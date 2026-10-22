@@ -160,6 +160,7 @@ footer.foot{text-align:center;padding:20px;font-size:12px;color:var(--ink-3);
    CONFIGURATION
    ========================================================================= */
 const API_URL = 'https://deploy-showoff-engaging.ngrok-free.dev/webhook/monjob';
+const ODOO_WEB_URL = 'http://localhost:8069';   // ✅ URL de base Odoo pour les liens "Ouvrir dans Odoo"
 
 const CATEGORIES = ['Plomberie','Electricite','Menuiserie','Maconnerie','Peinture',
   'Mecanique','Couture','Coiffure','Cuisine','Jardinage','Informatique',
@@ -183,11 +184,11 @@ const SESSION = {
   set token(v){ if(v) sessionStorage.setItem('monjob_token', v); else sessionStorage.removeItem('monjob_token'); }
 };
 
-let USER = null;      // données de l'utilisateur connecté (chargées depuis Odoo)
+let USER = null;
 let ROUTE = ['dashboard'];
 
 /* =========================================================================
-   API CLIENT
+   API CLIENT  ✅ Amélioré : gère les réponses non-JSON et erreurs HTTP
    ========================================================================= */
 async function api(action, data = {}){
   try {
@@ -196,10 +197,19 @@ async function api(action, data = {}){
       headers: { 'Content-Type':'application/json', 'ngrok-skip-browser-warning':'true' },
       body: JSON.stringify({ action, token: SESSION.token, ...data })
     });
-    return await res.json();
+    const text = await res.text();
+    let json;
+    try { json = JSON.parse(text); }
+    catch {
+      return { status:'error', message:'Réponse non-JSON ('+res.status+'): '+text.slice(0,160) };
+    }
+    if(!res.ok && json.status !== 'error'){
+      json = { status:'error', message: json.message || ('HTTP '+res.status) };
+    }
+    return json;
   } catch(e){
     console.error('API error:', e);
-    return { status:'error', message:'Erreur réseau' };
+    return { status:'error', message:'Erreur réseau : '+e.message };
   }
 }
 
@@ -217,6 +227,9 @@ const fmtNum = n => n==null || n==='' ? '' : Number(n).toLocaleString('fr-FR');
 const initials = u => u ? ((u.name||u.email||'?')[0]||'').toUpperCase() : '?';
 const fullName = u => u ? (u.name || u.email || 'Utilisateur') : 'Utilisateur';
 const catLabel = c => CAT_LABELS[c] || c || '';
+
+// ✅ Helper many2one Odoo : accepte [id, "nom"] OU id OU null
+const m2oId = v => Array.isArray(v) ? v[0] : (typeof v === 'number' ? v : null);
 
 function toast(msg, type='info'){
   const t = document.createElement('div');
@@ -276,7 +289,17 @@ function renderAuth(){
     AUTH_MODE = b.dataset.mode; renderAuth();
   });
   if(AUTH_MODE === 'login') $('#formLogin').onsubmit = handleLogin;
-  else $('#formRegister').onsubmit = handleRegister;
+  else {
+    $('#formRegister').onsubmit = handleRegister;
+    // ✅ Afficher/masquer le champ Métier selon le rôle choisi
+    const roleSel = $('#rg_role');
+    const metierWrap = $('#metierWrap');
+    const toggleMetier = () => {
+      metierWrap.style.display = roleSel.value === 'prestataire' ? '' : 'none';
+    };
+    roleSel.onchange = toggleMetier;
+    toggleMetier();
+  }
 }
 
 function loginForm(){
@@ -389,7 +412,6 @@ function renderShell(){
   $('#btnLogout').onclick = logout;
   $$('.tab').forEach(t => t.onclick = () => navigate(t.dataset.tab));
 
-  // Pending user
   if(USER.monjob_role !== 'admin' && USER.statut !== 'actif'){
     $('#main').innerHTML = `
       <div class="banner banner-warn">
@@ -592,15 +614,11 @@ async function renderAnnonceDetail(id){
   const a = (r.annonces || []).find(x => String(x.id) === String(id));
   if(!a){ main.innerHTML = `<div class="card"><div class="empty"><h4>Annonce introuvable</h4></div></div>`; return; }
 
-  const isOwner = USER.monjob_role === 'client' && a.client_id && (a.client_id[0] === parseInt(SESSION.token));
+  // ✅ many2one robuste : Odoo peut renvoyer [id,"nom"] ou id
+  const clientId = m2oId(a.client_id);
+  const myId = parseInt(SESSION.token, 10);
+  const isOwner = USER.monjob_role === 'client' && clientId === myId;
   const isPresta = USER.monjob_role === 'prestataire' && a.state === 'active';
-
-  // Charger les devis associés
-  let devis = [];
-  try {
-    // On utilise annonces.list scope=all pour déduire, mais pour MVP on affiche juste les devis si client
-    // Appel séparé nécessaire — simplifié pour MVP : on n'affiche pas la liste des devis
-  } catch(e){}
 
   main.innerHTML = `
     <button class="btn btn-ghost btn-sm" onclick="history.back()" style="margin-bottom:16px">← Retour</button>
@@ -637,35 +655,36 @@ async function renderAnnonceDetail(id){
       <div class="card">
         <h3>Devis reçus</h3>
         <p class="muted" style="margin-bottom:12px">Consultez vos devis depuis Odoo pour accepter ou refuser.</p>
-        <button class="btn btn-ghost btn-sm" onclick="window.open('http://localhost:8069/odoo/monjob-annonces/'+${a.id},'_blank')">
+        <button class="btn btn-ghost btn-sm" onclick="window.open('${ODOO_WEB_URL}/odoo/monjob-annonces/${a.id}','_blank')">
           Ouvrir dans Odoo
         </button>
       </div>` : ''}
 
-    <div class="card">
-      <h3>Contacter</h3>
-      <button class="btn btn-primary btn-sm" data-contact="${a.id}|${a.client_id ? a.client_id[0] : ''}">
-        Envoyer un message au client
-      </button>
-    </div>`;
+    ${!isOwner && clientId ? `
+      <div class="card">
+        <h3>Contacter</h3>
+        <button class="btn btn-primary btn-sm" data-contact="${a.id}|${clientId}">
+          Envoyer un message au client
+        </button>
+      </div>` : ''}`;
 
   const fDev = $('#formDevis');
   if(fDev) fDev.onsubmit = async (ev) => {
     ev.preventDefault();
-    const r = await api('devis.create', {
+    const r2 = await api('devis.create', {
       annonceId: a.id,
-      montant: $('#dv_montant').value,
+      montant: parseInt($('#dv_montant').value, 10) || 0,
       delai: $('#dv_delai').value.trim(),
       message: $('#dv_message').value.trim()
     });
-    if(r.status !== 'ok'){ toast(r.message || 'Erreur', 'error'); return; }
+    if(r2.status !== 'ok'){ toast(r2.message || 'Erreur', 'error'); return; }
     toast('Devis envoyé', 'success');
     navigate('annonce/'+a.id);
   };
 
   $$('[data-contact]').forEach(b => b.onclick = () => {
     const [aid, toId] = b.dataset.contact.split('|');
-    if(!toId){ toast('Destinataire inconnu', 'error'); return; }
+    if(!toId || toId === 'null'){ toast('Destinataire inconnu', 'error'); return; }
     navigate('messages/'+aid+'/'+toId);
   });
 }
@@ -689,18 +708,26 @@ async function renderMessages(annonceId, otherId){
 
 async function renderThread(annonceId, otherId){
   const main = $('#main');
+  const aid = parseInt(annonceId, 10);
+  const toId = parseInt(otherId, 10);
+  if(!Number.isFinite(aid) || !Number.isFinite(toId)){
+    main.innerHTML = `<div class="card"><div class="empty"><h4>Conversation invalide</h4></div></div>`;
+    return;
+  }
   main.innerHTML = `<div class="card">Chargement...</div>`;
-  const r = await api('messages.list', { annonceId });
+  const r = await api('messages.list', { annonceId: aid });
   if(r.status !== 'ok'){ main.innerHTML = `<div class="card">Erreur : ${esc(r.message)}</div>`; return; }
   const msgs = r.messages || [];
-  const myId = parseInt(SESSION.token);
+  const myId = parseInt(SESSION.token, 10);
 
   main.innerHTML = `
     <button class="btn btn-ghost btn-sm" onclick="navigate('messages')" style="margin-bottom:16px">← Retour</button>
     <div class="card">
       <div class="thread" id="thread">
         ${msgs.length ? msgs.map(m => {
-          const isMe = m.expediteur_id && m.expediteur_id[0] === myId;
+          // ✅ many2one robuste
+          const expId = m2oId(m.expediteur_id);
+          const isMe = expId === myId;
           return `<div class="bubble ${isMe?'me':'them'}">
             ${esc(m.contenu)}
             <span class="time">${fmtDate(m.create_date)}</span>
@@ -720,8 +747,8 @@ async function renderThread(annonceId, otherId){
     ev.preventDefault();
     const texte = $('#msg_text').value.trim();
     if(!texte) return;
-    const r = await api('message.send', { annonceId, toId: parseInt(otherId), texte });
-    if(r.status !== 'ok'){ toast(r.message || 'Erreur', 'error'); return; }
+    const r2 = await api('message.send', { annonceId: aid, toId, texte });
+    if(r2.status !== 'ok'){ toast(r2.message || 'Erreur', 'error'); return; }
     renderThread(annonceId, otherId);
   };
 }
@@ -778,7 +805,6 @@ function bindProfil(){
     });
     if(r.status !== 'ok'){ toast(r.message || 'Erreur', 'error'); return; }
     toast('Profil mis à jour', 'success');
-    // Recharger
     const me = await api('auth.me');
     if(me.status === 'ok') USER = me.user;
     render();
@@ -816,15 +842,15 @@ async function renderAdminInscriptions(){
       </div>`).join('') : '<div class="card"><div class="empty"><h4>Aucune inscription en attente</h4></div></div>'}`;
 
   $$('[data-validate]').forEach(b => b.onclick = async () => {
-    const r = await api('admin.validate', { userId: parseInt(b.dataset.validate) });
-    if(r.status === 'ok'){ toast('Compte validé', 'success'); renderAdminInscriptions(); }
-    else toast(r.message, 'error');
+    const r2 = await api('admin.validate', { userId: parseInt(b.dataset.validate) });
+    if(r2.status === 'ok'){ toast('Compte validé', 'success'); renderAdminInscriptions(); }
+    else toast(r2.message, 'error');
   });
   $$('[data-reject]').forEach(b => b.onclick = async () => {
     if(!confirm('Refuser cette inscription ?')) return;
-    const r = await api('admin.reject', { userId: parseInt(b.dataset.reject) });
-    if(r.status === 'ok'){ toast('Inscription refusée', 'info'); renderAdminInscriptions(); }
-    else toast(r.message, 'error');
+    const r2 = await api('admin.reject', { userId: parseInt(b.dataset.reject) });
+    if(r2.status === 'ok'){ toast('Inscription refusée', 'info'); renderAdminInscriptions(); }
+    else toast(r2.message, 'error');
   });
 }
 
