@@ -840,6 +840,29 @@ function logout(silent=false){
   location.hash = '#/login'; render();
 }
 
+/* ==========================================================
+   COMMUNICATION AVEC N8N VIA NGROK
+   ========================================================== */
+async function callWorkflow(event, payload) {
+  // ⚠️ URL de votre tunnel ngrok actuel
+  const N8N_URL = 'https://deploy-showoff-engaging.ngrok-free.dev/webhook/monjob/events';
+  
+  try {
+    const response = await fetch(N8N_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-monjob-token': 'MONJOB_WEBHOOK_SECRET_2026',
+        'ngrok-skip-browser-warning': 'true'
+      },
+      body: JSON.stringify({ event, payload })
+    });
+    console.log(`✅ [${event}] envoyé à n8n`);
+  } catch (error) {
+    console.error(`❌ [${event}] Erreur n8n :`, error);
+  }
+}
+
 function handleLogin(email, password, remember){
   email = email.trim().toLowerCase();
   const u = DB.users.find(x => x.email.toLowerCase() === email);
@@ -887,6 +910,14 @@ function handleRegister(data){
   audit('inscription', u.email+' ('+u.role+')');
   DB.session = u.id; saveDB();
   toast('Compte créé. En attente de validation.','success');
+  
+  // ⚠️ APPEL N8N À L'INSCRIPTION
+  callWorkflow('user.register', {
+    prenom: u.prenom, nom: u.nom, email: u.email,
+    password: data.password, phone: u.phone, ville: u.ville,
+    role: u.role, metier: u.metier
+  });
+
   return true;
 }
 
@@ -2220,6 +2251,20 @@ function bindPage(u, route){
     DB.contrats.push(contrat);
     notify(d.prestataireId, 'Votre devis pour "'+a.titre+'" a été accepté !', '#/annonce/'+a.id);
     saveDB(); audit('devis_accepte', a.titre);
+    
+    // ⚠️ APPEL N8N À L'ACCEPTATION DE DEVIS
+    const presta = userById(d.prestataireId);
+    callWorkflow('devis.accepted', {
+      clientId: a.clientId,
+      prestataireId: d.prestataireId,
+      prestataireEmail: presta ? presta.email : '',
+      prestataireName: presta ? fullName(presta) : '',
+      montant: d.montant,
+      delai: d.delai,
+      annonceTitre: a.titre,
+      annonceId: a.id
+    });
+
     toast('Devis accepté. Contrat généré (sans paiement).','success'); render();
   });
   $$('[data-refuse-devis]').forEach(b => b.onclick = async () => {
@@ -2369,6 +2414,12 @@ function handlePublier(e){
     .forEach(p => notify(p.id, 'Nouvelle annonce : "'+titre+'" à '+ville, '#/annonce/'+a.id));
   saveDB(); audit('annonce_publiee', titre);
   toast('Annonce publiée.','success'); navigate('mes-annonces');
+
+  // ⚠️ APPEL N8N À LA PUBLICATION D'ANNONCE
+  callWorkflow('annonce.published', {
+    categorie: cat, titre: titre, ville: ville,
+    description: desc, annonceId: a.id
+  });
 }
 function handleEnvoyerDevis(e){
   e.preventDefault();
