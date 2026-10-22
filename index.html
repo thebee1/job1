@@ -3,2532 +3,870 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mon Job — Plateforme professionnelle</title>
+<title>Mon Job</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --orange:#F77F00;--orange-h:#E06E00;--orange-s:#FFF3E0;--orange-glow:rgba(247,127,0,.25);
-  --green:#009E60;--green-h:#008752;--green-s:#E6F6EE;--green-glow:rgba(0,158,96,.25);
+  --orange:#F77F00;--orange-h:#E06E00;--orange-s:#FFF3E0;
+  --green:#009E60;--green-h:#008752;--green-s:#E6F6EE;
   --ink:#0F172A;--ink-2:#334155;--ink-3:#64748B;--ink-4:#94A3B8;
-  --line:#E2E8F0;--line-2:#F1F5F9;--bg:#F8FAFC;--surface:#FFFFFF;
+  --line:#E2E8F0;--line-2:#F1F5F9;--bg:#F8FAFC;--surface:#FFF;
   --red:#DC2626;--red-s:#FEF2F2;--amber:#D97706;--amber-s:#FFFBEB;
-  --blue:#0EA5E9;--blue-s:#F0F9FF;
-  --r-sm:6px;--r:10px;--r-lg:14px;--r-xl:20px;
+  --r:10px;--r-lg:14px;
   --sh-sm:0 1px 2px rgba(15,23,42,.06);
   --sh:0 1px 3px rgba(15,23,42,.08),0 1px 2px rgba(15,23,42,.04);
-  --sh-md:0 4px 6px -1px rgba(15,23,42,.08),0 2px 4px -1px rgba(15,23,42,.04);
-  --sh-lg:0 10px 15px -3px rgba(15,23,42,.08),0 4px 6px -2px rgba(15,23,42,.04);
-  --sh-xl:0 20px 25px -5px rgba(15,23,42,.1),0 10px 10px -5px rgba(15,23,42,.04);
-  --transition:.25s cubic-bezier(.4,0,.2,1);
-  --bounce:cubic-bezier(.68,-.55,.265,1.55);
 }
-[data-theme="dark"]{
-  --ink:#F1F5F9;--ink-2:#CBD5E1;--ink-3:#94A3B8;--ink-4:#64748B;
-  --line:#1E293B;--line-2:#1E293B;--bg:#0F172A;--surface:#1E293B;
-  --orange-s:#422006;--green-s:#052E1B;--red-s:#450A0A;--amber-s:#452A02;--blue-s:#082F49;
-}
-
-/* ============ ANIMATIONS ============ */
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-@keyframes slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
-@keyframes slideInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.85}}
-@keyframes pulseRing{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.2);opacity:0}}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
-@keyframes floatSlow{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(3deg)}}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@keyframes ripple{to{transform:scale(4);opacity:0}}
-@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-@keyframes typing{from{width:0}to{width:100%}}
-@keyframes checkmark{0%{stroke-dashoffset:50}100%{stroke-dashoffset:0}}
-@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(247,127,0,.3)}50%{box-shadow:0 0 40px rgba(247,127,0,.6)}}
-@keyframes barFill{from{width:0}}
-@keyframes dots{0%,20%{color:transparent;text-shadow:.25em 0 0 transparent,.5em 0 0 transparent}
-  40%{color:var(--ink);text-shadow:.25em 0 0 transparent,.5em 0 0 transparent}
-  60%{text-shadow:.25em 0 0 var(--ink),.5em 0 0 transparent}
-  80%,100%{text-shadow:.25em 0 0 var(--ink),.5em 0 0 var(--ink)}}
-
-/* ============ BASE ============ */
+*{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-  background:var(--bg);color:var(--ink);line-height:1.55;font-size:15px;min-height:100vh;
-  transition:background .3s,color .3s;-webkit-font-smoothing:antialiased}
+  background:var(--bg);color:var(--ink);line-height:1.55;font-size:15px;min-height:100vh}
+.hidden{display:none!important}
 a{color:var(--green);text-decoration:none;cursor:pointer}
-a:hover{text-decoration:underline}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit;font-size:inherit}
 input,select,textarea{font-family:inherit}
-.hidden{display:none!important}
 .muted{color:var(--ink-3);font-size:13px}
 .flex-between{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 
-/* Reveal on scroll */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-stagger>*{opacity:0;transform:translateY(20px);animation:fadeInUp .5s ease forwards}
-.reveal-stagger>*:nth-child(1){animation-delay:.05s}
-.reveal-stagger>*:nth-child(2){animation-delay:.1s}
-.reveal-stagger>*:nth-child(3){animation-delay:.15s}
-.reveal-stagger>*:nth-child(4){animation-delay:.2s}
-.reveal-stagger>*:nth-child(5){animation-delay:.25s}
-.reveal-stagger>*:nth-child(6){animation-delay:.3s}
-
-/* Page transition */
-.page-enter{animation:fadeInUp .4s ease}
-
-/* ============ TOPBAR ============ */
-.topbar{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40;transition:background .3s}
-.topbar-inner{max-width:1280px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.logo{font-size:20px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:8px;cursor:pointer;position:relative}
-.logo-bar{width:4px;height:22px;border-radius:2px;background:linear-gradient(180deg,var(--orange),var(--orange-h));
-  background-size:200% 100%;animation:gradientShift 3s ease infinite}
-.logo-bar.g{background:linear-gradient(180deg,var(--green),var(--green-h));
-  background-size:200% 100%;animation:gradientShift 3s ease infinite reverse}
-.logo b{color:var(--ink)}
-.logo em{font-style:normal;background:linear-gradient(90deg,var(--orange),var(--orange-h),var(--orange));
-  background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:gradientShift 3s ease infinite}
-.logo:hover{transform:scale(1.02);transition:transform .3s}
-.topbar-search{flex:1;max-width:460px;position:relative}
-.topbar-search input{padding-left:38px;background:var(--line-2);border-color:transparent;transition:all .25s}
-.topbar-search input:focus{background:var(--surface);border-color:var(--orange);box-shadow:0 0 0 4px var(--orange-glow)}
-.topbar-search .icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-3);transition:color .2s}
-.topbar-search input:focus~.icon{color:var(--orange)}
-.topbar-actions{display:flex;align-items:center;gap:4px;margin-left:auto}
-.icon-btn{width:38px;height:38px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;
-  color:var(--ink-2);position:relative;transition:all .25s}
-.icon-btn:hover{background:var(--line-2);transform:translateY(-2px)}
-.icon-btn:active{transform:translateY(0) scale(.95)}
-.icon-btn .dot{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;
-  background:var(--orange);border:2px solid var(--surface);animation:pulse 2s infinite}
-.icon-btn .dot::before{content:'';position:absolute;inset:-4px;border-radius:50%;
-  background:var(--orange);animation:pulseRing 2s infinite;z-index:-1}
+.topbar{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
+.topbar-inner{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+.logo{font-size:20px;font-weight:800;display:flex;align-items:center;gap:6px;cursor:pointer}
+.logo b{color:var(--ink)}.logo em{font-style:normal;color:var(--orange)}
+.topbar-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
 .avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--orange),var(--green));
-  display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px;flex-shrink:0;
-  box-shadow:0 2px 8px rgba(15,23,42,.15)}
-.avatar-lg{width:96px;height:96px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--orange),var(--green));
-  display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:32px;flex-shrink:0;
-  box-shadow:0 4px 16px rgba(15,23,42,.2);position:relative}
-.avatar-lg::after{content:'';position:absolute;inset:-4px;border-radius:50%;
-  background:linear-gradient(135deg,var(--orange),var(--green));opacity:.2;z-index:-1}
-.avatar-md{width:48px;height:48px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--orange),var(--green));
-  display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px;flex-shrink:0}
+  display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:13px}
+.avatar-lg{width:90px;height:90px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--orange),var(--green));
+  display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:28px}
 
-.tabs{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:64px;z-index:30;
-  overflow-x:auto;scrollbar-width:thin}
-.tabs-inner{max-width:1280px;margin:0 auto;padding:0 20px;display:flex;gap:2px}
-.tab{padding:14px 16px;font-size:14px;font-weight:600;color:var(--ink-3);border-bottom:3px solid transparent;
-  white-space:nowrap;display:flex;align-items:center;gap:6px;position:relative;transition:all .2s}
-.tab::before{content:'';position:absolute;bottom:-1px;left:50%;width:0;height:3px;background:var(--orange);
-  transition:all .3s;transform:translateX(-50%)}
+.tabs{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:62px;z-index:30;overflow-x:auto}
+.tabs-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;gap:2px}
+.tab{padding:14px 16px;font-size:14px;font-weight:600;color:var(--ink-3);
+  border-bottom:3px solid transparent;white-space:nowrap}
 .tab:hover{color:var(--ink)}
-.tab.active{color:var(--orange)}
-.tab.active::before{width:100%}
-.tab .count{background:var(--green);color:#fff;border-radius:10px;padding:1px 7px;font-size:11px;font-weight:700;
-  animation:scaleIn .3s var(--bounce)}
+.tab.active{color:var(--orange);border-bottom-color:var(--orange)}
 
-.wrap{max-width:1280px;margin:0 auto;padding:24px 20px 64px}
-.page-title{font-size:24px;font-weight:800;margin-bottom:6px;letter-spacing:-.3px}
-.page-sub{color:var(--ink-3);font-size:14px;margin-bottom:24px}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:22px;font-weight:800;margin-bottom:6px}
+.page-sub{color:var(--ink-3);font-size:14px;margin-bottom:20px}
 
-/* ============ CARDS ============ */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-bottom:18px;
-  box-shadow:var(--sh-sm);transition:all .3s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
-.card:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:var(--sh-sm)}
 .card h3{font-size:16px;margin-bottom:14px;font-weight:700}
-.card-narrow{max-width:800px}
-.grid{display:grid;gap:18px}
-.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.grid-3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-.grid-4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
-.sep{height:1px;background:var(--line);margin:18px 0}
 
-/* ============ BUTTONS ============ */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;border-radius:8px;
-  border:1px solid transparent;font-size:14px;font-weight:600;white-space:nowrap;position:relative;overflow:hidden;
-  transition:all .25s cubic-bezier(.4,0,.2,1)}
+  border:1px solid transparent;font-size:14px;font-weight:600;white-space:nowrap}
 .btn:disabled{opacity:.55;cursor:not-allowed}
-.btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-h));color:#fff;
-  box-shadow:0 2px 8px var(--orange-glow)}
-.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 20px var(--orange-glow)}
-.btn-primary:active:not(:disabled){transform:translateY(0) scale(.98)}
-.btn-green{background:linear-gradient(135deg,var(--green),var(--green-h));color:#fff;
-  box-shadow:0 2px 8px var(--green-glow)}
-.btn-green:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 20px var(--green-glow)}
+.btn-primary{background:var(--orange);color:#fff}
+.btn-primary:hover:not(:disabled){background:var(--orange-h)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover:not(:disabled){background:var(--green-h)}
 .btn-ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}
-.btn-ghost:hover:not(:disabled){border-color:var(--ink-4);background:var(--line-2);transform:translateY(-1px)}
+.btn-ghost:hover:not(:disabled){border-color:var(--ink-4);background:var(--line-2)}
 .btn-danger{background:var(--surface);border-color:#FCA5A5;color:var(--red)}
-.btn-danger:hover:not(:disabled){background:var(--red-s);transform:translateY(-1px)}
-.btn-blue{background:linear-gradient(135deg,var(--blue),#0284C7);color:#fff;box-shadow:0 2px 8px rgba(14,165,233,.25)}
-.btn-blue:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 20px rgba(14,165,233,.35)}
-.btn-sm{padding:6px 12px;font-size:13px;border-radius:6px}
+.btn-danger:hover:not(:disabled){background:var(--red-s)}
+.btn-sm{padding:6px 12px;font-size:13px}
 .btn-lg{padding:12px 24px;font-size:15px}
 .btn-block{width:100%}
-.btn-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.6);transform:scale(0);
-  animation:ripple .6s linear;pointer-events:none}
 
-/* ============ FORMS ============ */
 label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink-2)}
 input[type=text],input[type=email],input[type=password],input[type=tel],input[type=number],
-input[type=search],input[type=file],select,textarea{
+input[type=file],select,textarea{
   width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;
-  background:var(--surface);color:var(--ink);transition:all .25s}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--orange);
-  box-shadow:0 0 0 4px var(--orange-glow);transform:translateY(-1px)}
-textarea{resize:vertical;min-height:100px}
+  background:var(--surface);color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(247,127,0,.12)}
+textarea{resize:vertical;min-height:90px}
 .field{margin-bottom:14px}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:560px){.field-row{grid-template-columns:1fr}}
 .hint{font-size:12px;color:var(--ink-3);margin-top:5px}
-.pwd-meter{display:flex;gap:3px;margin-top:6px;height:4px}
-.pwd-meter i{flex:1;background:var(--line);border-radius:2px;transition:all .3s}
-.pwd-meter[data-score="1"] i:nth-child(1){background:var(--red)}
-.pwd-meter[data-score="2"] i:nth-child(-n+2){background:var(--amber)}
-.pwd-meter[data-score="3"] i:nth-child(-n+3){background:#10B981}
-.pwd-meter[data-score="4"] i{background:var(--green)}
 
-/* ============ AUTH SCREEN ============ */
-.auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 20px;
-  position:relative;overflow:hidden;
-  background:linear-gradient(135deg,#FFF8F0 0%,#FFFFFF 45%,#F0FAF5 100%)}
-[data-theme="dark"] .auth-screen{background:linear-gradient(135deg,#1a0f00 0%,#0F172A 45%,#001a10 100%)}
-.auth-bg-blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.3;animation:floatSlow 8s ease-in-out infinite}
-.auth-bg-blob.b1{width:400px;height:400px;background:var(--orange);top:-100px;left:-100px}
-.auth-bg-blob.b2{width:300px;height:300px;background:var(--green);bottom:-80px;right:-80px;animation-delay:-4s}
-.auth-card{width:100%;max-width:500px;background:var(--surface);border:1px solid var(--line);
-  border-radius:var(--r-xl);padding:32px;box-shadow:var(--sh-xl);position:relative;z-index:1;animation:fadeInUp .5s ease}
-.flagline{display:flex;height:4px;border-radius:2px;overflow:hidden;margin-bottom:22px}
-.flagline i{flex:1;animation:slideInRight .6s ease both}
-.flagline i:nth-child(1){background:var(--orange);animation-delay:.1s}
-.flagline i:nth-child(2){background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);animation-delay:.2s}
-.flagline i:nth-child(3){background:var(--green);animation-delay:.3s}
-.auth-brand{text-align:center;margin-bottom:24px}
-.auth-brand h1{font-size:26px;font-weight:800;letter-spacing:.6px}
-.auth-brand h1 em{font-style:normal;background:linear-gradient(90deg,var(--orange),var(--orange-h));
-  background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:gradientShift 3s ease infinite}
-.auth-brand p{color:var(--ink-3);font-size:13px;margin-top:4px}
-.auth-switch{display:flex;background:var(--line-2);border-radius:8px;padding:4px;margin-bottom:22px;position:relative}
-.auth-switch button{flex:1;padding:9px;border-radius:6px;font-size:14px;font-weight:600;color:var(--ink-3);transition:all .25s}
-.auth-switch button.active{background:var(--surface);color:var(--orange);box-shadow:var(--sh-sm)}
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--sh-sm)}
+.stat .num{font-size:26px;font-weight:800;color:var(--orange)}
+.stat .lbl{font-size:13px;color:var(--ink-3);margin-top:2px}
 
-/* ============ HERO ============ */
-.hero{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-h) 50%,var(--green) 100%);
-  background-size:200% 200%;animation:gradientShift 15s ease infinite;
-  color:#fff;padding:60px 20px;position:relative;overflow:hidden;border-radius:var(--r-xl);margin-bottom:24px}
-.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 2px 2px,rgba(255,255,255,.15) 1px,transparent 0);
-  background-size:30px 30px;opacity:.5}
-.hero-content{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:40px;flex-wrap:wrap;position:relative;z-index:1}
-.hero-text{flex:1;min-width:280px;animation:fadeInUp .6s ease .2s both}
-.hero-text h2{font-size:42px;font-weight:800;line-height:1.1;margin-bottom:14px;letter-spacing:-1px}
-.hero-text p{font-size:17px;opacity:.95;margin-bottom:24px;line-height:1.6}
-.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
-.hero-cta .btn{background:#fff;color:var(--orange);padding:14px 28px;font-size:15px;box-shadow:0 4px 16px rgba(0,0,0,.2)}
-.hero-cta .btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.hero-cta .btn.outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
-.hero-cta .btn.outline:hover{background:rgba(255,255,255,.15);border-color:#fff}
-.hero-illustration{flex:1;min-width:280px;max-width:400px;animation:float 6s ease-in-out infinite}
-
-/* ============ BADGES ============ */
-.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;
-  line-height:1.4;white-space:nowrap;gap:4px;transition:all .2s}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
 .badge-orange{background:var(--orange-s);color:#B45309}
 .badge-green{background:var(--green-s);color:var(--green-h)}
+.badge-amber{background:var(--amber-s);color:var(--amber)}
 .badge-grey{background:var(--line-2);color:var(--ink-2)}
 .badge-red{background:var(--red-s);color:var(--red)}
-.badge-amber{background:var(--amber-s);color:var(--amber)}
-.badge-blue{background:var(--blue-s);color:#0369A1}
 
-.trust-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:11px;
-  font-weight:700;text-transform:uppercase;transition:transform .2s}
-.trust-badge:hover{transform:scale(1.05)}
-.trust-verified{background:var(--green-s);color:var(--green-h)}
-.trust-top{background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#78350F}
-.trust-new{background:var(--line-2);color:var(--ink-2)}
-
-/* ============ ITEMS ============ */
-.item{border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;
-  background:var(--surface);transition:all .3s cubic-bezier(.4,0,.2,1)}
-.item:hover{box-shadow:var(--sh-md);transform:translateY(-2px);border-color:var(--ink-4)}
-.item-clickable{cursor:pointer}
+.item{border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;background:var(--surface)}
 .item-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:8px}
 .item-title{font-weight:700;font-size:15px;margin-bottom:4px}
 .item-meta{font-size:13px;color:var(--ink-3)}
-.item-body{margin-top:10px;font-size:14px;line-height:1.6;color:var(--ink-2)}
-.item-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-2)}
-.item-highlight{border-left:4px solid var(--green);position:relative}
-.item-highlight::before{content:'';position:absolute;left:-4px;top:0;bottom:0;width:4px;
-  background:var(--green);box-shadow:0 0 12px var(--green-glow)}
+.item-body{margin-top:10px;font-size:14px;color:var(--ink-2);line-height:1.6}
+.item-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--line-2)}
 
-/* ============ TABLES ============ */
-table.table{width:100%;border-collapse:collapse;font-size:14px}
-table.table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--line);
-  font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--ink-3);font-weight:700}
-table.table td{padding:12px;border-bottom:1px solid var(--line-2);vertical-align:middle;transition:background .2s}
-table.table tr:hover td{background:var(--line-2)}
-.table-scroll{overflow-x:auto}
+.banner{padding:14px 18px;border-radius:8px;font-size:14px;margin-bottom:16px}
+.banner-warn{background:var(--amber-s);border:1px solid #FDBA74;color:#9A3412}
 
-/* ============ STATS ============ */
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;
-  box-shadow:var(--sh-sm);transition:all .3s;position:relative;overflow:hidden}
-.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--orange),var(--green));transform:scaleX(0);transform-origin:left;
-  transition:transform .3s}
-.stat:hover::before{transform:scaleX(1)}
-.stat:hover{box-shadow:var(--sh-lg);transform:translateY(-3px)}
-.stat .num{font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-.5px;line-height:1.1}
-.stat .lbl{font-size:13px;color:var(--ink-3);margin-top:2px}
-.stat.stat-orange .num{color:var(--orange)}
-.stat.stat-green .num{color:var(--green)}
-.stat.stat-amber .num{color:var(--amber)}
-.stat.stat-blue .num{color:var(--blue)}
+.empty{text-align:center;padding:40px 20px;color:var(--ink-3)}
+.empty h4{font-size:15px;color:var(--ink-2);margin-bottom:6px;font-weight:700}
+.empty p{font-size:14px;margin-bottom:16px}
 
-/* ============ MESSAGES ============ */
-.thread{display:flex;flex-direction:column;gap:10px;max-height:460px;overflow-y:auto;padding:16px;
+.auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 20px;
+  background:linear-gradient(135deg,#FFF8F0 0%,#FFF 45%,#F0FAF5 100%)}
+.auth-card{width:100%;max-width:460px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:30px;box-shadow:var(--sh)}
+.auth-brand{text-align:center;margin-bottom:24px}
+.auth-brand h1{font-size:26px;font-weight:800;letter-spacing:.5px}
+.auth-brand h1 em{font-style:normal;color:var(--orange)}
+.auth-brand p{color:var(--ink-3);font-size:13px;margin-top:4px}
+.auth-switch{display:flex;background:var(--line-2);border-radius:8px;padding:4px;margin-bottom:20px}
+.auth-switch button{flex:1;padding:9px;border-radius:6px;font-size:14px;font-weight:600;color:var(--ink-3)}
+.auth-switch button.active{background:#fff;color:var(--orange);box-shadow:var(--sh-sm)}
+
+.thread{display:flex;flex-direction:column;gap:10px;max-height:400px;overflow-y:auto;padding:14px;
   background:var(--line-2);border-radius:8px;margin-bottom:14px}
-.bubble{max-width:78%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.5;
-  word-wrap:break-word;animation:slideUp .3s ease;box-shadow:0 1px 2px rgba(15,23,42,.06)}
-.bubble.me{align-self:flex-end;background:linear-gradient(135deg,var(--green),var(--green-h));color:#fff;
-  border-bottom-right-radius:3px}
-.bubble.them{align-self:flex-start;background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:3px}
+.bubble{max-width:78%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.5}
+.bubble.me{align-self:flex-end;background:var(--green);color:#fff;border-bottom-right-radius:3px}
+.bubble.them{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:3px}
 .bubble .time{display:block;font-size:11px;opacity:.7;margin-top:4px}
 
-/* ============ MODAL ============ */
-.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.6);display:flex;align-items:center;
-  justify-content:center;padding:20px;z-index:100;animation:fadeIn .2s;backdrop-filter:blur(4px)}
-.modal{background:var(--surface);border-radius:var(--r-lg);max-width:520px;width:100%;max-height:90vh;
-  overflow-y:auto;box-shadow:var(--sh-xl);animation:scaleIn .25s cubic-bezier(.4,0,.2,1)}
-.modal-lg{max-width:820px}
-.modal-header{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;
-  align-items:center;gap:12px}
-.modal-header h3{font-size:17px;font-weight:700;margin:0}
-.modal-body{padding:24px}
-.modal-footer{padding:16px 24px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
-
-/* ============ TOAST ============ */
-#toast-root{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;
-  gap:10px;z-index:200;pointer-events:none;max-width:calc(100% - 32px);width:420px}
-.toast{background:var(--ink);color:#fff;padding:12px 18px;border-radius:8px;font-size:14px;
-  box-shadow:var(--sh-xl);display:flex;align-items:center;gap:10px;pointer-events:auto;
-  animation:slideUp .3s cubic-bezier(.4,0,.2,1);border-left:4px solid transparent}
-.toast.success{background:var(--green);border-left-color:#065F46}
-.toast.error{background:var(--red);border-left-color:#7F1D1D}
-.toast.warn{background:var(--amber);border-left-color:#78350F}
-.toast.info{background:var(--blue);border-left-color:#0369A1}
-.toast .close{margin-left:auto;opacity:.7;padding:2px;transition:opacity .2s}
-.toast .close:hover{opacity:1}
-
-/* ============ EMPTY STATES ============ */
-.empty{text-align:center;padding:48px 20px;color:var(--ink-3);animation:fadeInUp .5s ease}
-.empty-illustration{margin:0 auto 20px;max-width:180px;opacity:.85;animation:float 4s ease-in-out infinite}
-.empty h4{font-size:16px;color:var(--ink-2);margin-bottom:8px;font-weight:700}
-.empty p{font-size:14px;margin-bottom:20px;max-width:360px;margin-left:auto;margin-right:auto;line-height:1.6}
-
-/* ============ DROPDOWNS ============ */
-.dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--surface);border:1px solid var(--line);
-  border-radius:var(--r);box-shadow:var(--sh-xl);min-width:340px;max-width:calc(100vw - 40px);z-index:50;
-  overflow:hidden;animation:fadeInDown .2s ease}
-.dropdown-header{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;
-  align-items:center;font-weight:700;font-size:14px}
-.dropdown-list{max-height:360px;overflow-y:auto}
-.dropdown-item{padding:12px 16px;border-bottom:1px solid var(--line-2);font-size:13px;cursor:pointer;transition:all .2s}
-.dropdown-item:hover{background:var(--line-2);padding-left:20px}
-.dropdown-item.unread{background:var(--orange-s);border-left:3px solid var(--orange)}
-.dropdown-item .meta{color:var(--ink-3);font-size:11px;margin-top:4px}
-.dropdown-footer{padding:10px 16px;text-align:center;border-top:1px solid var(--line);font-size:13px}
-.user-menu{min-width:240px}
-.user-menu-head{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
-.user-menu-head .info{line-height:1.3;min-width:0}
-.user-menu-head .info b{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.user-menu-head .info span{font-size:12px;color:var(--ink-3)}
-.user-menu-item{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:14px;
-  color:var(--ink-2);width:100%;text-align:left;transition:all .2s}
-.user-menu-item:hover{background:var(--line-2);padding-left:20px;text-decoration:none}
-.user-menu-item.danger{color:var(--red)}
-
-/* ============ STARS ============ */
-.stars{display:inline-flex;gap:1px;vertical-align:middle}
-.stars svg{color:var(--amber);transition:transform .2s}
-.stars svg:hover{transform:scale(1.2)}
-.stars .off{color:var(--line)}
-.star-input{display:inline-flex;gap:4px;cursor:pointer}
-.star-input button{padding:2px;color:var(--line);transition:all .2s}
-.star-input button.on{color:var(--amber)}
-.star-input button:hover{transform:scale(1.2)}
-
-/* ============ CHARTS ============ */
-.chart-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;
-  transition:all .3s}
-.chart-card:hover{box-shadow:var(--sh-md)}
-.chart-card h3{font-size:15px;margin-bottom:16px}
-.chart-canvas{width:100%;height:220px;display:block}
-
-/* ============ PAGINATION ============ */
-.pagination{display:flex;justify-content:center;align-items:center;gap:4px;margin-top:20px;flex-wrap:wrap}
-.pagination button{min-width:36px;height:36px;border-radius:6px;font-size:14px;color:var(--ink-2);
-  border:1px solid var(--line);background:var(--surface);transition:all .2s}
-.pagination button:hover:not(:disabled){border-color:var(--orange);color:var(--orange);transform:translateY(-2px)}
-.pagination button.active{background:linear-gradient(135deg,var(--orange),var(--orange-h));color:#fff;
-  border-color:var(--orange);box-shadow:0 2px 8px var(--orange-glow)}
-.pagination button:disabled{opacity:.4;cursor:not-allowed}
-
-/* ============ MISC ============ */
-.doc-thumb{max-width:140px;border-radius:6px;border:1px solid var(--line);display:block;margin-top:6px;cursor:pointer;
-  transition:all .2s}
-.doc-thumb:hover{transform:scale(1.03);box-shadow:var(--sh-md)}
-.filter-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:end;padding:16px;background:var(--surface);
+.filter-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:end;padding:14px;background:var(--surface);
   border:1px solid var(--line);border-radius:var(--r);margin-bottom:16px}
 .filter-bar .field{margin:0;flex:1;min-width:150px}
-.banner{padding:14px 18px;border-radius:8px;font-size:14px;margin-bottom:18px;display:flex;
-  align-items:flex-start;gap:10px;animation:fadeInUp .3s ease}
-.banner-warn{background:var(--amber-s);border:1px solid #FDBA74;color:#9A3412}
-.banner-info{background:var(--green-s);border:1px solid #6EE7B7;color:#065F46}
-.banner-blue{background:var(--blue-s);border:1px solid #7DD3FC;color:#0C4A6E}
-.profile-head{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
-.link{color:var(--green);cursor:pointer;font-weight:600}
-footer.foot{text-align:center;padding:24px 20px;font-size:12px;color:var(--ink-3);
+
+#toast-root{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;
+  gap:10px;z-index:200;max-width:calc(100% - 32px);width:420px}
+.toast{background:var(--ink);color:#fff;padding:12px 18px;border-radius:8px;font-size:14px;box-shadow:var(--sh)}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--red)}
+.toast.warn{background:var(--amber)}
+
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;padding:10px;border-bottom:2px solid var(--line);font-size:11px;
+  text-transform:uppercase;color:var(--ink-3);font-weight:700}
+td{padding:10px;border-bottom:1px solid var(--line-2)}
+.table-scroll{overflow-x:auto}
+
+footer.foot{text-align:center;padding:20px;font-size:12px;color:var(--ink-3);
   border-top:1px solid var(--line);background:var(--surface);margin-top:40px}
 
-/* ============ SKELETON ============ */
-.skeleton{background:linear-gradient(90deg,var(--line-2) 0%,var(--line) 50%,var(--line-2) 100%);
-  background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:6px;height:16px}
-
-/* ============ RESPONSIVE ============ */
-@media(max-width:640px){
-  .topbar-search{display:none}
+@media(max-width:600px){
+  .topbar-inner{padding:10px 14px}
   .wrap{padding:16px 14px 48px}
-  .page-title{font-size:20px}
+  .page-title{font-size:19px}
   .auth-card{padding:24px 20px}
-  .tabs{top:60px}
-  .tabs-inner{padding:0 14px}
   .tab{padding:12px 12px;font-size:13px}
-  .bubble{max-width:88%}
-  .modal-body{padding:18px}
-  .modal-header,.modal-footer{padding:14px 18px}
-  .dropdown{right:-8px;min-width:280px}
-  .hero-text h2{font-size:28px}
-  .hero{padding:40px 20px}
 }
 </style>
 </head>
 <body>
 <div id="root"></div>
-<div id="modal-root"></div>
-<div id="toast-root" aria-live="polite"></div>
+<div id="toast-root"></div>
 
 <script>
 /* =========================================================================
-   MON JOB v5 — Design pro + animations, sans paiement
+   CONFIGURATION
    ========================================================================= */
+const API_URL = 'https://deploy-showoff-engaging.ngrok-free.dev/webhook/monjob';
 
-const CONFIG = {
-  categories:['Plomberie','Électricité','Menuiserie','Maçonnerie','Peinture',
-    'Mécanique','Couture','Coiffure','Cuisine','Jardinage','Informatique',
-    'Transport','Ménage','Sécurité','Design','Marketing','Comptabilité',
-    'Traduction','Autre'],
-  villes:['Abidjan','Bouaké','Daloa','Yamoussoukro','San-Pédro','Korhogo',
-    'Man','Gagnoa','Divo','Autre'],
-  perPage:8,
-  sessionTimeoutMs:30*60*1000,
-  maxLoginAttempts:5,
-  lockDurationMs:5*60*1000,
-  maxFileSize:800*1024,
-  dbKey:'monjob_db_v5'
+const CATEGORIES = ['Plomberie','Electricite','Menuiserie','Maconnerie','Peinture',
+  'Mecanique','Couture','Coiffure','Cuisine','Jardinage','Informatique',
+  'Transport','Menage','Securite','Design','Marketing','Comptabilite',
+  'Traduction','Autre'];
+
+const VILLES = ['Abidjan','Bouake','Daloa','Yamoussoukro','San-Pedro','Korhogo',
+  'Man','Gagnoa','Divo','Autre'];
+
+const CAT_LABELS = {plomberie:'Plomberie',electricite:'Électricité',menuiserie:'Menuiserie',
+  maconnerie:'Maçonnerie',peinture:'Peinture',mecanique:'Mécanique',couture:'Couture',
+  coiffure:'Coiffure',cuisine:'Cuisine',jardinage:'Jardinage',informatique:'Informatique',
+  transport:'Transport',menage:'Ménage',securite:'Sécurité',design:'Design',
+  marketing:'Marketing',comptabilite:'Comptabilité',traduction:'Traduction',autre:'Autre'};
+
+/* =========================================================================
+   SESSION (token uniquement en sessionStorage)
+   ========================================================================= */
+const SESSION = {
+  get token(){ return sessionStorage.getItem('monjob_token'); },
+  set token(v){ if(v) sessionStorage.setItem('monjob_token', v); else sessionStorage.removeItem('monjob_token'); }
 };
 
+let USER = null;      // données de l'utilisateur connecté (chargées depuis Odoo)
+let ROUTE = ['dashboard'];
+
+/* =========================================================================
+   API CLIENT
+   ========================================================================= */
+async function api(action, data = {}){
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'ngrok-skip-browser-warning':'true' },
+      body: JSON.stringify({ action, token: SESSION.token, ...data })
+    });
+    return await res.json();
+  } catch(e){
+    console.error('API error:', e);
+    return { status:'error', message:'Erreur réseau' };
+  }
+}
+
+/* =========================================================================
+   UTILITAIRES
+   ========================================================================= */
 const $ = (s,el=document) => el.querySelector(s);
 const $$ = (s,el=document) => Array.from(el.querySelectorAll(s));
-const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const uid = p => p+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
-const now = () => new Date().toISOString();
-const fmtDate = iso => { if(!iso) return ''; const d = new Date(iso); return d.toLocaleDateString('fr-FR')+' à '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate = iso => { if(!iso) return ''; const d = new Date(iso);
+  return d.toLocaleDateString('fr-FR')+' à '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); };
 const fmtDateShort = iso => { if(!iso) return ''; return new Date(iso).toLocaleDateString('fr-FR'); };
 const fmtNum = n => n==null || n==='' ? '' : Number(n).toLocaleString('fr-FR');
-const daysAgo = n => { const d = new Date(); d.setDate(d.getDate()-n); return d; };
-const sameDay = (a,b) => a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
-const debounce = (fn,ms=300) => { let t; return (...a)=>{clearTimeout(t); t=setTimeout(()=>fn(...a),ms);}; };
+const initials = u => u ? ((u.name||u.email||'?')[0]||'').toUpperCase() : '?';
+const fullName = u => u ? (u.name || u.email || 'Utilisateur') : 'Utilisateur';
+const catLabel = c => CAT_LABELS[c] || c || '';
 
-function hashPassword(pwd, salt){
-  salt = salt || uid('s');
-  const input = salt + ':' + pwd;
-  let h = 0;
-  for(let i=0;i<input.length;i++){ h = ((h<<5)-h) + input.charCodeAt(i); h = h & h; }
-  return salt+'$'+(h>>>0).toString(16);
+function toast(msg, type='info'){
+  const t = document.createElement('div');
+  t.className = 'toast '+type;
+  t.textContent = msg;
+  $('#toast-root').appendChild(t);
+  setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 3500);
 }
-function verifyPassword(pwd, stored){
-  if(!stored || !stored.includes('$')) return false;
-  return hashPassword(pwd, stored.split('$')[0]) === stored;
-}
-function passwordScore(p){
-  let s=0;
-  if(p.length>=8) s++;
-  if(p.length>=12) s++;
-  if(/[A-Z]/.test(p) && /[a-z]/.test(p)) s++;
-  if(/[0-9]/.test(p) && /[^A-Za-z0-9]/.test(p)) s++;
-  return Math.min(s,4);
-}
+
 function passwordErrors(p){
-  const e=[];
-  if(p.length<8) e.push('8 caractères minimum');
+  const e = [];
+  if(p.length < 8) e.push('8 caractères minimum');
   if(!/[A-Z]/.test(p)) e.push('une majuscule');
   if(!/[a-z]/.test(p)) e.push('une minuscule');
   if(!/[0-9]/.test(p)) e.push('un chiffre');
   if(!/[^A-Za-z0-9]/.test(p)) e.push('un caractère spécial');
   return e;
 }
-const emailValide = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 
-let DB = {};
-function defaultDB(){
-  return {
-    users:[{ id:'u_admin', role:'admin', prenom:'Mon Job', nom:'Administrateur',
-      email:'admin@monjob.ci', phone:'+225 00 00 00 00', ville:'Abidjan',
-      metier:'', bio:'', password:hashPassword('Admin@2026'),
-      statut:'actif', photo:'', cni:'',
-      kyc:{ email:true, phone:true, cni:true }, twoFA:false,
-      prefNotif:{ email:true, push:true, sms:false, marketing:false },
-      onboardingDone:true, theme:'light', lang:'fr',
-      createdAt:now(), lastLogin:null, loginAttempts:0, lockUntil:null }],
-    annonces:[], devis:[], messages:[], notifications:[], avis:[],
-    favoris:[], signalements:[], contrats:[], litiges:[], tickets:[],
-    auditLog:[], emails:[],
-    session:null, theme:'light', lang:'fr'
-  };
+/* =========================================================================
+   ROUTER
+   ========================================================================= */
+function navigate(path){
+  ROUTE = path.split('/');
+  location.hash = '#/'+path;
 }
-function loadDB(){
-  try{
-    const raw = localStorage.getItem(CONFIG.dbKey);
-    DB = raw ? JSON.parse(raw) : defaultDB();
-    if(!DB.users || !DB.users.length) DB = defaultDB();
-  } catch(e){ DB = defaultDB(); }
-}
-function saveDB(){ try{ localStorage.setItem(CONFIG.dbKey, JSON.stringify(DB)); } catch(e){ toast('Stockage saturé.','error'); } }
-function me(){ return DB.users.find(u=>u.id===DB.session) || null; }
-function userById(id){ return DB.users.find(u=>u.id===id) || null; }
-function fullName(u){ return u ? (u.prenom+' '+u.nom).trim() : 'Utilisateur'; }
-function initials(u){ return u ? ((u.prenom||'?')[0]+(u.nom||'')[0]||'').toUpperCase() : '?'; }
+window.addEventListener('hashchange', () => {
+  ROUTE = location.hash.replace(/^#\/?/, '').split('/');
+  if(ROUTE[0]==='') ROUTE = ['dashboard'];
+  render();
+});
 
-function audit(action, details){
-  const u = me();
-  DB.auditLog.push({ id:uid('l'), userId:u?u.id:null, action, details, date:now() });
-  if(DB.auditLog.length > 1000) DB.auditLog = DB.auditLog.slice(-1000);
-}
-function sendEmail(to, subject, body, type='info'){
-  DB.emails.push({ id:uid('e'), to, subject, body, type, date:now() });
-  if(DB.emails.length > 300) DB.emails = DB.emails.slice(-300);
-}
-function notify(userId, texte, link=null){
-  DB.notifications.push({ id:uid('n'), userId, texte, link, lu:false, date:now() });
-  if(DB.notifications.length > 300) DB.notifications = DB.notifications.slice(-300);
-}
-function unreadCount(userId){ return DB.notifications.filter(n=>n.userId===userId && !n.lu).length; }
-
-const icon = (name, size=18) => {
-  const s = `width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"`;
-  const p = {
-    bell:`<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>`,
-    search:`<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>`,
-    user:`<circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>`,
-    logout:`<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>`,
-    plus:`<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>`,
-    check:`<polyline points="20 6 9 17 4 12"/>`,
-    x:`<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>`,
-    trash:`<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>`,
-    edit:`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,
-    mail:`<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>`,
-    clock:`<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>`,
-    mapPin:`<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>`,
-    file:`<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>`,
-    eye:`<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`,
-    message:`<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
-    heart:`<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>`,
-    heartFill:`<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="currentColor"/>`,
-    shield:`<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
-    shieldCheck:`<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10" stroke="currentColor" stroke-width="2" fill="none"/>`,
-    chart:`<line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/>`,
-    download:`<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>`,
-    warning:`<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>`,
-    info:`<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>`,
-    star:`<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`,
-    starFill:`<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="currentColor"/>`,
-    chevronDown:`<polyline points="6 9 12 15 18 9"/>`,
-    chevronLeft:`<polyline points="15 18 9 12 15 6"/>`,
-    chevronRight:`<polyline points="9 18 15 12 9 6"/>`,
-    arrowLeft:`<line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>`,
-    home:`<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>`,
-    briefcase:`<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>`,
-    send:`<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>`,
-    settings:`<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>`,
-    flag:`<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>`,
-    sun:`<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`,
-    moon:`<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`,
-    globe:`<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
-    phone:`<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>`,
-    help:`<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>`,
-    scale:`<path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>`
-  };
-  return `<svg ${s}>${p[name]||''}</svg>`;
-};
-
-/* ============ ILLUSTRATIONS SVG (empty states) ============ */
-const illustrations = {
-  annonces:`<svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="30" y="30" width="140" height="100" rx="12" fill="#FFF3E0" stroke="#F77F00" stroke-width="2"/>
-    <rect x="45" y="45" width="60" height="6" rx="3" fill="#F77F00" opacity=".4"/>
-    <rect x="45" y="60" width="90" height="4" rx="2" fill="#F77F00" opacity=".25"/>
-    <rect x="45" y="72" width="80" height="4" rx="2" fill="#F77F00" opacity=".25"/>
-    <rect x="45" y="84" width="70" height="4" rx="2" fill="#F77F00" opacity=".25"/>
-    <circle cx="155" cy="55" r="12" fill="#009E60" opacity=".2"/>
-    <path d="M150 55l4 4 7-7" stroke="#009E60" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="100" cy="130" r="3" fill="#F77F00" opacity=".5"/>
-    <circle cx="80" cy="135" r="2" fill="#009E60" opacity=".5"/>
-    <circle cx="120" cy="137" r="2.5" fill="#F77F00" opacity=".3"/>
-  </svg>`,
-  messages:`<svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="25" y="30" width="110" height="60" rx="12" fill="#E6F6EE" stroke="#009E60" stroke-width="2"/>
-    <path d="M35 90l10 15v-15" fill="#E6F6EE" stroke="#009E60" stroke-width="2" stroke-linejoin="round"/>
-    <rect x="40" y="45" width="60" height="4" rx="2" fill="#009E60" opacity=".4"/>
-    <rect x="40" y="55" width="80" height="4" rx="2" fill="#009E60" opacity=".3"/>
-    <rect x="40" y="65" width="50" height="4" rx="2" fill="#009E60" opacity=".3"/>
-    <rect x="65" y="75" width="110" height="55" rx="12" fill="#FFF3E0" stroke="#F77F00" stroke-width="2"/>
-    <path d="M165 130l-10 15v-15" fill="#FFF3E0" stroke="#F77F00" stroke-width="2" stroke-linejoin="round"/>
-    <rect x="78" y="88" width="70" height="4" rx="2" fill="#F77F00" opacity=".4"/>
-    <rect x="78" y="98" width="60" height="4" rx="2" fill="#F77F00" opacity=".3"/>
-    <rect x="78" y="108" width="80" height="4" rx="2" fill="#F77F00" opacity=".3"/>
-  </svg>`,
-  favoris:`<svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M100 60c-15-20-50-15-50 15 0 25 30 45 50 60 20-15 50-35 50-60 0-30-35-35-50-15z" 
-      fill="#FEF2F2" stroke="#DC2626" stroke-width="2.5" stroke-linejoin="round"/>
-    <circle cx="60" cy="40" r="8" fill="#F77F00" opacity=".3"/>
-    <circle cx="145" cy="35" r="6" fill="#009E60" opacity=".3"/>
-    <circle cx="155" cy="125" r="10" fill="#F77F00" opacity=".2"/>
-    <circle cx="50" cy="130" r="5" fill="#009E60" opacity=".25"/>
-  </svg>`,
-  contrats:`<svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M50 20h70l30 30v90a10 10 0 01-10 10H50a10 10 0 01-10-10V30a10 10 0 0110-10z" 
-      fill="#F0F9FF" stroke="#0EA5E9" stroke-width="2"/>
-    <path d="M120 20v30h30" stroke="#0EA5E9" stroke-width="2"/>
-    <rect x="55" y="60" width="70" height="4" rx="2" fill="#0EA5E9" opacity=".3"/>
-    <rect x="55" y="72" width="80" height="4" rx="2" fill="#0EA5E9" opacity=".25"/>
-    <rect x="55" y="84" width="60" height="4" rx="2" fill="#0EA5E9" opacity=".25"/>
-    <rect x="55" y="96" width="75" height="4" rx="2" fill="#0EA5E9" opacity=".25"/>
-    <path d="M80 120c8-15 25-15 30 0" stroke="#F77F00" stroke-width="2" fill="none" stroke-dasharray="4 3"/>
-    <path d="M150 135c-8 4-16-2-16-10s8-14 16-10 8 16 0 20z" fill="#009E60" opacity=".2"/>
-  </svg>`,
-  litiges:`<svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="100" y1="30" x2="100" y2="140" stroke="#D97706" stroke-width="3" stroke-linecap="round"/>
-    <line x1="60" y1="45" x2="140" y2="45" stroke="#D97706" stroke-width="3" stroke-linecap="round"/>
-    <circle cx="60" cy="45" r="5" fill="#D97706"/>
-    <circle cx="140" cy="45" r="5" fill="#D97706"/>
-    <path d="M40 45l20 50h-40z" fill="#FFFBEB" stroke="#D97706" stroke-width="2" stroke-linejoin="round"/>
-    <path d="M120 45l20 50h-40z" fill="#FFFBEB" stroke="#D97706" stroke-width="2" stroke-linejoin="round"/>
-    <rect x="75" y="130" width="50" height="8" rx="3" fill="#D97706" opacity=".3"/>
-  </svg>`,
-  notifications:`<svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M60 60c0-22 18-40 40-40s40 18 40 40c0 47 20 60 20 60H40s20-13 20-60z" 
-      fill="#FFF3E0" stroke="#F77F00" stroke-width="2.5" stroke-linejoin="round"/>
-    <circle cx="100" cy="140" r="8" fill="#F77F00" opacity=".3"/>
-    <circle cx="150" cy="50" r="10" fill="#009E60" opacity=".4"/>
-    <circle cx="55" cy="45" r="6" fill="#F77F00" opacity=".4"/>
-    <path d="M95 55c0-3 2-5 5-5s5 2 5 5-3 5-3 8" stroke="#F77F00" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-    <circle cx="102" cy="70" r="1.5" fill="#F77F00"/>
-  </svg>`,
-  users:`<svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="80" cy="55" r="22" fill="#FFF3E0" stroke="#F77F00" stroke-width="2.5"/>
-    <path d="M40 130c0-22 18-40 40-40s40 18 40 40" stroke="#F77F00" stroke-width="2.5" stroke-linecap="round" fill="#FFF3E0"/>
-    <circle cx="130" cy="65" r="16" fill="#E6F6EE" stroke="#009E60" stroke-width="2.5"/>
-    <path d="M100 130c0-16 13-30 30-30s30 14 30 30" stroke="#009E60" stroke-width="2.5" stroke-linecap="round" fill="#E6F6EE"/>
-  </svg>`,
-  search:`<svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="85" cy="75" r="40" fill="#F0F9FF" stroke="#0EA5E9" stroke-width="3"/>
-    <line x1="115" y1="105" x2="155" y2="145" stroke="#0EA5E9" stroke-width="5" stroke-linecap="round"/>
-    <rect x="65" y="65" width="40" height="4" rx="2" fill="#0EA5E9" opacity=".4"/>
-    <rect x="65" y="75" width="30" height="4" rx="2" fill="#0EA5E9" opacity=".3"/>
-    <rect x="65" y="85" width="35" height="4" rx="2" fill="#0EA5E9" opacity=".3"/>
-    <circle cx="150" cy="50" r="8" fill="#F77F00" opacity=".3"/>
-    <circle cx="50" cy="130" r="6" fill="#009E60" opacity=".3"/>
-  </svg>`,
-  success:`<svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="100" cy="80" r="55" fill="#E6F6EE" stroke="#009E60" stroke-width="3"/>
-    <path d="M75 80l18 18 33-38" stroke="#009E60" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="45" cy="50" r="6" fill="#F77F00" opacity=".5"/>
-    <circle cx="160" cy="45" r="8" fill="#009E60" opacity=".3"/>
-    <circle cx="155" cy="130" r="5" fill="#F77F00" opacity=".4"/>
-    <circle cx="40" cy="130" r="4" fill="#009E60" opacity=".4"/>
-  </svg>`
-};
-
-function emptyState(illustration, title, text, actionHtml=''){
-  return `<div class="card"><div class="empty">
-    <div class="empty-illustration">${illustrations[illustration]||illustrations.annonces}</div>
-    <h4>${esc(title)}</h4>
-    <p>${esc(text)}</p>
-    ${actionHtml}
-  </div></div>`;
+/* =========================================================================
+   RENDER
+   ========================================================================= */
+function render(){
+  if(!USER) { renderAuth(); return; }
+  renderShell();
 }
 
-/* ============ HERO SVG ============ */
-const heroSvg = `<svg viewBox="0 0 400 320" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
-  <defs>
-    <linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#fff" stop-opacity=".9"/>
-      <stop offset="100%" stop-color="#fff" stop-opacity=".5"/>
-    </linearGradient>
-    <linearGradient id="hg2" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#009E60"/>
-      <stop offset="100%" stop-color="#008752"/>
-    </linearGradient>
-  </defs>
-  <!-- Card principale -->
-  <rect x="60" y="60" width="280" height="180" rx="16" fill="url(#hg1)" opacity=".9"/>
-  <rect x="80" y="85" width="80" height="10" rx="5" fill="#F77F00" opacity=".6"/>
-  <rect x="80" y="105" width="180" height="6" rx="3" fill="#F77F00" opacity=".35"/>
-  <rect x="80" y="118" width="150" height="6" rx="3" fill="#F77F00" opacity=".25"/>
-  <rect x="80" y="140" width="60" height="28" rx="8" fill="#009E60" opacity=".9"/>
-  <text x="110" y="159" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="11" font-weight="700">PUBLIER</text>
-  <!-- Avatar petit -->
-  <circle cx="290" cy="95" r="18" fill="#F77F00"/>
-  <text x="290" y="100" text-anchor="middle" fill="#fff" font-family="system-ui" font-size="14" font-weight="700">A</text>
-  <!-- Notification flottante -->
-  <g class="hero-float-1">
-    <rect x="220" y="180" width="140" height="50" rx="10" fill="#fff" opacity=".95"/>
-    <circle cx="245" cy="205" r="12" fill="#E6F6EE"/>
-    <path d="M240 205l3 3 6-6" stroke="#009E60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <rect x="265" y="198" width="80" height="6" rx="3" fill="#009E60" opacity=".5"/>
-    <rect x="265" y="210" width="60" height="5" rx="2.5" fill="#009E60" opacity=".3"/>
-  </g>
-  <!-- Étoile flottante -->
-  <g class="hero-float-2">
-    <circle cx="55" cy="200" r="22" fill="#fff" opacity=".95"/>
-    <path d="M55 188l4 8 9 1-6 6 2 9-9-5-9 5 2-9-6-6 9-1z" fill="#F77F00"/>
-  </g>
-  <!-- Bulle message -->
-  <g class="hero-float-3">
-    <rect x="100" y="250" width="90" height="35" rx="10" fill="url(#hg2)"/>
-    <rect x="115" y="262" width="60" height="5" rx="2.5" fill="#fff" opacity=".8"/>
-    <rect x="115" y="272" width="40" height="4" rx="2" fill="#fff" opacity=".5"/>
-    <path d="M108 285l-3 10 8-8" fill="#008752"/>
-  </g>
-  <style>
-    .hero-float-1{animation:float 4s ease-in-out infinite}
-    .hero-float-2{animation:float 5s ease-in-out infinite;animation-delay:-1s}
-    .hero-float-3{animation:float 6s ease-in-out infinite;animation-delay:-2s}
-  </style>
-</svg>`;
+/* ============ AUTH ============ */
+let AUTH_MODE = 'login';
 
-function toast(message, type='info'){
-  const icons = { info:'info', success:'check', error:'x', warn:'warning' };
-  const t = document.createElement('div');
-  t.className = 'toast '+type;
-  t.innerHTML = icon(icons[type]||'info',18) + '<span>'+esc(message)+'</span>' + `<button class="close">${icon('x',16)}</button>`;
-  $('#toast-root').appendChild(t);
-  const remove = () => { t.style.opacity='0'; t.style.transform='translateY(20px)'; setTimeout(()=>t.remove(),200); };
-  t.querySelector('.close').onclick = remove;
-  setTimeout(remove, 4000);
-}
-
-let modalOnClose = null;
-function openModal({title, content, size='', footer=null, onMount=null, onClose=null}){
-  closeModal();
-  $('#modal-root').innerHTML = `
-    <div class="modal-backdrop" data-backdrop>
-      <div class="modal ${size}" role="dialog">
-        <div class="modal-header"><h3>${esc(title)}</h3><button class="icon-btn" data-close>${icon('x',18)}</button></div>
-        <div class="modal-body">${content}</div>
-        ${footer ? `<div class="modal-footer">${footer}</div>` : ''}
+function renderAuth(){
+  $('#root').innerHTML = `
+    <div class="auth">
+      <div class="auth-card">
+        <div class="auth-brand"><h1>MON <em>JOB</em></h1><p>Mise en relation professionnelle</p></div>
+        <div class="auth-switch">
+          <button data-mode="login" class="${AUTH_MODE==='login'?'active':''}">Connexion</button>
+          <button data-mode="register" class="${AUTH_MODE==='register'?'active':''}">Inscription</button>
+        </div>
+        ${AUTH_MODE === 'login' ? loginForm() : registerForm()}
       </div>
     </div>`;
-  const backdrop = $('[data-backdrop]');
-  backdrop.addEventListener('click', e => { if(e.target === backdrop) closeModal(); });
-  $('[data-close]').onclick = closeModal;
-  document.addEventListener('keydown', escCloseModal);
-  modalOnClose = onClose;
-  if(onMount) onMount($('.modal'));
-}
-function closeModal(){ document.removeEventListener('keydown', escCloseModal); $('#modal-root').innerHTML = ''; if(modalOnClose){ try{modalOnClose();}catch(e){} modalOnClose = null; } }
-function escCloseModal(e){ if(e.key === 'Escape') closeModal(); }
-function confirmDialog({title, message, confirmLabel='Confirmer', cancelLabel='Annuler', danger=false}){
-  return new Promise(resolve => {
-    openModal({ title,
-      content:`<p style="font-size:14px;line-height:1.6;color:var(--ink-2)">${esc(message)}</p>`,
-      footer:`<button class="btn btn-ghost" data-cancel>${esc(cancelLabel)}</button><button class="btn ${danger?'btn-danger':'btn-primary'}" data-confirm>${esc(confirmLabel)}</button>`,
-      onMount: m => {
-        m.querySelector('[data-cancel]').onclick = () => { resolve(false); closeModal(); };
-        m.querySelector('[data-confirm]').onclick = () => { resolve(true); closeModal(); };
-      },
-      onClose: () => resolve(false) });
+  $$('.auth-switch button').forEach(b => b.onclick = () => {
+    AUTH_MODE = b.dataset.mode; renderAuth();
   });
+  if(AUTH_MODE === 'login') $('#formLogin').onsubmit = handleLogin;
+  else $('#formRegister').onsubmit = handleRegister;
 }
 
-/* Ripple effect on buttons */
-function attachRipple(){
-  $$('.btn').forEach(btn => {
-    if(btn._ripple) return;
-    btn._ripple = true;
-    btn.addEventListener('click', e => {
-      const rect = btn.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      const x = e.clientX - rect.left - size/2;
-      const y = e.clientY - rect.top - size/2;
-      const r = document.createElement('span');
-      r.className = 'ripple';
-      r.style.width = r.style.height = size + 'px';
-      r.style.left = x + 'px'; r.style.top = y + 'px';
-      btn.appendChild(r);
-      setTimeout(() => r.remove(), 600);
-    });
-  });
+function loginForm(){
+  return `
+    <form id="formLogin" novalidate>
+      <div class="field"><label>Email</label><input type="email" id="li_email" required autocomplete="email"></div>
+      <div class="field"><label>Mot de passe</label><input type="password" id="li_pass" required autocomplete="current-password"></div>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">Se connecter</button>
+    </form>
+    <p class="hint" style="text-align:center;margin-top:16px">
+      Démonstration admin : admin@monjob.ci / Admin@2026
+    </p>`;
 }
 
-/* Scroll reveal */
-function setupReveal(){
-  const els = $$('.card, .item, .stat, .chart-card');
-  if(!('IntersectionObserver' in window)) return;
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if(entry.isIntersecting){
-        entry.target.style.animation = `fadeInUp .5s ease ${i*0.05}s both`;
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  els.forEach(el => { if(!el.style.animation) observer.observe(el); });
+function registerForm(){
+  return `
+    <form id="formRegister" novalidate>
+      <div class="field"><label>Je m'inscris en tant que</label>
+        <select id="rg_role">
+          <option value="client">Client — je publie des annonces</option>
+          <option value="prestataire">Prestataire — je propose mes services</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Prénom</label><input type="text" id="rg_prenom" required></div>
+        <div class="field"><label>Nom</label><input type="text" id="rg_nom" required></div>
+      </div>
+      <div class="field"><label>Email</label><input type="email" id="rg_email" required></div>
+      <div class="field"><label>Téléphone</label><input type="tel" id="rg_phone" required></div>
+      <div class="field-row">
+        <div class="field"><label>Ville</label>
+          <select id="rg_ville">${VILLES.map(v=>`<option>${v}</option>`).join('')}</select></div>
+        <div class="field" id="metierWrap" style="display:none"><label>Métier</label>
+          <select id="rg_metier">${CATEGORIES.map(c=>`<option value="${c}">${catLabel(c)}</option>`).join('')}</select></div>
+      </div>
+      <div class="field"><label>Mot de passe</label><input type="password" id="rg_pass" required>
+        <p class="hint">8 caractères, majuscule, minuscule, chiffre, caractère spécial.</p></div>
+      <div class="field"><label>Confirmer</label><input type="password" id="rg_pass2" required></div>
+      <button type="submit" class="btn btn-green btn-block btn-lg">Créer mon compte</button>
+    </form>`;
 }
 
-/* Count-up animation */
-function animateCounters(){
-  $$('[data-count]').forEach(el => {
-    const target = Number(el.dataset.count);
-    if(isNaN(target)) return;
-    const duration = 800;
-    const start = performance.now();
-    const update = (t) => {
-      const elapsed = t - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(target * ease).toLocaleString('fr-FR');
-      if(progress < 1) requestAnimationFrame(update);
-    };
-    requestAnimationFrame(update);
-  });
+async function handleLogin(ev){
+  ev.preventDefault();
+  const email = $('#li_email').value.trim();
+  const password = $('#li_pass').value;
+  if(!email || !password){ toast('Champs requis','error'); return; }
+  const r = await api('auth.login', { email, password });
+  if(r.status !== 'ok'){ toast(r.message || 'Erreur', 'error'); return; }
+  SESSION.token = r.token;
+  USER = r.user;
+  toast('Bienvenue ' + fullName(USER), 'success');
+  navigate('dashboard');
+  render();
 }
 
-/* Parallax on hero */
-function setupParallax(){
-  const hero = $('.hero');
-  if(!hero) return;
-  window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    if(scrolled < 400){
-      hero.style.transform = `translateY(${scrolled * 0.15}px)`;
-    }
-  }, { passive: true });
+async function handleRegister(ev){
+  ev.preventDefault();
+  const role = $('#rg_role').value;
+  const prenom = $('#rg_prenom').value.trim();
+  const nom = $('#rg_nom').value.trim();
+  const email = $('#rg_email').value.trim();
+  const phone = $('#rg_phone').value.trim();
+  const ville = $('#rg_ville').value;
+  const metier = role === 'prestataire' ? $('#rg_metier').value : '';
+  const password = $('#rg_pass').value;
+  const password2 = $('#rg_pass2').value;
+
+  if(!prenom || !nom || !email || !phone){ toast('Champs requis','error'); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ toast('Email invalide','error'); return; }
+  const errs = passwordErrors(password);
+  if(errs.length){ toast('Mot de passe faible : ' + errs.join(', '), 'error'); return; }
+  if(password !== password2){ toast('Mots de passe différents', 'error'); return; }
+
+  const r = await api('user.register', { role, prenom, nom, email, phone, ville, metier, password });
+  if(r.status !== 'ok'){ toast(r.message || 'Erreur', 'error'); return; }
+  toast('Compte créé. En attente de validation administrateur.', 'success');
+  AUTH_MODE = 'login';
+  renderAuth();
 }
 
-let lastActivity = Date.now();
-function touchSession(){ lastActivity = Date.now(); }
-['click','keydown','scroll'].forEach(ev => document.addEventListener(ev, touchSession, {passive:true}));
-setInterval(() => { if(me() && Date.now()-lastActivity > CONFIG.sessionTimeoutMs) logout(true); }, 60000);
-function logout(silent=false){
-  DB.session = null; saveDB();
-  toast(silent ? 'Session expirée.' : 'Vous êtes déconnecté.', silent ? 'warn' : 'info');
-  location.hash = '#/login'; render();
+function logout(){
+  SESSION.token = null;
+  USER = null;
+  navigate('login');
+  renderAuth();
 }
 
-/* ==========================================================
-   COMMUNICATION AVEC N8N VIA NGROK
-   ========================================================== */
-async function callWorkflow(event, payload) {
-  // ⚠️ URL de votre tunnel ngrok actuel
-  const N8N_URL = 'https://deploy-showoff-engaging.ngrok-free.dev/webhook/monjob/events';
-  
-  try {
-    const response = await fetch(N8N_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-monjob-token': 'MONJOB_WEBHOOK_SECRET_2026',
-        'ngrok-skip-browser-warning': 'true'
-      },
-      body: JSON.stringify({ event, payload })
-    });
-    console.log(`✅ [${event}] envoyé à n8n`);
-  } catch (error) {
-    console.error(`❌ [${event}] Erreur n8n :`, error);
-  }
-}
-
-function handleLogin(email, password, remember){
-  email = email.trim().toLowerCase();
-  const u = DB.users.find(x => x.email.toLowerCase() === email);
-  if(!u){ toast('Identifiants incorrects.','error'); return false; }
-  if(u.lockUntil && new Date(u.lockUntil) > new Date()){
-    toast('Compte verrouillé. Réessayez plus tard.','error'); return false;
-  }
-  if(!verifyPassword(password, u.password)){
-    u.loginAttempts = (u.loginAttempts||0)+1;
-    if(u.loginAttempts >= CONFIG.maxLoginAttempts){
-      u.lockUntil = new Date(Date.now()+CONFIG.lockDurationMs).toISOString();
-      u.loginAttempts = 0;
-      toast('Trop de tentatives. Compte verrouillé 5 minutes.','error');
-    } else toast('Identifiants incorrects.','error');
-    saveDB(); return false;
-  }
-  if(u.statut === 'refuse'){ toast('Compte refusé.','error'); return false; }
-  if(u.statut === 'suspendu'){ toast('Compte suspendu.','error'); return false; }
-  u.loginAttempts = 0; u.lockUntil = null; u.lastLogin = now();
-  DB.session = u.id; saveDB(); audit('connexion', u.email);
-  lastActivity = Date.now();
-  toast('Bienvenue '+u.prenom+'.','success');
-  return true;
-}
-
-function handleRegister(data){
-  if(DB.users.some(u => u.email.toLowerCase() === data.email.toLowerCase())){
-    toast('Cet email est déjà utilisé.','error'); return false;
-  }
-  const perr = passwordErrors(data.password);
-  if(perr.length){ toast('Mot de passe trop faible : '+perr.join(', ')+'.','error'); return false; }
-  const u = {
-    id:uid('u'), role:data.role, prenom:data.prenom, nom:data.nom,
-    email:data.email.toLowerCase(), phone:data.phone, ville:data.ville,
-    metier:data.role==='prestataire'?data.metier:'',
-    bio:'', password:hashPassword(data.password), statut:'en_attente',
-    photo:'', cni:'', kyc:{ email:true, phone:false, cni:false }, twoFA:false,
-    prefNotif:{ email:true, push:true, sms:false, marketing:false },
-    onboardingDone:false, createdAt:now(), lastLogin:null, loginAttempts:0, lockUntil:null
-  };
-  DB.users.push(u);
-  DB.users.filter(x => x.role==='admin').forEach(a =>
-    notify(a.id, 'Nouvelle inscription : '+fullName(u)+' ('+data.role+').', '#/admin/inscriptions'));
-  sendEmail(u.email, 'Bienvenue sur Mon Job', 'Votre compte a été créé. Il sera activé par un administrateur.', 'inscription');
-  audit('inscription', u.email+' ('+u.role+')');
-  DB.session = u.id; saveDB();
-  toast('Compte créé. En attente de validation.','success');
-  
-  // ⚠️ APPEL N8N À L'INSCRIPTION
-  callWorkflow('user.register', {
-    prenom: u.prenom, nom: u.nom, email: u.email,
-    password: data.password, phone: u.phone, ville: u.ville,
-    role: u.role, metier: u.metier
-  });
-
-  return true;
-}
-
-function handleForgot(email){
-  email = email.trim().toLowerCase();
-  const u = DB.users.find(x => x.email.toLowerCase() === email);
-  if(!u){ toast('Si cet email existe, un lien a été envoyé.','info'); return true; }
-  const token = uid('t');
-  u.resetToken = token;
-  u.resetExpires = new Date(Date.now()+60*60*1000).toISOString();
-  saveDB();
-  sendEmail(email, 'Réinitialisation de mot de passe', 'Lien : #/reset/'+token, 'reset');
-  toast('Email envoyé (voir Journal admin).','success');
-  return true;
-}
-function handleReset(token, newPassword){
-  const u = DB.users.find(x => x.resetToken === token);
-  if(!u){ toast('Lien invalide.','error'); return false; }
-  if(new Date(u.resetExpires) < new Date()){ toast('Lien expiré.','error'); return false; }
-  const errs = passwordErrors(newPassword);
-  if(errs.length){ toast('Mot de passe trop faible.','error'); return false; }
-  u.password = hashPassword(newPassword);
-  u.resetToken = null; u.resetExpires = null;
-  saveDB(); toast('Mot de passe réinitialisé.','success');
-  return true;
-}
-
-function ratingOf(userId){
-  const list = DB.avis.filter(a => a.toId === userId);
-  if(!list.length) return { avg:0, count:0 };
-  return { avg:list.reduce((s,a)=>s+a.note,0)/list.length, count:list.length };
-}
-function starsHtml(note, size=14){
-  let h = '<span class="stars">';
-  for(let i=1;i<=5;i++){
-    h += `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="${i<=Math.round(note)?'':'off'}" ${i<=Math.round(note)?'style="fill:currentColor"':''}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
-  }
-  return h+'</span>';
-}
-function ratingHtml(userId){
-  const r = ratingOf(userId);
-  if(!r.count) return '<span class="muted">Pas encore noté</span>';
-  return starsHtml(r.avg)+` <span class="muted">${r.avg.toFixed(1)} (${r.count})</span>`;
-}
-function computeBadges(u){
-  const badges = [];
-  if(u.kyc && u.kyc.cni) badges.push('verified');
-  const r = ratingOf(u.id);
-  if(u.role === 'prestataire' && r.count >= 3 && r.avg >= 4.5) badges.push('top');
-  if((new Date()-new Date(u.createdAt)) < 7*24*3600*1000) badges.push('new');
-  return badges;
-}
-function badgesHtml(u){
-  if(!u) return '';
-  const b = computeBadges(u);
-  const map = { verified:['trust-verified','Vérifié'], top:['trust-top','Top prestataire'], new:['trust-new','Nouveau'] };
-  return b.map(x => map[x] ? `<span class="trust-badge ${map[x][0]}">${map[x][1]}</span>` : '').join(' ');
-}
-function annonceStatutBadge(s){
-  const map = { active:['badge-green','En ligne'], attribuee:['badge-orange','Attribuée'], terminee:['badge-grey','Terminée'], masquee:['badge-red','Masquée'], cloturee:['badge-grey','Clôturée'] };
-  const [c,l] = map[s]||['badge-grey',s];
-  return `<span class="badge ${c}">${l}</span>`;
-}
-function devisStatutBadge(s){
-  const map = { en_attente:['badge-amber','En attente'], accepte:['badge-green','Accepté'], refuse:['badge-red','Refusé'], retire:['badge-grey','Retiré'] };
-  const [c,l] = map[s]||['badge-grey',s];
-  return `<span class="badge ${c}">${l}</span>`;
-}
-function isFavori(userId, annonceId){ return DB.favoris.some(f => f.userId===userId && f.annonceId===annonceId); }
-function toggleFavori(userId, annonceId){
-  const i = DB.favoris.findIndex(f => f.userId===userId && f.annonceId===annonceId);
-  if(i>=0){ DB.favoris.splice(i,1); return false; }
-  DB.favoris.push({ userId, annonceId, date:now() }); return true;
-}
-function devisOfAnnonce(id){ return DB.devis.filter(d => d.annonceId===id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)); }
-
-function getRoute(){ return location.hash.replace(/^#\/?/, '').split('/'); }
-function navigate(p){ location.hash = '#/'+p; }
-
-const state = {
-  annoncesFiltre:{ cat:'', ville:'', q:'', tri:'recent', page:1 },
-  usersFiltre:{ q:'', role:'', statut:'', page:1 },
-  adminAnnoncesFiltre:{ q:'', statut:'', page:1 }
-};
-
-function render(){
-  document.documentElement.dataset.theme = DB.theme || 'light';
-  const route = getRoute();
-  const u = me();
-  if(!u){
-    if(route[0]==='register'){ renderAuth('register'); return; }
-    if(route[0]==='forgot'){ renderAuth('forgot'); return; }
-    if(route[0]==='reset' && route[1]){ renderAuth('reset', route[1]); return; }
-    renderAuth('login'); return;
-  }
-  renderShell(u, route);
-  setTimeout(() => { attachRipple(); animateCounters(); }, 50);
-}
-
-function renderShell(u, route){
-  const tabs = tabsFor(u);
-  const pending = u.role !== 'admin' && u.statut !== 'actif';
-  const nUnread = unreadCount(u.id);
-
+/* ============ SHELL ============ */
+function renderShell(){
+  const tabs = tabsFor(USER);
   $('#root').innerHTML = `
     <header class="topbar">
       <div class="topbar-inner">
-        <div class="logo" data-nav="dashboard"><span class="logo-bar"></span><b>MON</b>&nbsp;<em>JOB</em><span class="logo-bar g"></span></div>
-        <div class="topbar-search"><span class="icon">${icon('search',18)}</span>
-          <input type="search" id="globalSearch" placeholder="Rechercher..." value="${esc(state.annoncesFiltre.q||'')}"></div>
+        <div class="logo" id="logoBtn"><b>MON</b>&nbsp;<em>JOB</em></div>
         <div class="topbar-actions">
-          <button class="icon-btn" id="btnTheme" title="Thème">${icon(DB.theme==='dark'?'sun':'moon',20)}</button>
-          <button class="icon-btn" id="btnLang" title="Langue">${icon('globe',20)}</button>
-          <button class="icon-btn" id="btnNotif" title="Notifications">${icon('bell',20)}${nUnread ? '<span class="dot"></span>' : ''}</button>
-          <button class="icon-btn" id="btnUserMenu">${u.photo ? `<img src="${u.photo}" class="avatar" alt="">` : `<span class="avatar">${esc(initials(u))}</span>`}</button>
+          ${USER.photo ? `<img src="${USER.photo}" class="avatar" alt="">` : `<div class="avatar">${esc(initials(USER))}</div>`}
+          <button class="btn btn-ghost btn-sm" id="btnLogout">Déconnexion</button>
         </div>
       </div>
     </header>
     <nav class="tabs"><div class="tabs-inner">
-      ${tabs.map(([id,label]) => {
-        const active = route[0]===id || (route[0]==='annonce' && id==='mes-annonces');
-        const badge = id==='notifications' && nUnread ? `<span class="count">${nUnread}</span>` : '';
-        return `<button class="tab ${active?'active':''}" data-nav="${id}">${label}${badge}</button>`;
-      }).join('')}
+      ${tabs.map(([id,label]) => `
+        <button class="tab ${ROUTE[0]===id?'active':''}" data-tab="${id}">${label}</button>`).join('')}
     </div></nav>
     <main class="wrap" id="main"></main>
     <footer class="foot">Mon Job — Plateforme professionnelle de mise en relation</footer>`;
 
-  $$('[data-nav]').forEach(el => { if(!el.onclick) el.onclick = () => navigate(el.dataset.nav); });
-  $('#btnNotif').onclick = showNotificationsPanel;
-  $('#btnUserMenu').onclick = showUserMenu;
-  $('#btnTheme').onclick = () => { DB.theme = DB.theme==='dark'?'light':'dark'; saveDB(); render(); };
-  $('#btnLang').onclick = () => { DB.lang = DB.lang==='fr'?'en':'fr'; saveDB(); toast(DB.lang==='fr'?'Français':'English','success'); render(); };
-  const search = $('#globalSearch');
-  if(search){
-    search.oninput = debounce(() => {
-      state.annoncesFiltre.q = search.value;
-      state.annoncesFiltre.page = 1;
-      const r = getRoute()[0];
-      if(['annonces-disponibles','mes-annonces'].includes(r)) renderPage(u, getRoute());
-      else navigate('annonces-disponibles');
-    }, 350);
-  }
-  if(pending){
-    $('#main').innerHTML = `<div class="banner banner-warn">${icon('warning',20)}<div>Votre compte est en attente de validation par un administrateur.</div></div>${renderProfilPage(u)}`;
-    bindProfil(u);
-    setTimeout(attachRipple, 30);
+  $('#logoBtn').onclick = () => navigate('dashboard');
+  $('#btnLogout').onclick = logout;
+  $$('.tab').forEach(t => t.onclick = () => navigate(t.dataset.tab));
+
+  // Pending user
+  if(USER.monjob_role !== 'admin' && USER.statut !== 'actif'){
+    $('#main').innerHTML = `
+      <div class="banner banner-warn">
+        Votre compte est en attente de validation par un administrateur.
+      </div>
+      ${renderProfil()}`;
+    bindProfil();
     return;
   }
-  renderPage(u, route);
+
+  renderPage();
 }
 
 function tabsFor(u){
-  if(u.role === 'admin'){
-    return [['admin/dashboard','Tableau de bord'],['admin/inscriptions','Inscriptions'],['admin/users','Utilisateurs'],['admin/annonces','Annonces'],['admin/litiges','Litiges'],['admin/tickets','Tickets'],['admin/audit','Journal'],['admin/emails','Emails'],['profil','Profil']];
+  if(u.monjob_role === 'admin'){
+    return [['dashboard','Tableau de bord'],['admin/inscriptions','Inscriptions'],
+      ['admin/users','Utilisateurs'],['admin/annonces','Annonces'],['profil','Profil']];
   }
-  if(u.role === 'prestataire'){
-    return [['dashboard','Tableau de bord'],['annonces-disponibles','Annonces'],['mes-devis','Devis'],['messages','Messages'],['mes-avis','Avis'],['notifications','Notifs'],['profil','Profil']];
+  if(u.monjob_role === 'prestataire'){
+    return [['dashboard','Tableau de bord'],['annonces-disponibles','Annonces'],
+      ['messages','Messages'],['profil','Profil']];
   }
-  return [['dashboard','Tableau de bord'],['mes-annonces','Mes annonces'],['publier','Publier'],['messages','Messages'],['contrats','Contrats'],['notifications','Notifs'],['profil','Profil']];
+  return [['dashboard','Tableau de bord'],['mes-annonces','Mes annonces'],
+    ['publier','Publier'],['messages','Messages'],['profil','Profil']];
 }
 
-function renderPage(u, route){
+/* ============ PAGE ROUTER ============ */
+async function renderPage(){
   const main = $('#main');
-  const key = route[0]+(route[1]?'/'+route[1]:'');
+  const key = ROUTE[0] + (ROUTE[1] ? '/'+ROUTE[1] : '');
+
   const pages = {
-    'dashboard':()=>renderDashboard(u),
-    'publier':()=>renderPublier(u),
-    'mes-annonces':()=>renderMesAnnonces(u),
-    'annonces-disponibles':()=>renderAnnoncesDispo(u),
-    'annonce':()=>renderAnnonceDetail(u, route[1]),
-    'messages':()=>renderMessages(u, route[1], route[2]),
-    'notifications':()=>renderNotifications(u),
-    'profil':()=>renderProfilPage(u),
-    'favoris':()=>renderFavoris(u),
-    'mes-devis':()=>renderMesDevis(u),
-    'mes-avis':()=>renderMesAvis(u),
-    'contrats':()=>renderContrats(u),
-    'litiges':()=>renderLitiges(u),
-    'help':()=>renderHelp(u),
-    'settings':()=>renderSettings(u),
-    'trust':()=>renderTrust(u),
-    'admin/dashboard':()=>renderAdminDashboard(u),
-    'admin/inscriptions':()=>renderAdminInscriptions(u),
-    'admin/users':()=>renderAdminUsers(u),
-    'admin/annonces':()=>renderAdminAnnonces(u),
-    'admin/audit':()=>renderAdminAudit(u),
-    'admin/emails':()=>renderAdminEmails(u),
-    'admin/litiges':()=>renderAdminLitiges(u),
-    'admin/tickets':()=>renderAdminTickets(u)
+    'dashboard': renderDashboard,
+    'mes-annonces': () => renderAnnonces('mine'),
+    'annonces-disponibles': () => renderAnnonces('available'),
+    'publier': renderPublier,
+    'annonce': () => renderAnnonceDetail(ROUTE[1]),
+    'messages': () => renderMessages(ROUTE[1], ROUTE[2]),
+    'profil': async () => { main.innerHTML = renderProfil(); bindProfil(); },
+    'admin/inscriptions': renderAdminInscriptions,
+    'admin/users': renderAdminUsers,
+    'admin/annonces': () => renderAnnonces('all')
   };
-  main.innerHTML = `<div class="page-enter">${(pages[key]||(()=>renderDashboard(u)))()}</div>`;
-  bindPage(u, route);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(() => { attachRipple(); animateCounters(); setupReveal(); }, 50);
-}
 
-/* ============ AUTH ============ */
-function renderAuth(mode='login', token=null){
-  let body = '';
-  if(mode==='login'){
-    body = `
-      <form id="formLogin" novalidate>
-        <div class="field"><label>Adresse email</label><input type="email" id="li_email" required placeholder="vous@exemple.ci"></div>
-        <div class="field"><label>Mot de passe</label><input type="password" id="li_pass" required></div>
-        <div class="field" style="display:flex;justify-content:space-between;align-items:center">
-          <label style="display:flex;align-items:center;gap:8px;margin:0;cursor:pointer"><input type="checkbox" id="li_remember"> Se souvenir de moi</label>
-          <a href="#/forgot" style="font-size:13px">Mot de passe oublié ?</a>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block btn-lg">Se connecter</button>
-      </form>
-      <div class="sep"></div>
-      <p class="muted" style="text-align:center;font-size:12px">Démonstration : admin@monjob.ci / Admin@2026</p>`;
-  }
-  else if(mode==='register'){
-    body = `
-      <form id="formRegister" novalidate>
-        <div class="field"><label>Je m'inscris en tant que</label>
-          <select id="rg_role"><option value="client">Client — je publie des annonces</option><option value="prestataire">Prestataire — je propose mes services</option></select></div>
-        <div class="field-row"><div class="field"><label>Prénom</label><input type="text" id="rg_prenom" required></div>
-          <div class="field"><label>Nom</label><input type="text" id="rg_nom" required></div></div>
-        <div class="field"><label>Email</label><input type="email" id="rg_email" required></div>
-        <div class="field"><label>Téléphone</label><input type="tel" id="rg_phone" required></div>
-        <div class="field-row">
-          <div class="field"><label>Ville</label><select id="rg_ville">${CONFIG.villes.map(v=>`<option>${v}</option>`).join('')}</select></div>
-          <div class="field" id="metierWrap" style="display:none"><label>Métier</label>
-            <select id="rg_metier">${CONFIG.categories.map(c=>`<option>${c}</option>`).join('')}</select></div>
-        </div>
-        <div class="field"><label>Mot de passe</label><input type="password" id="rg_pass" required>
-          <div class="pwd-meter" id="pwdMeter"><i></i><i></i><i></i><i></i></div>
-          <p class="hint">8 caractères, majuscule, minuscule, chiffre, caractère spécial.</p></div>
-        <div class="field"><label>Confirmer</label><input type="password" id="rg_pass2" required></div>
-        <button type="submit" class="btn btn-green btn-block btn-lg">Créer mon compte</button>
-      </form>`;
-  }
-  else if(mode==='forgot'){
-    body = `<form id="formForgot" novalidate>
-      <p class="muted" style="margin-bottom:16px">Un lien de réinitialisation vous sera transmis.</p>
-      <div class="field"><label>Email</label><input type="email" id="fg_email" required></div>
-      <button type="submit" class="btn btn-primary btn-block">Envoyer</button>
-      <p style="text-align:center;margin-top:14px;font-size:13px"><a href="#/login">Retour</a></p>
-    </form>`;
-  }
-  else if(mode==='reset'){
-    body = `<form id="formReset" novalidate>
-      <div class="field"><label>Nouveau mot de passe</label><input type="password" id="rs_pass" required>
-        <div class="pwd-meter" id="pwdMeterReset"><i></i><i></i><i></i><i></i></div></div>
-      <div class="field"><label>Confirmer</label><input type="password" id="rs_pass2" required></div>
-      <button type="submit" class="btn btn-primary btn-block">Réinitialiser</button>
-    </form>`;
-  }
-  const sw = (mode==='login'||mode==='register') ? `
-    <div class="auth-switch">
-      <button data-mode="login" class="${mode==='login'?'active':''}">Connexion</button>
-      <button data-mode="register" class="${mode==='register'?'active':''}">Inscription</button>
-    </div>` : '';
-
-  $('#root').innerHTML = `
-    <section class="auth-screen">
-      <div class="auth-bg-blob b1"></div>
-      <div class="auth-bg-blob b2"></div>
-      <div class="auth-card">
-        <div class="flagline"><i></i><i></i><i></i></div>
-        <div class="auth-brand"><h1>MON <em>JOB</em></h1><p>Mise en relation professionnelle</p></div>
-        ${sw}${body}
-      </div>
-    </section>`;
-
-  $$('.auth-switch button').forEach(b => b.onclick = () => location.hash = '#/'+b.dataset.mode);
-
-  if(mode==='login'){
-    $('#formLogin').onsubmit = e => {
-      e.preventDefault();
-      if(handleLogin($('#li_email').value, $('#li_pass').value, $('#li_remember').checked)){
-        navigate('dashboard'); render();
-      }
-    };
-  }
-  else if(mode==='register'){
-    $('#rg_role').onchange = e => { $('#metierWrap').style.display = e.target.value==='prestataire'?'block':'none'; };
-    $('#rg_pass').oninput = () => { $('#pwdMeter').dataset.score = passwordScore($('#rg_pass').value); };
-    $('#formRegister').onsubmit = e => {
-      e.preventDefault();
-      if($('#rg_pass').value !== $('#rg_pass2').value){ toast('Les mots de passe ne correspondent pas.','error'); return; }
-      if(handleRegister({
-        role:$('#rg_role').value, prenom:$('#rg_prenom').value.trim(),
-        nom:$('#rg_nom').value.trim(), email:$('#rg_email').value.trim(),
-        phone:$('#rg_phone').value.trim(), ville:$('#rg_ville').value,
-        metier:$('#rg_metier').value, password:$('#rg_pass').value
-      })){ navigate('profil'); render(); }
-    };
-  }
-  else if(mode==='forgot'){
-    $('#formForgot').onsubmit = e => { e.preventDefault(); if(handleForgot($('#fg_email').value)) location.hash = '#/login'; };
-  }
-  else if(mode==='reset' && token){
-    $('#rs_pass').oninput = () => { $('#pwdMeterReset').dataset.score = passwordScore($('#rs_pass').value); };
-    $('#formReset').onsubmit = e => {
-      e.preventDefault();
-      if($('#rs_pass').value !== $('#rs_pass2').value){ toast('Les mots de passe ne correspondent pas.','error'); return; }
-      if(handleReset(token, $('#rs_pass').value)) location.hash = '#/login';
-    };
-  }
-  setTimeout(attachRipple, 30);
+  const fn = pages[key];
+  if(!fn){ main.innerHTML = `<div class="card"><div class="empty"><h4>Page introuvable</h4></div></div>`; return; }
+  await fn();
 }
 
 /* ============ DASHBOARD ============ */
-function renderDashboard(u){
-  return u.role==='client' ? renderDashboardClient(u) : renderDashboardPrestataire(u);
-}
-function renderDashboardClient(u){
-  const mesAnn = DB.annonces.filter(a => a.clientId === u.id);
-  const devisRecus = DB.devis.filter(d => mesAnn.some(a=>a.id===d.annonceId) && d.statut==='en_attente');
-  const mesMsg = DB.messages.filter(m => m.fromId===u.id || m.toId===u.id).length;
-  const attribuees = mesAnn.filter(a => a.statut==='attribuee'||a.statut==='terminee').length;
-  const recentes = mesAnn.slice().sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,3);
+async function renderDashboard(){
+  const main = $('#main');
+  main.innerHTML = `<div class="card">Chargement...</div>`;
+  const r = await api('dashboard');
+  if(r.status !== 'ok'){ main.innerHTML = `<div class="card"><div class="empty"><h4>Erreur</h4><p>${esc(r.message)}</p></div></div>`; return; }
+  const annonces = r.annonces || [];
 
-  return `
-    <div class="hero" style="padding:40px 30px;margin-bottom:24px">
-      <div class="hero-content">
-        <div class="hero-text">
-          <h2>Bonjour ${esc(u.prenom)}</h2>
-          <p>Publiez une annonce, recevez des devis de prestataires qualifiés et suivez vos missions.</p>
-          <div class="hero-cta">
-            <button class="btn" data-nav="publier">${icon('plus',18)} Publier une annonce</button>
-            <button class="btn outline" data-nav="mes-annonces">Mes annonces</button>
-          </div>
-        </div>
-        <div class="hero-illustration">${heroSvg}</div>
+  if(USER.monjob_role === 'admin'){
+    main.innerHTML = `
+      <h2 class="page-title">Administration</h2>
+      <p class="page-sub">Bonjour ${esc(fullName(USER))}.</p>
+      <div class="grid grid-4">
+        <div class="stat"><div class="num">${annonces.length}</div><div class="lbl">Annonces actives</div></div>
+        <div class="stat"><div class="num">${USER.note_moyenne || 0}</div><div class="lbl">Note</div></div>
       </div>
-    </div>
-    <div class="grid grid-4" style="margin-bottom:24px">
-      <div class="stat stat-orange"><div class="num" data-count="${mesAnn.length}">0</div><div class="lbl">Annonces publiées</div></div>
-      <div class="stat stat-green"><div class="num" data-count="${devisRecus.length}">0</div><div class="lbl">Devis en attente</div></div>
-      <div class="stat"><div class="num" data-count="${attribuees}">0</div><div class="lbl">Missions attribuées</div></div>
-      <div class="stat"><div class="num" data-count="${mesMsg}">0</div><div class="lbl">Messages</div></div>
+      <div class="card" style="margin-top:20px">
+        <h3>Accès rapide</h3>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="navigate('admin/inscriptions')">Voir les inscriptions</button>
+          <button class="btn btn-ghost btn-sm" onclick="navigate('admin/users')">Tous les utilisateurs</button>
+          <button class="btn btn-ghost btn-sm" onclick="navigate('admin/annonces')">Toutes les annonces</button>
+        </div>
+      </div>`;
+    return;
+  }
+
+  main.innerHTML = `
+    <h2 class="page-title">Bonjour ${esc(fullName(USER))}</h2>
+    <p class="page-sub">${esc(USER.monjob_role === 'prestataire' ? 'Vos opportunités' : 'Vos annonces et devis')}</p>
+    <div class="grid grid-4" style="margin-bottom:20px">
+      <div class="stat"><div class="num">${annonces.length}</div>
+        <div class="lbl">${USER.monjob_role === 'prestataire' ? 'Annonces disponibles' : 'Annonces publiées'}</div></div>
+      <div class="stat"><div class="num">${USER.note_moyenne || 0}</div><div class="lbl">Note moyenne</div></div>
+      <div class="stat"><div class="num">${USER.nombre_avis || 0}</div><div class="lbl">Avis reçus</div></div>
+      <div class="stat"><div class="num">${esc(USER.statut === 'actif' ? 'Actif' : USER.statut || '')}</div><div class="lbl">Statut</div></div>
     </div>
     <div class="card">
-      <div class="flex-between mb-3"><h3 style="margin:0">Vos annonces récentes</h3>
-        <button class="btn btn-primary btn-sm" data-nav="publier">${icon('plus',16)} Publier</button></div>
-      ${recentes.length ? recentes.map(a => annonceItem(a, u, false)).join('')
-        : emptyState('annonces','Aucune annonce publiée','Publiez votre première annonce pour recevoir des devis de prestataires qualifiés.',
-          `<button class="btn btn-primary" data-nav="publier">${icon('plus',16)} Commencer</button>`)}
-    </div>`;
-}
-function renderDashboardPrestataire(u){
-  const dispo = DB.annonces.filter(a => a.statut==='active' && a.categorie===u.metier);
-  const mesDevis = DB.devis.filter(d => d.prestataireId===u.id);
-  const acceptes = mesDevis.filter(d => d.statut==='accepte').length;
-  const note = ratingOf(u.id);
-  return `
-    <div class="hero" style="padding:40px 30px;margin-bottom:24px">
-      <div class="hero-content">
-        <div class="hero-text">
-          <h2>Bonjour ${esc(u.prenom)}</h2>
-          <p>Découvrez les annonces correspondant à votre métier et envoyez vos devis.</p>
-          <div class="hero-cta">
-            <button class="btn" data-nav="annonces-disponibles">${icon('search',18)} Voir les annonces</button>
-            <button class="btn outline" data-nav="mes-devis">Mes devis</button>
-          </div>
-        </div>
-        <div class="hero-illustration">${heroSvg}</div>
+      <div class="flex-between" style="margin-bottom:14px">
+        <h3 style="margin:0">${USER.monjob_role === 'prestataire' ? 'Dernières annonces' : 'Vos dernières annonces'}</h3>
+        ${USER.monjob_role === 'client' ? `<button class="btn btn-primary btn-sm" onclick="navigate('publier')">Publier</button>` : ''}
       </div>
-    </div>
-    <div class="grid grid-4" style="margin-bottom:24px">
-      <div class="stat stat-orange"><div class="num" data-count="${dispo.length}">0</div><div class="lbl">Annonces pour vous</div></div>
-      <div class="stat stat-green"><div class="num" data-count="${mesDevis.length}">0</div><div class="lbl">Devis envoyés</div></div>
-      <div class="stat"><div class="num" data-count="${acceptes}">0</div><div class="lbl">Devis acceptés</div></div>
-      <div class="stat stat-amber"><div class="num">${note.count ? note.avg.toFixed(1) : '—'}</div><div class="lbl">Note (${note.count} avis)</div></div>
-    </div>
-    <div class="card">
-      <div class="flex-between mb-3"><h3 style="margin:0">Annonces dans votre métier</h3>
-        <button class="btn btn-green btn-sm" data-nav="annonces-disponibles">Voir tout</button></div>
-      ${dispo.length ? dispo.slice(-3).reverse().map(a => annonceItem(a, u, false)).join('')
-        : emptyState('annonces','Aucune annonce pour '+(u.metier||'votre métier'),'Consultez toutes les annonces disponibles pour trouver d\'autres opportunités.',
-          `<button class="btn btn-green" data-nav="annonces-disponibles">${icon('search',16)} Voir les annonces</button>`)}
+      ${annonces.length ? annonces.slice(0,5).map(a => annonceItem(a)).join('') :
+        `<div class="empty"><h4>Aucune annonce</h4>
+         <p>${USER.monjob_role === 'client' ? 'Publiez votre première annonce.' : 'Revenez plus tard.'}</p></div>`}
     </div>`;
 }
 
-function annonceItem(a, u, showOwner=true){
-  const client = userById(a.clientId);
-  const favori = isFavori(u.id, a.id);
-  const nbDevis = DB.devis.filter(d => d.annonceId===a.id).length;
-  const match = u.role==='prestataire' && u.metier===a.categorie;
-  return `<div class="item ${match?'item-highlight':''}">
+/* ============ ANNONCES ============ */
+function annonceItem(a){
+  const statut = a.state || 'active';
+  const badge = statut === 'active' ? 'badge-green'
+    : statut === 'attribuee' ? 'badge-orange'
+    : statut === 'terminee' ? 'badge-grey' : 'badge-red';
+  const label = statut === 'active' ? 'En ligne'
+    : statut === 'attribuee' ? 'Attribuée'
+    : statut === 'terminee' ? 'Terminée' : statut;
+  return `<div class="item">
     <div class="item-head">
-      <div style="flex:1;min-width:0">
-        <div class="item-title">${esc(a.titre)}</div>
-        <div class="item-meta">${esc(a.categorie)} · ${esc(a.ville)} · ${fmtDateShort(a.createdAt)}${showOwner && client ? ' · par '+esc(fullName(client)) : ''}</div>
+      <div>
+        <div class="item-title">${esc(a.name)}</div>
+        <div class="item-meta">${esc(catLabel(a.categorie))} · ${esc(a.ville)} · ${fmtDateShort(a.create_date)}</div>
       </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
-        ${match ? '<span class="badge badge-green">Votre métier</span>' : ''}${annonceStatutBadge(a.statut)}
-      </div>
+      <span class="badge ${badge}">${esc(label)}</span>
     </div>
-    <div class="item-body">${esc(a.description).slice(0,220)}${a.description.length>220?'...':''}</div>
+    <div class="item-body">${esc((a.description||'').slice(0,200))}${(a.description||'').length>200?'...':''}</div>
     <div class="item-meta" style="margin-top:8px">
-      ${a.budget ? `<span>Budget indicatif : ${fmtNum(a.budget)} FCFA</span>` : ''}
-      ${a.delai ? `<span> · Délai : ${esc(a.delai)}</span>` : ''}
-      ${nbDevis ? `<span> · ${nbDevis} devis</span>` : ''}
+      ${a.budget ? `Budget : ${fmtNum(a.budget)} FCFA` : ''}
+      ${a.delai ? ` · Délai : ${esc(a.delai)}` : ''}
     </div>
     <div class="item-actions">
-      <button class="btn btn-ghost btn-sm" data-open-annonce="${a.id}">${icon('eye',16)} Détail</button>
-      <button class="btn btn-ghost btn-sm" data-toggle-fav="${a.id}">${icon(favori?'heartFill':'heart',16)} ${favori?'Retirer':'Favori'}</button>
+      <button class="btn btn-ghost btn-sm" data-open="${a.id}">Voir le détail</button>
     </div>
   </div>`;
 }
-function renderMesAnnonces(u){
-  const all = DB.annonces.filter(a => a.clientId===u.id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  const { items, html } = paginateList(all, state.annoncesFiltre.page, a => annonceItem(a, u, false));
-  return `
-    <div class="flex-between mb-4"><div><h2 class="page-title">Mes annonces</h2><p class="page-sub" style="margin:0">${all.length} au total</p></div>
-      <button class="btn btn-primary" data-nav="publier">${icon('plus',16)} Publier</button></div>
-    ${all.length ? items.join('')+html : emptyState('annonces','Aucune annonce','Commencez par publier votre première annonce pour recevoir des devis.',
-      `<button class="btn btn-primary" data-nav="publier">${icon('plus',16)} Publier ma première annonce</button>`)}`;
+
+async function renderAnnonces(scope){
+  const main = $('#main');
+  main.innerHTML = `<div class="card">Chargement...</div>`;
+  const r = await api('annonces.list', { scope });
+  if(r.status !== 'ok'){ main.innerHTML = `<div class="card">Erreur : ${esc(r.message)}</div>`; return; }
+  const list = r.annonces || [];
+
+  const titles = { mine:'Mes annonces', available:'Annonces disponibles', all:'Toutes les annonces' };
+  main.innerHTML = `
+    <div class="flex-between" style="margin-bottom:16px">
+      <div>
+        <h2 class="page-title">${titles[scope] || 'Annonces'}</h2>
+        <p class="page-sub" style="margin:0">${list.length} annonce(s)</p>
+      </div>
+      ${scope === 'mine' || USER.monjob_role === 'client' ? `<button class="btn btn-primary btn-sm" onclick="navigate('publier')">Publier</button>` : ''}
+    </div>
+    ${list.length ? list.map(a => annonceItem(a)).join('') :
+      `<div class="card"><div class="empty"><h4>Aucune annonce</h4></div></div>`}`;
+  bindAnnoncesClick();
 }
-function renderPublier(u){
-  return `
+
+function bindAnnoncesClick(){
+  $$('[data-open]').forEach(b => b.onclick = () => navigate('annonce/'+b.dataset.open));
+}
+
+async function renderPublier(){
+  const main = $('#main');
+  main.innerHTML = `
     <h2 class="page-title">Publier une annonce</h2>
-    <p class="page-sub">Les prestataires correspondants seront notifiés.</p>
-    <div class="card card-narrow">
+    <p class="page-sub">Décrivez votre besoin.</p>
+    <div class="card" style="max-width:700px">
       <form id="formAnnonce">
-        <div class="field"><label>Titre</label><input type="text" id="an_titre" required maxlength="120" placeholder="Ex. Recherche plombier pour fuite"></div>
+        <div class="field"><label>Titre</label><input type="text" id="an_titre" required maxlength="120"></div>
         <div class="field-row">
-          <div class="field"><label>Catégorie</label><select id="an_cat" required>${CONFIG.categories.map(c=>`<option>${c}</option>`).join('')}</select></div>
-          <div class="field"><label>Ville</label><select id="an_ville" required>${CONFIG.villes.map(v=>`<option>${v}</option>`).join('')}</select></div>
+          <div class="field"><label>Catégorie</label>
+            <select id="an_cat">${CATEGORIES.map(c=>`<option value="${c}">${catLabel(c)}</option>`).join('')}</select></div>
+          <div class="field"><label>Ville</label>
+            <select id="an_ville">${VILLES.map(v=>`<option>${v}</option>`).join('')}</select></div>
         </div>
-        <div class="field"><label>Description</label><textarea id="an_desc" required maxlength="2000" placeholder="Décrivez précisément votre besoin..."></textarea></div>
+        <div class="field"><label>Description</label><textarea id="an_desc" required maxlength="2000"></textarea></div>
         <div class="field-row">
-          <div class="field"><label>Budget indicatif (FCFA)</label><input type="number" id="an_budget" min="0" placeholder="Optionnel"></div>
-          <div class="field"><label>Délai</label><input type="text" id="an_delai" placeholder="Ex. 48 heures"></div>
+          <div class="field"><label>Budget (FCFA)</label><input type="number" id="an_budget" min="0"></div>
+          <div class="field"><label>Délai</label><input type="text" id="an_delai"></div>
         </div>
-        <div class="btn-row"><button type="submit" class="btn btn-primary btn-lg">Publier</button><button type="button" class="btn btn-ghost" data-nav="dashboard">Annuler</button></div>
+        <div style="display:flex;gap:8px">
+          <button type="submit" class="btn btn-primary btn-lg">Publier</button>
+          <button type="button" class="btn btn-ghost" onclick="navigate('dashboard')">Annuler</button>
+        </div>
       </form>
     </div>`;
+
+  $('#formAnnonce').onsubmit = async (ev) => {
+    ev.preventDefault();
+    const r = await api('annonce.publish', {
+      titre: $('#an_titre').value.trim(),
+      categorie: $('#an_cat').value,
+      ville: $('#an_ville').value,
+      description: $('#an_desc').value.trim(),
+      budget: $('#an_budget').value || 0,
+      delai: $('#an_delai').value.trim()
+    });
+    if(r.status !== 'ok'){ toast(r.message || 'Erreur', 'error'); return; }
+    toast('Annonce publiée', 'success');
+    navigate('mes-annonces');
+  };
 }
-function renderAnnoncesDispo(u){
-  let list = DB.annonces.filter(a => a.statut==='active');
-  const f = state.annoncesFiltre;
-  if(f.cat) list = list.filter(a => a.categorie===f.cat);
-  if(f.ville) list = list.filter(a => a.ville===f.ville);
-  if(f.q){ const q = f.q.toLowerCase(); list = list.filter(a => (a.titre+' '+a.description+' '+a.categorie+' '+a.ville).toLowerCase().includes(q)); }
-  list.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  const { items, html } = paginateList(list, f.page, a => annonceItem(a, u, true));
-  return `
-    <h2 class="page-title">Annonces disponibles</h2>
-    <p class="page-sub">${list.length} annonce(s)</p>
-    <div class="filter-bar">
-      <div class="field"><label>Catégorie</label><select id="f_cat"><option value="">Toutes</option>${CONFIG.categories.map(c=>`<option ${f.cat===c?'selected':''}>${c}</option>`).join('')}</select></div>
-      <div class="field"><label>Ville</label><select id="f_ville"><option value="">Toutes</option>${CONFIG.villes.map(v=>`<option ${f.ville===v?'selected':''}>${v}</option>`).join('')}</select></div>
-      <button class="btn btn-ghost" id="btnResetFiltre">Réinitialiser</button>
+
+async function renderAnnonceDetail(id){
+  const main = $('#main');
+  if(!id){ main.innerHTML = `<div class="card">Annonce introuvable</div>`; return; }
+  main.innerHTML = `<div class="card">Chargement...</div>`;
+
+  const r = await api('annonces.list', { scope: 'all' });
+  if(r.status !== 'ok'){ main.innerHTML = `<div class="card">Erreur</div>`; return; }
+  const a = (r.annonces || []).find(x => String(x.id) === String(id));
+  if(!a){ main.innerHTML = `<div class="card"><div class="empty"><h4>Annonce introuvable</h4></div></div>`; return; }
+
+  const isOwner = USER.monjob_role === 'client' && a.client_id && (a.client_id[0] === parseInt(SESSION.token));
+  const isPresta = USER.monjob_role === 'prestataire' && a.state === 'active';
+
+  // Charger les devis associés
+  let devis = [];
+  try {
+    // On utilise annonces.list scope=all pour déduire, mais pour MVP on affiche juste les devis si client
+    // Appel séparé nécessaire — simplifié pour MVP : on n'affiche pas la liste des devis
+  } catch(e){}
+
+  main.innerHTML = `
+    <button class="btn btn-ghost btn-sm" onclick="history.back()" style="margin-bottom:16px">← Retour</button>
+    <div class="card">
+      <div class="flex-between" style="margin-bottom:12px">
+        <div>
+          <h2 class="page-title" style="margin-bottom:6px">${esc(a.name)}</h2>
+          <div class="item-meta">${esc(catLabel(a.categorie))} · ${esc(a.ville)} · ${fmtDate(a.create_date)}</div>
+        </div>
+        ${a.state === 'active' ? '<span class="badge badge-green">En ligne</span>' : `<span class="badge badge-grey">${esc(a.state)}</span>`}
+      </div>
+      <p style="white-space:pre-wrap;line-height:1.7;color:var(--ink-2)">${esc(a.description)}</p>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line-2);
+        display:flex;gap:24px;flex-wrap:wrap">
+        <div><div class="muted">Budget</div><strong>${a.budget ? fmtNum(a.budget)+' FCFA' : 'Non précisé'}</strong></div>
+        <div><div class="muted">Délai</div><strong>${a.delai ? esc(a.delai) : 'Non précisé'}</strong></div>
+      </div>
     </div>
-    ${list.length ? items.join('')+html : emptyState('search','Aucune annonce ne correspond','Essayez d\'élargir vos critères de recherche.',
-      `<button class="btn btn-ghost" id="btnResetFiltre2">Réinitialiser</button>`)}`;
-}
-function renderAnnonceDetail(u, id){
-  const a = DB.annonces.find(x => x.id===id);
-  if(!a) return emptyState('search','Annonce introuvable','Cette annonce a peut-être été supprimée.',`<button class="btn btn-ghost" data-nav="dashboard">Retour</button>`);
-  const client = userById(a.clientId);
-  const devis = devisOfAnnonce(a.id);
-  const isOwner = a.clientId===u.id;
-  const isPresta = u.role==='prestataire';
-  const monDevis = devis.find(d => d.prestataireId===u.id);
-  const favori = isFavori(u.id, a.id);
-  const clientRating = ratingOf(client.id);
-  const contrat = DB.contrats.find(c => c.annonceId===a.id);
 
-  let devisSection = '';
-  if(isOwner && devis.length){
-    devisSection = `<div class="card"><h3>Devis reçus (${devis.length})</h3>
-      ${devis.map(d => {
-        const p = userById(d.prestataireId);
-        return `<div class="item">
-          <div class="item-head">
-            <div style="display:flex;gap:12px;align-items:center">
-              ${p && p.photo ? `<img src="${p.photo}" class="avatar">` : `<div class="avatar">${esc(p?initials(p):'?')}</div>`}
-              <div><div class="item-title">${esc(p?fullName(p):'Prestataire')}</div>
-                <div class="item-meta">${p ? badgesHtml(p) : ''}</div>
-                <div class="item-meta">${p ? ratingHtml(p.id) : ''}</div></div>
-            </div>${devisStatutBadge(d.statut)}
-          </div>
-          <div class="item-body">
-            <div><strong>Montant proposé :</strong> ${fmtNum(d.montant)} FCFA</div>
-            <div><strong>Délai :</strong> ${esc(d.delai)}</div>
-            ${d.message ? `<div style="margin-top:8px;padding:10px;background:var(--line-2);border-radius:6px">${esc(d.message)}</div>` : ''}
-          </div>
-          <div class="item-actions">
-            ${d.statut==='en_attente' && a.statut==='active' ? `
-              <button class="btn btn-green btn-sm" data-accept-devis="${d.id}">${icon('check',16)} Accepter</button>
-              <button class="btn btn-danger btn-sm" data-refuse-devis="${d.id}">${icon('x',16)} Refuser</button>` : ''}
-            <button class="btn btn-ghost btn-sm" data-contact="${a.id}|${p?p.id:''}">${icon('message',16)} Contacter</button>
-          </div>
-        </div>`;
-      }).join('')}</div>`;
-  }
-  if(isOwner && !devis.length){
-    devisSection = emptyState('messages','Aucun devis reçu','Les prestataires de la catégorie '+esc(a.categorie)+' ont été notifiés. Les devis apparaîtront ici dès qu\'ils seront envoyés.');
-  }
-
-  let actionSection = '';
-  if(isPresta && !isOwner && a.statut==='active'){
-    actionSection = `<div class="card"><h3>Envoyer un devis</h3>
-      ${monDevis ? `<div class="banner banner-info">${icon('info',18)}<div>Devis déjà envoyé. Statut : ${devisStatutBadge(monDevis.statut)}</div></div>` : `
+    ${isPresta ? `
+      <div class="card">
+        <h3>Envoyer un devis</h3>
         <form id="formDevis">
           <div class="field-row">
             <div class="field"><label>Montant (FCFA)</label><input type="number" id="dv_montant" min="0" required></div>
             <div class="field"><label>Délai</label><input type="text" id="dv_delai" required placeholder="Ex. 3 jours"></div>
           </div>
-          <div class="field"><label>Message</label><textarea id="dv_message" required placeholder="Présentez votre approche..."></textarea></div>
-          <button type="submit" class="btn btn-green">${icon('send',16)} Envoyer le devis</button>
-        </form>`}</div>`;
-  }
-  if(a.statut==='attribuee' && isOwner){
-    actionSection += `<div class="card"><h3>Mission en cours</h3>
-      <p class="muted mb-3">Le devis a été accepté. Le contrat peut être signé électroniquement par les deux parties.</p>
-      <div class="btn-row">
-        ${!contrat ? `<button class="btn btn-blue" data-signer-contrat="${a.id}">${icon('edit',16)} Voir le contrat</button>` : '<span class="badge badge-green">Contrat créé</span>'}
-        <button class="btn btn-green" data-terminer="${a.id}">${icon('check',16)} Marquer terminée</button>
-      </div></div>`;
-  }
-  if(a.statut==='terminee' && isOwner && !DB.avis.some(v => v.annonceId===a.id)){
-    const acc = DB.devis.find(d => d.annonceId===a.id && d.statut==='accepte');
-    if(acc) actionSection += `<div class="card"><h3>Laisser un avis</h3><p class="muted mb-3">Votre retour aide les autres.</p>
-      <button class="btn btn-primary" data-laisser-avis="${a.id}|${acc.prestataireId}">${icon('star',16)} Noter</button></div>`;
-  }
+          <div class="field"><label>Message</label><textarea id="dv_message" required></textarea></div>
+          <button type="submit" class="btn btn-green">Envoyer le devis</button>
+        </form>
+      </div>` : ''}
 
-  return `
-    <button class="btn btn-ghost btn-sm" data-nav="${u.role==='prestataire'?'annonces-disponibles':'mes-annonces'}" style="margin-bottom:16px">${icon('arrowLeft',16)} Retour</button>
+    ${isOwner ? `
+      <div class="card">
+        <h3>Devis reçus</h3>
+        <p class="muted" style="margin-bottom:12px">Consultez vos devis depuis Odoo pour accepter ou refuser.</p>
+        <button class="btn btn-ghost btn-sm" onclick="window.open('http://localhost:8069/odoo/monjob-annonces/'+${a.id},'_blank')">
+          Ouvrir dans Odoo
+        </button>
+      </div>` : ''}
+
     <div class="card">
-      <div class="flex-between mb-3"><div><h2 class="page-title" style="margin-bottom:8px">${esc(a.titre)}</h2>
-        <div class="item-meta">${esc(a.categorie)} · ${esc(a.ville)} · ${fmtDate(a.createdAt)}</div></div>${annonceStatutBadge(a.statut)}</div>
-      <p style="white-space:pre-wrap;line-height:1.7;color:var(--ink-2)">${esc(a.description)}</p>
-      <div class="sep"></div>
-      <div class="grid grid-3">
-        <div><div class="muted">Budget indicatif</div><strong>${a.budget?fmtNum(a.budget)+' FCFA':'Non précisé'}</strong></div>
-        <div><div class="muted">Délai</div><strong>${a.delai?esc(a.delai):'Non précisé'}</strong></div>
-        <div><div class="muted">Client</div><strong>${esc(client?fullName(client):'—')}</strong>
-          <div>${clientRating.count ? starsHtml(clientRating.avg,12) : '<span class="muted tiny">Pas noté</span>'}</div></div>
-      </div>
-      <div class="item-actions">
-        ${!isOwner ? `<button class="btn btn-ghost btn-sm" data-contact="${a.id}|${a.clientId}">${icon('message',16)} Contacter</button>` : ''}
-        <button class="btn btn-ghost btn-sm" data-toggle-fav="${a.id}">${icon(favori?'heartFill':'heart',16)} ${favori?'Retirer':'Favori'}</button>
-        ${!isOwner ? `<button class="btn btn-ghost btn-sm" data-signaler="${a.id}">${icon('flag',16)} Signaler</button>` : ''}
-        ${!isOwner ? `<button class="btn btn-ghost btn-sm" data-ouvrir-litige="${a.id}">${icon('scale',16)} Litige</button>` : ''}
-      </div>
-    </div>
-    ${actionSection}${devisSection}`;
-}
+      <h3>Contacter</h3>
+      <button class="btn btn-primary btn-sm" data-contact="${a.id}|${a.client_id ? a.client_id[0] : ''}">
+        Envoyer un message au client
+      </button>
+    </div>`;
 
-function conversations(u){
-  const map = {};
-  DB.messages.forEach(m => {
-    if(m.fromId!==u.id && m.toId!==u.id) return;
-    const other = m.fromId===u.id ? m.toId : m.fromId;
-    const key = m.annonceId+'::'+other;
-    if(!map[key]) map[key] = { annonceId:m.annonceId, otherId:other, last:m };
-    else if(new Date(m.createdAt) > new Date(map[key].last.createdAt)) map[key].last = m;
+  const fDev = $('#formDevis');
+  if(fDev) fDev.onsubmit = async (ev) => {
+    ev.preventDefault();
+    const r = await api('devis.create', {
+      annonceId: a.id,
+      montant: $('#dv_montant').value,
+      delai: $('#dv_delai').value.trim(),
+      message: $('#dv_message').value.trim()
+    });
+    if(r.status !== 'ok'){ toast(r.message || 'Erreur', 'error'); return; }
+    toast('Devis envoyé', 'success');
+    navigate('annonce/'+a.id);
+  };
+
+  $$('[data-contact]').forEach(b => b.onclick = () => {
+    const [aid, toId] = b.dataset.contact.split('|');
+    if(!toId){ toast('Destinataire inconnu', 'error'); return; }
+    navigate('messages/'+aid+'/'+toId);
   });
-  return Object.values(map).sort((a,b)=>new Date(b.last.createdAt)-new Date(a.last.createdAt));
 }
-function renderMessages(u, annonceId, otherId){
-  if(annonceId && otherId) return renderThread(u, annonceId, otherId);
-  const convs = conversations(u);
-  return `
+
+/* ============ MESSAGES ============ */
+async function renderMessages(annonceId, otherId){
+  const main = $('#main');
+  if(annonceId && otherId){ return renderThread(annonceId, otherId); }
+
+  main.innerHTML = `
     <h2 class="page-title">Messages</h2>
-    <p class="page-sub">Vos conversations.</p>
-    ${convs.length ? convs.map(c => {
-      const other = userById(c.otherId);
-      const a = DB.annonces.find(x => x.id===c.annonceId);
-      const nonLus = DB.messages.filter(m => m.annonceId===c.annonceId && m.fromId===c.otherId && m.toId===u.id && !m.lu).length;
-      return `<div class="item item-clickable" data-open-thread="${c.annonceId}|${c.otherId}">
-        <div class="item-head">
-          <div style="display:flex;gap:12px;align-items:center">
-            ${other && other.photo ? `<img src="${other.photo}" class="avatar">` : `<div class="avatar">${esc(other?initials(other):'?')}</div>`}
-            <div><div class="item-title">${esc(other?fullName(other):'Utilisateur')}${nonLus?`<span class="badge badge-orange" style="margin-left:6px">${nonLus}</span>`:''}</div>
-              <div class="item-meta">${esc(a?a.titre:'Annonce supprimée')}</div>
-              <div class="item-meta" style="margin-top:4px;color:var(--ink-2)">${esc(c.last.texte.slice(0,100))}</div></div>
-          </div>
-          <div class="muted tiny">${fmtDateShort(c.last.createdAt)}</div>
-        </div>
-      </div>`;
-    }).join('') : emptyState('messages','Aucune conversation','Contactez un prestataire depuis une annonce pour démarrer une discussion.',
-      `<button class="btn btn-primary" data-nav="annonces-disponibles">Découvrir les annonces</button>`)}`;
-}
-function renderThread(u, annonceId, otherId){
-  const a = DB.annonces.find(x => x.id===annonceId);
-  const other = userById(otherId);
-  if(!other) return emptyState('messages','Utilisateur introuvable','');
-  const msgs = DB.messages.filter(m => m.annonceId===annonceId &&
-    ((m.fromId===u.id && m.toId===otherId) || (m.fromId===otherId && m.toId===u.id)))
-    .sort((x,y)=>new Date(x.createdAt)-new Date(y.createdAt));
-  let marked = false;
-  msgs.forEach(m => { if(m.fromId===otherId && m.toId===u.id && !m.lu){ m.lu = true; marked = true; } });
-  if(marked) saveDB();
-  return `
-    <button class="btn btn-ghost btn-sm" data-nav="messages" style="margin-bottom:16px">${icon('arrowLeft',16)} Retour</button>
+    <p class="page-sub">Vos conversations sont accessibles depuis le détail d'une annonce.</p>
     <div class="card">
-      <div style="display:flex;gap:14px;align-items:center;margin-bottom:16px">
-        ${other.photo ? `<img src="${other.photo}" class="avatar-md">` : `<div class="avatar-md">${esc(initials(other))}</div>`}
-        <div style="flex:1"><div style="font-weight:700;font-size:16px">${esc(fullName(other))}</div>
-          <div class="muted">${esc(other.role)}${other.metier?' — '+esc(other.metier):''}</div>
-          <div style="margin-top:4px">${badgesHtml(other)}</div></div>
-        ${other.role==='prestataire' ? `<div>${ratingHtml(other.id)}</div>` : ''}
+      <div class="empty">
+        <h4>Ouvrez une annonce pour démarrer</h4>
+        <p>Cliquez sur "Contacter" depuis le détail d'une annonce.</p>
+        <button class="btn btn-primary" onclick="navigate('annonces-disponibles')">Voir les annonces</button>
       </div>
-      <p class="muted" style="padding:10px;background:var(--line-2);border-radius:6px;margin-bottom:16px">Annonce : <strong>${esc(a?a.titre:'supprimée')}</strong></p>
-      <div class="thread" id="thread">
-        ${msgs.length ? msgs.map(m => `<div class="bubble ${m.fromId===u.id?'me':'them'}">${esc(m.texte)}<span class="time">${fmtDate(m.createdAt)}${m.fromId===u.id?(m.lu?' · Lu':' · Envoyé'):''}</span></div>`).join('') : '<div class="empty"><p>Aucun message.</p></div>'}
-      </div>
-      <form id="formMsg"><div class="field"><textarea id="msg_text" required placeholder="Votre message..."></textarea></div>
-        <button type="submit" class="btn btn-primary">${icon('send',16)} Envoyer</button></form>
     </div>`;
 }
 
-function renderNotifications(u){
-  const list = DB.notifications.filter(n => n.userId===u.id).sort((a,b)=>new Date(b.date)-new Date(a.date));
-  list.forEach(n => n.lu = true);
-  saveDB();
-  return `
-    <h2 class="page-title">Notifications</h2>
-    <p class="page-sub">Toutes vos notifications.</p>
-    ${list.length ? list.map(n => `<div class="item" ${n.link?`style="cursor:pointer" data-nav="${n.link.replace('#/','')}"`:''}>
-      <div class="item-body">${esc(n.texte)}</div>
-      <div class="item-meta" style="margin-top:6px">${fmtDate(n.date)}</div>
-    </div>`).join('') : emptyState('notifications','Aucune notification','Vous serez notifié dès qu\'une activité vous concerne.')}`;
-}
-function showNotificationsPanel(){
-  const u = me();
-  if(!u) return;
-  const list = DB.notifications.filter(n => n.userId===u.id).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,8);
-  document.body.insertAdjacentHTML('beforeend', `
-    <div class="dropdown" id="notifDropdown">
-      <div class="dropdown-header"><span>Notifications</span><button class="link tiny" data-mark-all>Tout lu</button></div>
-      <div class="dropdown-list">
-        ${list.length ? list.map(n => `<div class="dropdown-item ${n.lu?'':'unread'}" ${n.link?`data-go="${esc(n.link)}"`:''}>
-          <div>${esc(n.texte)}</div><div class="meta">${fmtDate(n.date)}</div>
-        </div>`).join('') : '<div class="empty" style="padding:24px"><p>Aucune notification.</p></div>'}
-      </div>
-      <div class="dropdown-footer"><a href="#/notifications" data-go="#/notifications">Voir tout</a></div>
-    </div>`);
-  const dd = $('#notifDropdown');
-  const pos = $('#btnNotif').getBoundingClientRect();
-  dd.style.cssText = `position:fixed;top:${pos.bottom+8}px;right:${Math.max(12, window.innerWidth-pos.right)}px;left:auto;`;
-  const close = e => { if(!dd.contains(e.target) && e.target.id!=='btnNotif'){ dd.remove(); document.removeEventListener('click', close); } };
-  setTimeout(() => document.addEventListener('click', close), 0);
-  $$('[data-mark-all]', dd).forEach(b => b.onclick = () => {
-    DB.notifications.forEach(n => { if(n.userId===u.id) n.lu = true; });
-    saveDB(); dd.remove(); render();
-  });
-  $$('[data-go]', dd).forEach(b => b.onclick = () => { location.hash = b.dataset.go; dd.remove(); });
-}
-function showUserMenu(){
-  const u = me();
-  if(!u) return;
-  document.body.insertAdjacentHTML('beforeend', `
-    <div class="dropdown user-menu" id="userDropdown">
-      <div class="user-menu-head">
-        ${u.photo ? `<img src="${u.photo}" class="avatar">` : `<div class="avatar">${esc(initials(u))}</div>`}
-        <div class="info"><b>${esc(fullName(u))}</b><span>${esc(u.role)}${u.metier?' — '+esc(u.metier):''}</span></div>
-      </div>
-      <a href="#/profil" class="user-menu-item">${icon('user',16)} Mon profil</a>
-      <a href="#/trust" class="user-menu-item">${icon('shield',16)} Vérification</a>
-      <a href="#/settings" class="user-menu-item">${icon('settings',16)} Paramètres</a>
-      <a href="#/help" class="user-menu-item">${icon('help',16)} Aide</a>
-      <div style="height:1px;background:var(--line);margin:6px 0"></div>
-      <button class="user-menu-item danger" id="btnLogoutMenu">${icon('logout',16)} Se déconnecter</button>
-    </div>`);
-  const dd = $('#userDropdown');
-  const pos = $('#btnUserMenu').getBoundingClientRect();
-  dd.style.cssText = `position:fixed;top:${pos.bottom+8}px;right:${Math.max(12, window.innerWidth-pos.right)}px;left:auto;`;
-  const close = e => { if(!dd.contains(e.target) && e.target.id!=='btnUserMenu'){ dd.remove(); document.removeEventListener('click', close); } };
-  setTimeout(() => document.addEventListener('click', close), 0);
-  $$('a', dd).forEach(a => a.onclick = () => dd.remove());
-  $('#btnLogoutMenu').onclick = () => { dd.remove(); logout(); };
-}
+async function renderThread(annonceId, otherId){
+  const main = $('#main');
+  main.innerHTML = `<div class="card">Chargement...</div>`;
+  const r = await api('messages.list', { annonceId });
+  if(r.status !== 'ok'){ main.innerHTML = `<div class="card">Erreur : ${esc(r.message)}</div>`; return; }
+  const msgs = r.messages || [];
+  const myId = parseInt(SESSION.token);
 
-function renderFavoris(u){
-  const list = DB.favoris.filter(f => f.userId===u.id).map(f => DB.annonces.find(a => a.id===f.annonceId)).filter(Boolean);
-  return `
-    <h2 class="page-title">Favoris</h2>
-    <p class="page-sub">Vos annonces sauvegardées.</p>
-    ${list.length ? list.map(a => annonceItem(a, u, true)).join('')
-      : emptyState('favoris','Aucun favori','Cliquez sur le cœur d\'une annonce pour la sauvegarder.',
-        `<button class="btn btn-primary" data-nav="annonces-disponibles">${icon('search',16)} Découvrir des annonces</button>`)}`;
-}
-function renderMesDevis(u){
-  const list = DB.devis.filter(d => d.prestataireId===u.id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  return `
-    <h2 class="page-title">Mes devis</h2>
-    <p class="page-sub">${list.length} devis envoyés</p>
-    ${list.length ? list.map(d => {
-      const a = DB.annonces.find(x => x.id===d.annonceId);
-      return `<div class="item">
-        <div class="item-head">
-          <div><div class="item-title">${esc(a?a.titre:'Annonce supprimée')}</div>
-            <div class="item-meta">${fmtDateShort(d.createdAt)}${a?` · ${esc(a.categorie)} · ${esc(a.ville)}`:''}</div></div>
-          ${devisStatutBadge(d.statut)}
-        </div>
-        <div class="item-body"><strong>${fmtNum(d.montant)} FCFA</strong> · ${esc(d.delai)}
-          ${d.message?`<div style="margin-top:8px;padding:10px;background:var(--line-2);border-radius:6px;font-size:13px">${esc(d.message)}</div>`:''}</div>
-        ${a?`<div class="item-actions">
-          <button class="btn btn-ghost btn-sm" data-open-annonce="${a.id}">${icon('eye',16)} Voir</button>
-          ${d.statut==='accepte'?`<button class="btn btn-green btn-sm" data-contact="${a.id}|${a.clientId}">${icon('message',16)} Contacter</button>`:''}
-        </div>`:''}
-      </div>`;
-    }).join('') : emptyState('contrats','Aucun devis','Parcourez les annonces et envoyez votre premier devis.',
-      `<button class="btn btn-green" data-nav="annonces-disponibles">${icon('search',16)} Voir les annonces</button>`)}`;
-}
-function renderMesAvis(u){
-  const list = DB.avis.filter(a => a.toId===u.id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  const r = ratingOf(u.id);
-  if(!list.length) return `
-    <h2 class="page-title">Mes avis</h2>
-    <p class="page-sub">Vos retours clients.</p>
-    ${emptyState('success','Pas encore d\'avis','Vos avis apparaîtront ici après vos premières missions.')}`;
-  return `
-    <h2 class="page-title">Mes avis</h2>
-    <p class="page-sub">Vos retours clients.</p>
+  main.innerHTML = `
+    <button class="btn btn-ghost btn-sm" onclick="navigate('messages')" style="margin-bottom:16px">← Retour</button>
     <div class="card">
-      <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
-        <div style="text-align:center"><div style="font-size:52px;font-weight:800;color:var(--orange);line-height:1">${r.avg.toFixed(1)}</div>
-          <div>${starsHtml(r.avg, 20)}</div><div class="muted mt-2">${r.count} avis</div></div>
-        <div style="flex:1;min-width:200px">
-          ${[5,4,3,2,1].map(n => {
-            const c = list.filter(a => a.note===n).length;
-            const p = (c/r.count*100);
-            return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-              <span class="tiny" style="width:20px">${n}</span>
-              <div style="flex:1;height:8px;background:var(--line);border-radius:4px;overflow:hidden"><div style="height:100%;width:${p}%;background:var(--amber);transition:width 1s ease"></div></div>
-              <span class="muted tiny" style="min-width:24px;text-align:right">${c}</span>
-            </div>`;
-          }).join('')}
-        </div>
+      <div class="thread" id="thread">
+        ${msgs.length ? msgs.map(m => {
+          const isMe = m.expediteur_id && m.expediteur_id[0] === myId;
+          return `<div class="bubble ${isMe?'me':'them'}">
+            ${esc(m.contenu)}
+            <span class="time">${fmtDate(m.create_date)}</span>
+          </div>`;
+        }).join('') : '<div class="empty"><p>Aucun message. Écrivez le premier.</p></div>'}
       </div>
-    </div>
-    ${list.map(v => {
-      const from = userById(v.fromId);
-      const a = DB.annonces.find(x => x.id===v.annonceId);
-      return `<div class="item">
-        <div class="item-head">
-          <div><div class="item-title">${esc(from?fullName(from):'Client')}</div>
-            <div class="item-meta">${a?'Pour : '+esc(a.titre)+' · ':''}${fmtDateShort(v.createdAt)}</div></div>
-          <div>${starsHtml(v.note, 16)}</div>
-        </div>
-        ${v.commentaire?`<div class="item-body">${esc(v.commentaire)}</div>`:''}
-      </div>`;
-    }).join('')}`;
+      <form id="formMsg">
+        <div class="field"><textarea id="msg_text" required placeholder="Votre message..."></textarea></div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+      </form>
+    </div>`;
+
+  const th = $('#thread');
+  if(th) th.scrollTop = th.scrollHeight;
+
+  $('#formMsg').onsubmit = async (ev) => {
+    ev.preventDefault();
+    const texte = $('#msg_text').value.trim();
+    if(!texte) return;
+    const r = await api('message.send', { annonceId, toId: parseInt(otherId), texte });
+    if(r.status !== 'ok'){ toast(r.message || 'Erreur', 'error'); return; }
+    renderThread(annonceId, otherId);
+  };
 }
 
-function renderProfilPage(u){
-  const photo = u.photo ? `<img src="${u.photo}" class="avatar-lg">` : `<div class="avatar-lg">${esc(initials(u))}</div>`;
-  const rating = u.role==='prestataire' ? ratingOf(u.id) : null;
+/* ============ PROFIL ============ */
+function renderProfil(){
   return `
     <h2 class="page-title">Mon profil</h2>
     <p class="page-sub">Vos informations personnelles.</p>
-    <div class="card">
-      <div class="profile-head">${photo}
-        <div style="flex:1;min-width:200px">
-          <div style="font-weight:700;font-size:18px">${esc(fullName(u))}</div>
-          <div class="muted">${esc(u.role)}${u.metier?' — '+esc(u.metier):''}</div>
-          <div style="margin-top:8px">${badgesHtml(u)}</div>
+    <div class="card" style="max-width:700px">
+      <div style="display:flex;gap:20px;align-items:center;margin-bottom:20px;flex-wrap:wrap">
+        ${USER.photo ? `<img src="${USER.photo}" class="avatar-lg" alt="">`
+          : `<div class="avatar-lg">${esc(initials(USER))}</div>`}
+        <div>
+          <div style="font-weight:700;font-size:17px">${esc(fullName(USER))}</div>
+          <div class="muted">${esc(USER.monjob_role)}${USER.metier ? ' — '+esc(USER.metier) : ''}</div>
           <div style="margin-top:8px">
-            ${u.statut==='actif'?'<span class="badge badge-green">Actif</span>':u.statut==='en_attente'?'<span class="badge badge-amber">En attente</span>':'<span class="badge badge-red">'+esc(u.statut)+'</span>'}
-            ${u.twoFA?'<span class="badge badge-blue">2FA activée</span>':''}
+            ${USER.statut === 'actif' ? '<span class="badge badge-green">Actif</span>'
+              : USER.statut === 'en_attente' ? '<span class="badge badge-amber">En attente</span>'
+              : '<span class="badge badge-red">' + esc(USER.statut) + '</span>'}
           </div>
-          ${rating && rating.count ? `<div style="margin-top:8px">${starsHtml(rating.avg)} ${rating.avg.toFixed(1)} (${rating.count})</div>` : ''}
         </div>
       </div>
-      <div class="sep"></div>
       <form id="formProfil">
-        <h3 style="font-size:14px;margin-bottom:14px">Informations personnelles</h3>
-        <div class="field-row"><div class="field"><label>Prénom</label><input type="text" id="p_prenom" value="${esc(u.prenom)}" required></div>
-          <div class="field"><label>Nom</label><input type="text" id="p_nom" value="${esc(u.nom)}" required></div></div>
-        <div class="field-row"><div class="field"><label>Email</label><input type="email" id="p_email" value="${esc(u.email)}" required></div>
-          <div class="field"><label>Téléphone</label><input type="tel" id="p_phone" value="${esc(u.phone)}" required></div></div>
-        <div class="field-row"><div class="field"><label>Ville</label><select id="p_ville">${CONFIG.villes.map(v=>`<option ${u.ville===v?'selected':''}>${v}</option>`).join('')}</select></div>
-          ${u.role==='prestataire'?`<div class="field"><label>Métier</label><select id="p_metier">${CONFIG.categories.map(c=>`<option ${u.metier===c?'selected':''}>${c}</option>`).join('')}</select></div>`:''}</div>
-        ${u.role==='prestataire'?`<div class="field"><label>Présentation</label><textarea id="p_bio" maxlength="500">${esc(u.bio||'')}</textarea></div>`:''}
+        <div class="field-row">
+          <div class="field"><label>Nom affiché</label><input type="text" id="p_name" value="${esc(USER.name||'')}" required></div>
+          <div class="field"><label>Téléphone</label><input type="tel" id="p_phone" value="${esc(USER.phone||'')}" required></div>
+        </div>
+        <div class="field">
+          <label>Email (non modifiable)</label>
+          <input type="email" value="${esc(USER.email||'')}" disabled>
+        </div>
+        <div class="field"><label>Ville</label>
+          <input type="text" id="p_ville" value="${esc(USER.city||'')}" required></div>
+        <div class="field">
+          <label>Photo de profil</label>
+          <input type="file" id="p_photo" accept="image/*">
+          <p class="hint">JPEG/PNG. L'upload vers Odoo sera implémenté dans une prochaine étape.</p>
+        </div>
         <button type="submit" class="btn btn-primary">Enregistrer</button>
       </form>
-      <div class="sep"></div>
-      <h3 style="font-size:14px;margin-bottom:14px">Photo de profil</h3>
-      <div class="field"><input type="file" id="p_photo" accept="image/*"><p class="hint">JPEG/PNG, 800 Ko max.</p></div>
-      <div class="sep"></div>
-      <h3 style="font-size:14px;margin-bottom:14px">Changer de mot de passe</h3>
-      <div class="field-row">
-        <div class="field"><label>Nouveau mot de passe</label><input type="password" id="p_pass"><div class="pwd-meter" id="pwdMeterProfil"><i></i><i></i><i></i><i></i></div></div>
-        <div class="field"><label>Confirmer</label><input type="password" id="p_pass2"></div>
-      </div>
     </div>`;
 }
-function bindProfil(u){
+
+function bindProfil(){
   const f = $('#formProfil');
   if(!f) return;
-  f.onsubmit = e => {
-    e.preventDefault();
-    const prenom = $('#p_prenom').value.trim();
-    const nom = $('#p_nom').value.trim();
-    const email = $('#p_email').value.trim().toLowerCase();
-    const phone = $('#p_phone').value.trim();
-    if(!prenom||!nom||!email||!phone){ toast('Champs obligatoires.','error'); return; }
-    if(!emailValide(email)){ toast('Email invalide.','error'); return; }
-    if(DB.users.some(x => x.id!==u.id && x.email.toLowerCase()===email)){ toast('Email déjà utilisé.','error'); return; }
-    u.prenom = prenom; u.nom = nom; u.email = email; u.phone = phone;
-    u.ville = $('#p_ville').value;
-    const pm = $('#p_metier'); if(pm) u.metier = pm.value;
-    const bio = $('#p_bio'); if(bio) u.bio = bio.value.trim();
-    const p1 = $('#p_pass').value, p2 = $('#p_pass2').value;
-    if(p1||p2){
-      const errs = passwordErrors(p1);
-      if(errs.length){ toast('Mot de passe faible : '+errs.join(', ')+'.','error'); return; }
-      if(p1 !== p2){ toast('Mots de passe différents.','error'); return; }
-      u.password = hashPassword(p1); audit('changement_mdp', u.email);
-    }
-    saveDB(); audit('maj_profil', u.email); toast('Profil mis à jour.','success'); render();
+  f.onsubmit = async (ev) => {
+    ev.preventDefault();
+    const r = await api('profil.update', {
+      name: $('#p_name').value.trim(),
+      phone: $('#p_phone').value.trim(),
+      ville: $('#p_ville').value.trim()
+    });
+    if(r.status !== 'ok'){ toast(r.message || 'Erreur', 'error'); return; }
+    toast('Profil mis à jour', 'success');
+    // Recharger
+    const me = await api('auth.me');
+    if(me.status === 'ok') USER = me.user;
+    render();
   };
-  const pwd = $('#p_pass');
-  if(pwd) pwd.oninput = () => { $('#pwdMeterProfil').dataset.score = passwordScore(pwd.value); };
-  const photoInput = $('#p_photo');
-  if(photoInput) photoInput.onchange = () => readFile(photoInput, data => { u.photo = data; saveDB(); toast('Photo enregistrée.','success'); render(); });
-}
-function readFile(input, cb){
-  const f = input.files[0];
-  if(!f) return;
-  if(f.size > CONFIG.maxFileSize){ toast('Fichier trop volumineux.','error'); input.value=''; return; }
-  const r = new FileReader(); r.onload = e => cb(e.target.result); r.readAsDataURL(f);
 }
 
-function renderContrats(u){
-  const list = DB.contrats.filter(c => c.clientId===u.id || c.prestataireId===u.id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  return `
-    <h2 class="page-title">Contrats</h2>
-    <p class="page-sub">Contrats signés électroniquement (sans notion de paiement).</p>
-    ${list.length ? list.map(c => {
-      const a = DB.annonces.find(x => x.id===c.annonceId);
-      return `<div class="item">
-        <div class="item-head">
-          <div><div class="item-title">Contrat ${esc(c.numero)}</div>
-            <div class="item-meta">${esc(a?a.titre:'Annonce supprimée')} · ${fmtDateShort(c.createdAt)}</div></div>
-          ${c.signeClient && c.signePresta ? '<span class="badge badge-green">Signé par les deux parties</span>'
-            : c.signeClient || c.signePresta ? '<span class="badge badge-amber">Partiellement signé</span>'
-            : '<span class="badge badge-grey">En attente</span>'}
-        </div>
-        <div class="item-body">
-          <strong>Montant proposé :</strong> ${fmtNum(c.montant)} FCFA<br>
-          <strong>Délai :</strong> ${esc(c.delai)}
-        </div>
-        <div class="item-actions">
-          <button class="btn btn-ghost btn-sm" data-voir-contrat="${c.id}">${icon('file',16)} Consulter</button>
-          ${!c.signeClient && c.clientId===u.id ? `<button class="btn btn-blue btn-sm" data-signer="${c.id}|client">Signer</button>`:''}
-          ${!c.signePresta && c.prestataireId===u.id ? `<button class="btn btn-blue btn-sm" data-signer="${c.id}|presta">Signer</button>`:''}
-        </div>
-      </div>`;
-    }).join('') : emptyState('contrats','Aucun contrat','Les contrats sont générés lorsqu\'un devis est accepté.')}`;
-}
-function showContrat(contratId){
-  const c = DB.contrats.find(x => x.id===contratId);
-  if(!c) return;
-  const client = userById(c.clientId);
-  const presta = userById(c.prestataireId);
-  openModal({ title:'Contrat '+c.numero, size:'modal-lg',
-    content:`<div style="line-height:1.7;font-size:14px">
-      <p class="bold mb-3">CONTRAT DE PRESTATION DE SERVICES</p>
-      <p class="mb-3"><strong>Entre :</strong><br>Le CLIENT : ${esc(client?fullName(client):'—')} (${esc(client?client.email:'')})<br>
-      Le PRESTATAIRE : ${esc(presta?fullName(presta):'—')} (${esc(presta?presta.email:'')})</p>
-      <p class="mb-3"><strong>Objet :</strong> Réalisation de la mission décrite dans l'annonce.</p>
-      <p class="mb-3"><strong>Montant convenu :</strong> ${fmtNum(c.montant)} FCFA<br><strong>Délai :</strong> ${esc(c.delai)}</p>
-      <p class="mb-3"><strong>Signatures :</strong></p>
-      <div class="grid grid-2">
-        <div style="padding:12px;border:1px solid var(--line);border-radius:6px">
-          <div class="tiny muted">Client</div><div class="bold">${c.signeClient ? esc(fullName(client)) : 'Non signé'}</div>
-          ${c.signeClient ? '<div class="tiny muted">Signé électroniquement</div>' : ''}
-        </div>
-        <div style="padding:12px;border:1px solid var(--line);border-radius:6px">
-          <div class="tiny muted">Prestataire</div><div class="bold">${c.signePresta ? esc(fullName(presta)) : 'Non signé'}</div>
-          ${c.signePresta ? '<div class="tiny muted">Signé électroniquement</div>' : ''}
-        </div>
-      </div></div>`,
-    footer:`<button class="btn btn-ghost" data-close>Fermer</button>`,
-    onMount: m => { m.querySelector('[data-close]').onclick = closeModal; attachRipple(); } });
-}
-function showSignature(contratId, who){
-  const c = DB.contrats.find(x => x.id===contratId);
-  if(!c) return;
-  const u = me();
-  openModal({ title:'Signer électroniquement',
-    content:`<p class="muted mb-3">Saisissez votre nom complet pour signer le contrat ${esc(c.numero)}.</p>
-      <div class="field"><label>Nom complet</label><input type="text" id="sign_name" placeholder="${esc(fullName(u))}" required></div>
-      <p class="hint">En signant, vous acceptez les termes du contrat.</p>`,
-    footer:`<button class="btn btn-ghost" data-cancel>Annuler</button><button class="btn btn-primary" data-submit>Signer</button>`,
-    onMount: m => {
-      m.querySelector('[data-cancel]').onclick = closeModal;
-      m.querySelector('[data-submit]').onclick = () => {
-        const name = $('#sign_name').value.trim();
-        if(name !== fullName(u)){ toast('Le nom doit correspondre exactement.','error'); return; }
-        if(who === 'client') c.signeClient = true; else c.signePresta = true;
-        saveDB(); audit('contrat_signe', c.numero+' par '+who);
-        toast('Contrat signé.','success'); closeModal(); render();
-      };
-      attachRipple();
-    } });
-}
+/* ============ ADMIN ============ */
+async function renderAdminInscriptions(){
+  const main = $('#main');
+  main.innerHTML = `<div class="card">Chargement...</div>`;
+  const r = await api('admin.users');
+  if(r.status !== 'ok'){ main.innerHTML = `<div class="card">Erreur : ${esc(r.message)}</div>`; return; }
+  const list = (r.users || []).filter(u => u.statut === 'en_attente');
 
-function renderLitiges(u){
-  const list = DB.litiges.filter(l => l.ouvertPar===u.id || l.contreId===u.id).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  return `
-    <h2 class="page-title">Litiges</h2>
-    <p class="page-sub">Vos litiges en cours et résolus.</p>
-    ${list.length ? list.map(l => {
-      const a = DB.annonces.find(x => x.id===l.annonceId);
-      return `<div class="item">
-        <div class="item-head">
-          <div><div class="item-title">Dossier ${esc(l.numero)}</div>
-            <div class="item-meta">${esc(a?a.titre:'Annonce supprimée')} · ${fmtDateShort(l.createdAt)}</div></div>
-          <span class="badge ${l.statut==='resolu'?'badge-green':l.statut==='en_cours'?'badge-amber':'badge-grey'}">${esc(l.statut)}</span>
-        </div>
-        <div class="item-body"><strong>Motif :</strong> ${esc(l.motif)}<br>${l.description?esc(l.description):''}</div>
-      </div>`;
-    }).join('') : emptyState('litiges','Aucun litige','Vous pouvez ouvrir un litige depuis le détail d\'une annonce attribuée.')}`;
-}
-
-function renderHelp(u){
-  const faqs = [
-    { q:'Comment publier une annonce ?', a:'Depuis votre tableau de bord, cliquez sur Publier. Renseignez le titre, la catégorie, la ville et la description. Les prestataires correspondants sont immédiatement notifiés.' },
-    { q:'Comment fonctionne la sélection d\'un prestataire ?', a:'Vous recevez des devis de prestataires. Choisissez celui qui vous convient en cliquant sur Accepter. Un contrat est généré automatiquement.' },
-    { q:'Que sont les badges de confiance ?', a:'Les badges sont calculés automatiquement : Vérifié (KYC complet), Top prestataire (note ≥ 4.5 avec au moins 3 avis) et Nouveau (compte récent).' },
-    { q:'Comment ouvrir un litige ?', a:'Sur le détail d\'une annonce attribuée, cliquez sur Litige. Un numéro de dossier est généré et un administrateur est notifié.' },
-    { q:'Comment signer un contrat ?', a:'Rendez-vous dans Contrats, ouvrez le contrat concerné et cliquez sur Signer. Saisissez votre nom complet pour valider.' }
-  ];
-  return `
-    <h2 class="page-title">Centre d'aide</h2>
-    <p class="page-sub">Réponses aux questions fréquentes et support.</p>
-    <div class="card"><h3>Questions fréquentes</h3>
-      ${faqs.map((f,i) => `<div class="item" style="cursor:pointer" data-faq="${i}">
-        <div class="flex-between"><div class="bold">${esc(f.q)}</div><span>${icon('chevronDown',16)}</span></div>
-        <div class="item-body hidden" id="faq-${i}">${esc(f.a)}</div>
-      </div>`).join('')}
-    </div>
-    <div class="card"><h3>Contacter le support</h3>
-      <form id="formTicket">
-        <div class="field"><label>Sujet</label><input type="text" id="tk_sujet" required maxlength="100"></div>
-        <div class="field"><label>Description</label><textarea id="tk_msg" required maxlength="1000"></textarea></div>
-        <button type="submit" class="btn btn-primary">Envoyer le ticket</button>
-      </form></div>`;
-}
-function renderSettings(u){
-  const p = u.prefNotif || {};
-  return `
-    <h2 class="page-title">Paramètres</h2>
-    <p class="page-sub">Personnalisez votre expérience.</p>
-    <div class="card"><h3>Notifications</h3>
-      ${['email','push','sms','marketing'].map(k => `
-        <div class="flex-between" style="padding:12px 0;border-bottom:1px solid var(--line-2)">
-          <div><div class="bold">${k==='email'?'Email':k==='push'?'Push':k==='sms'?'SMS':'Marketing'}</div></div>
-          <label style="display:inline-flex;align-items:center;cursor:pointer"><input type="checkbox" data-pref="${k}" ${p[k]?'checked':''}></label>
-        </div>`).join('')}
-    </div>
-    <div class="card"><h3>Préférences</h3>
-      <div class="flex-between" style="padding:12px 0;border-bottom:1px solid var(--line-2)">
-        <div class="bold">Thème sombre</div>
-        <label style="cursor:pointer"><input type="checkbox" id="toggleTheme" ${DB.theme==='dark'?'checked':''}></label>
-      </div>
-      <div class="flex-between" style="padding:12px 0">
-        <div class="bold">Langue</div>
-        <select id="selectLang" style="width:auto"><option value="fr" ${DB.lang==='fr'?'selected':''}>Français</option><option value="en" ${DB.lang==='en'?'selected':''}>English</option></select>
-      </div>
-    </div>
-    <div class="card"><h3>Zone de danger</h3><p class="muted mb-3">Actions irréversibles.</p>
-      <button class="btn btn-danger" id="btnResetData">Réinitialiser toutes les données</button></div>`;
-}
-function renderTrust(u){
-  const k = u.kyc || {};
-  return `
-    <h2 class="page-title">Vérification et confiance</h2>
-    <p class="page-sub">Complétez les niveaux pour gagner des badges.</p>
-    <div class="card"><h3>Niveaux de vérification</h3>
-      ${[['email','Email vérifié','mail'],['phone','Téléphone vérifié','phone'],['cni','Pièce d\'identité','shieldCheck']].map(([key,label,ic]) => `
-        <div class="item" style="margin-bottom:8px">
-          <div class="flex-between">
-            <div style="display:flex;gap:12px;align-items:center">
-              <div style="width:40px;height:40px;border-radius:50%;background:${k[key]?'var(--green-s)':'var(--line-2)'};color:${k[key]?'var(--green)':'var(--ink-3)'};display:flex;align-items:center;justify-content:center;transition:all .3s">${icon(ic,20)}</div>
-              <div><div class="bold">${label}</div><div class="muted tiny">${k[key]?'Vérifié':'Non complété'}</div></div>
-            </div>
-            ${k[key] ? '<span class="badge badge-green">Fait</span>' : `<button class="btn btn-primary btn-sm" data-verify="${key}">Vérifier</button>`}
-          </div>
-        </div>`).join('')}
-    </div>
-    <div class="card"><h3>Vos badges</h3>${badgesHtml(u) || '<span class="muted">Aucun badge.</span>'}</div>
-    <div class="card"><h3>Double authentification</h3>
-      <div class="flex-between">
-        <div><div class="bold">Activer la 2FA</div><div class="muted tiny">Code à 6 chiffres à chaque connexion.</div></div>
-        <label style="cursor:pointer"><input type="checkbox" id="toggle2fa" ${u.twoFA?'checked':''}></label>
-      </div>
-    </div>`;
-}
-
-function renderAdminDashboard(u){
-  const clients = DB.users.filter(x => x.role==='client' && x.statut==='actif').length;
-  const prests = DB.users.filter(x => x.role==='prestataire' && x.statut==='actif').length;
-  const attente = DB.users.filter(x => x.statut==='en_attente').length;
-  const annonces = DB.annonces.filter(a => a.statut!=='supprimee').length;
-  const devis = DB.devis.length;
-  const litiges = DB.litiges.filter(l => l.statut!=='resolu').length;
-  const tickets = DB.tickets.filter(t => t.statut!=='ferme').length;
-  return `
-    <h2 class="page-title">Tableau de bord administrateur</h2>
-    <p class="page-sub">Vue d'ensemble de la plateforme.</p>
-    <div class="grid grid-4" style="margin-bottom:24px">
-      <div class="stat stat-orange"><div class="num" data-count="${attente}">0</div><div class="lbl">À valider</div></div>
-      <div class="stat stat-green"><div class="num" data-count="${clients+prests}">0</div><div class="lbl">Comptes actifs</div></div>
-      <div class="stat"><div class="num" data-count="${annonces}">0</div><div class="lbl">Annonces</div></div>
-      <div class="stat stat-amber"><div class="num" data-count="${devis}">0</div><div class="lbl">Devis échangés</div></div>
-    </div>
-    <div class="grid grid-2 mb-4">
-      <div class="chart-card"><h3>Inscriptions sur 14 jours</h3><canvas class="chart-canvas" id="chartInsc"></canvas></div>
-      <div class="chart-card"><h3>Top catégories</h3><canvas class="chart-canvas" id="chartCats"></canvas></div>
-    </div>
-    <div class="grid grid-4">
-      <div class="stat stat-blue"><div class="num" data-count="${litiges}">0</div><div class="lbl">Litiges ouverts</div></div>
-      <div class="stat"><div class="num" data-count="${tickets}">0</div><div class="lbl">Tickets ouverts</div></div>
-      <div class="stat stat-green"><div class="num" data-count="${DB.messages.length}">0</div><div class="lbl">Messages</div></div>
-      <div class="stat stat-orange"><div class="num" data-count="${DB.avis.length}">0</div><div class="lbl">Avis</div></div>
-    </div>`;
-}
-function chartBar(canvas, data, color='#F77F00'){
-  const ctx = canvas.getContext('2d'); const dpr = window.devicePixelRatio||1;
-  const w = canvas.clientWidth, h = canvas.clientHeight;
-  canvas.width = w*dpr; canvas.height = h*dpr; ctx.scale(dpr,dpr);
-  const pad = {l:36,r:16,t:20,b:48}; const cw = w-pad.l-pad.r, ch = h-pad.t-pad.b;
-  if(!data.length){ ctx.fillStyle='#94A3B8'; ctx.fillText('Aucune donnée', w/2-40, h/2); return; }
-  const max = Math.max(...data.map(d=>d.value), 1);
-  const barW = Math.min(60, cw/data.length*0.7); const step = cw/data.length;
-  ctx.strokeStyle = '#E2E8F0';
-  for(let i=0;i<=4;i++){ const y = pad.t+ch*(i/4); ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cw,y); ctx.stroke(); }
-  data.forEach((d,i) => {
-    const x = pad.l+step*i+(step-barW)/2; const bh = ch*(d.value/max); const y = pad.t+ch-bh;
-    const grad = ctx.createLinearGradient(x, y, x, y+bh);
-    grad.addColorStop(0, color); grad.addColorStop(1, color+'88');
-    ctx.fillStyle = grad; ctx.fillRect(x,y,barW,bh);
-    ctx.fillStyle = '#334155'; ctx.font = '11px system-ui'; ctx.textAlign = 'center';
-    ctx.fillText(d.label.slice(0,10), x+barW/2, h-pad.b+14);
-    if(d.value>0) ctx.fillText(d.value, x+barW/2, y-4);
-  });
-}
-function chartLine(canvas, data, color='#F77F00'){
-  const ctx = canvas.getContext('2d'); const dpr = window.devicePixelRatio||1;
-  const w = canvas.clientWidth, h = canvas.clientHeight;
-  canvas.width = w*dpr; canvas.height = h*dpr; ctx.scale(dpr,dpr);
-  const pad = {l:36,r:16,t:20,b:36}; const cw = w-pad.l-pad.r, ch = h-pad.t-pad.b;
-  const max = Math.max(...data.map(d=>d.value), 1);
-  ctx.strokeStyle = '#E2E8F0';
-  for(let i=0;i<=4;i++){ const y = pad.t+ch*(i/4); ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cw,y); ctx.stroke(); }
-  const step = cw/Math.max(1,data.length-1);
-  ctx.beginPath();
-  data.forEach((d,i) => { const x = pad.l+step*i, y = pad.t+ch-ch*(d.value/max); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
-  ctx.lineTo(pad.l+cw, pad.t+ch); ctx.lineTo(pad.l, pad.t+ch); ctx.closePath();
-  const grad = ctx.createLinearGradient(0, pad.t, 0, pad.t+ch);
-  grad.addColorStop(0, 'rgba(247,127,0,0.25)'); grad.addColorStop(1, 'rgba(247,127,0,0)');
-  ctx.fillStyle = grad; ctx.fill();
-  ctx.beginPath();
-  data.forEach((d,i) => { const x = pad.l+step*i, y = pad.t+ch-ch*(d.value/max); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
-  ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.stroke();
-  data.forEach((d,i) => {
-    const x = pad.l+step*i, y = pad.t+ch-ch*(d.value/max);
-    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2); ctx.fillStyle = color; ctx.fill();
-    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x,y,1.5,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#64748B'; ctx.font = '11px system-ui'; ctx.textAlign = 'center';
-    ctx.fillText(d.label, x, h-pad.b+18);
-  });
-}
-function mountAdminCharts(){
-  const jours = [];
-  for(let i=13;i>=0;i--){ const d = daysAgo(i);
-    const c = DB.users.filter(u => u.createdAt && sameDay(new Date(u.createdAt), d)).length;
-    jours.push({ label:d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}), value:c }); }
-  const c1 = $('#chartInsc'); if(c1) chartLine(c1, jours);
-  const cats = {};
-  DB.annonces.forEach(a => cats[a.categorie] = (cats[a.categorie]||0)+1);
-  const catData = Object.entries(cats).map(([l,v])=>({label:l,value:v})).sort((a,b)=>b.value-a.value).slice(0,6);
-  const c2 = $('#chartCats'); if(c2) chartBar(c2, catData);
-}
-
-function renderAdminInscriptions(u){
-  const list = DB.users.filter(x => x.statut==='en_attente').sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
-  return `
+  main.innerHTML = `
     <h2 class="page-title">Inscriptions à valider</h2>
-    <p class="page-sub">${list.length} compte(s)</p>
-    ${list.length ? list.map(x => `<div class="item">
-      <div class="item-head">
-        <div style="display:flex;gap:14px;align-items:center">
-          ${x.photo?`<img src="${x.photo}" class="avatar">`:`<div class="avatar">${esc(initials(x))}</div>`}
-          <div><div class="item-title">${esc(fullName(x))}</div>
-            <div class="item-meta">${esc(x.role)}${x.metier?' — '+esc(x.metier):''} · ${esc(x.ville)}</div></div>
-        </div>
-        <span class="badge badge-amber">En attente</span>
-      </div>
-      <div class="item-meta">Email : ${esc(x.email)} · Téléphone : ${esc(x.phone)} · Inscrit ${fmtDate(x.createdAt)}</div>
-      <div class="item-actions">
-        <button class="btn btn-green btn-sm" data-validate="${x.id}">${icon('check',16)} Valider</button>
-        <button class="btn btn-danger btn-sm" data-reject="${x.id}">${icon('x',16)} Refuser</button>
-      </div>
-    </div>`).join('') : emptyState('users','Aucune inscription en attente','Toutes les demandes ont été traitées.')}`;
-}
-function renderAdminUsers(u){
-  const f = state.usersFiltre;
-  let list = DB.users.filter(x => x.role!=='admin');
-  if(f.q){ const q = f.q.toLowerCase(); list = list.filter(x => (x.prenom+' '+x.nom+' '+x.email+' '+x.phone).toLowerCase().includes(q)); }
-  if(f.role) list = list.filter(x => x.role===f.role);
-  if(f.statut) list = list.filter(x => x.statut===f.statut);
-  list.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  const perPage = 15, pages = Math.max(1, Math.ceil(list.length/perPage));
-  const page = Math.min(f.page, pages);
-  const slice = list.slice((page-1)*perPage, page*perPage);
-  return `
-    <div class="flex-between mb-4"><div><h2 class="page-title">Utilisateurs</h2><p class="page-sub" style="margin:0">${list.length}</p></div>
-      <button class="btn btn-ghost" id="btnExportUsers">${icon('download',16)} CSV</button></div>
-    <div class="filter-bar">
-      <div class="field"><label>Recherche</label><input type="search" id="u_q" value="${esc(f.q)}"></div>
-      <div class="field"><label>Rôle</label><select id="u_role"><option value="">Tous</option>
-        <option value="client" ${f.role==='client'?'selected':''}>Clients</option>
-        <option value="prestataire" ${f.role==='prestataire'?'selected':''}>Prestataires</option></select></div>
-      <div class="field"><label>Statut</label><select id="u_statut"><option value="">Tous</option>
-        <option value="actif" ${f.statut==='actif'?'selected':''}>Actifs</option>
-        <option value="en_attente" ${f.statut==='en_attente'?'selected':''}>En attente</option>
-        <option value="suspendu" ${f.statut==='suspendu'?'selected':''}>Suspendus</option></select></div>
-    </div>
-    <div class="card table-scroll"><table class="table">
-      <thead><tr><th>Utilisateur</th><th>Rôle</th><th>Contact</th><th>Ville</th><th>Statut</th><th>Note</th><th>Actions</th></tr></thead>
-      <tbody>
-        ${slice.map(x => {
-          const r = x.role==='prestataire' ? ratingOf(x.id) : null;
-          return `<tr>
-            <td><strong>${esc(fullName(x))}</strong><br><span class="muted tiny">${esc(x.email)}</span></td>
-            <td>${esc(x.role)}${x.metier?'<br><span class="muted tiny">'+esc(x.metier)+'</span>':''}</td>
-            <td>${esc(x.phone)}</td><td>${esc(x.ville)}</td>
-            <td>${x.statut==='actif'?'<span class="badge badge-green">Actif</span>':x.statut==='en_attente'?'<span class="badge badge-amber">En attente</span>':x.statut==='suspendu'?'<span class="badge badge-red">Suspendu</span>':'<span class="badge badge-grey">Refusé</span>'}</td>
-            <td>${r&&r.count?r.avg.toFixed(1)+' ('+r.count+')':'<span class="muted">—</span>'}</td>
-            <td>${x.statut==='actif'?`<button class="btn btn-ghost btn-sm" data-suspend="${x.id}">Suspendre</button>`:x.statut==='suspendu'||x.statut==='en_attente'?`<button class="btn btn-green btn-sm" data-activate="${x.id}">Activer</button>`:''}</td>
-          </tr>`;
-        }).join('')}
-      </tbody>
-    </table></div>
-    ${pages>1?pagination(page, pages, 'users'):''}`;
-}
-function renderAdminAnnonces(u){
-  const f = state.adminAnnoncesFiltre;
-  let list = DB.annonces.slice();
-  if(f.q){ const q = f.q.toLowerCase(); list = list.filter(a => (a.titre+' '+a.description+' '+a.categorie).toLowerCase().includes(q)); }
-  if(f.statut) list = list.filter(a => a.statut===f.statut);
-  list.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  const perPage = 12, pages = Math.max(1, Math.ceil(list.length/perPage));
-  const page = Math.min(f.page, pages);
-  const slice = list.slice((page-1)*perPage, page*perPage);
-  return `
-    <div class="flex-between mb-4"><div><h2 class="page-title">Annonces</h2><p class="page-sub" style="margin:0">${list.length}</p></div>
-      <button class="btn btn-ghost" id="btnExportAnnonces">${icon('download',16)} CSV</button></div>
-    <div class="filter-bar">
-      <div class="field"><label>Recherche</label><input type="search" id="aa_q" value="${esc(f.q)}"></div>
-      <div class="field"><label>Statut</label><select id="aa_statut"><option value="">Tous</option>
-        <option value="active" ${f.statut==='active'?'selected':''}>En ligne</option>
-        <option value="attribuee" ${f.statut==='attribuee'?'selected':''}>Attribuées</option>
-        <option value="terminee" ${f.statut==='terminee'?'selected':''}>Terminées</option>
-        <option value="masquee" ${f.statut==='masquee'?'selected':''}>Masquées</option></select></div>
-    </div>
-    ${slice.length ? slice.map(a => {
-      const client = userById(a.clientId);
-      return `<div class="item">
+    <p class="page-sub">${list.length} compte(s) en attente</p>
+    ${list.length ? list.map(u => `
+      <div class="item">
         <div class="item-head">
-          <div><div class="item-title">${esc(a.titre)}</div>
-            <div class="item-meta">${esc(a.categorie)} · ${esc(a.ville)} · ${esc(client?fullName(client):'—')} · ${fmtDate(a.createdAt)}</div></div>
-          ${annonceStatutBadge(a.statut)}
+          <div style="display:flex;gap:12px;align-items:center">
+            <div class="avatar">${esc(initials(u))}</div>
+            <div>
+              <div class="item-title">${esc(fullName(u))}</div>
+              <div class="item-meta">${esc(u.monjob_role)}${u.metier ? ' — '+esc(u.metier) : ''} · ${esc(u.city||'')}</div>
+            </div>
+          </div>
+          <span class="badge badge-amber">En attente</span>
         </div>
-        <div class="item-body">${esc(a.description).slice(0,200)}${a.description.length>200?'...':''}</div>
+        <div class="item-meta" style="margin-top:8px">Email : ${esc(u.email)} · Tél : ${esc(u.phone||'')}</div>
         <div class="item-actions">
-          <button class="btn btn-ghost btn-sm" data-open-annonce="${a.id}">${icon('eye',16)} Voir</button>
-          ${a.statut==='active'?`<button class="btn btn-ghost btn-sm" data-mask="${a.id}">Masquer</button>`:a.statut==='masquee'?`<button class="btn btn-green btn-sm" data-unmask="${a.id}">Restaurer</button>`:''}
-          <button class="btn btn-danger btn-sm" data-del="${a.id}">${icon('trash',16)}</button>
+          <button class="btn btn-green btn-sm" data-validate="${u.id}">Valider</button>
+          <button class="btn btn-danger btn-sm" data-reject="${u.id}">Refuser</button>
         </div>
-      </div>`;
-    }).join('') : emptyState('annonces','Aucune annonce','Aucune annonce ne correspond aux filtres.')}
-    ${pages>1?pagination(page, pages, 'adminAnnonces'):''}`;
+      </div>`).join('') : '<div class="card"><div class="empty"><h4>Aucune inscription en attente</h4></div></div>'}`;
+
+  $$('[data-validate]').forEach(b => b.onclick = async () => {
+    const r = await api('admin.validate', { userId: parseInt(b.dataset.validate) });
+    if(r.status === 'ok'){ toast('Compte validé', 'success'); renderAdminInscriptions(); }
+    else toast(r.message, 'error');
+  });
+  $$('[data-reject]').forEach(b => b.onclick = async () => {
+    if(!confirm('Refuser cette inscription ?')) return;
+    const r = await api('admin.reject', { userId: parseInt(b.dataset.reject) });
+    if(r.status === 'ok'){ toast('Inscription refusée', 'info'); renderAdminInscriptions(); }
+    else toast(r.message, 'error');
+  });
 }
-function renderAdminAudit(u){
-  const list = DB.auditLog.slice().reverse().slice(0, 300);
-  return `
-    <h2 class="page-title">Journal d'audit</h2>
-    <p class="page-sub">${list.length} dernières actions</p>
-    <div class="card table-scroll"><table class="table">
-      <thead><tr><th>Date</th><th>Utilisateur</th><th>Action</th><th>Détails</th></tr></thead>
-      <tbody>${list.length ? list.map(l => {
-        const from = l.userId ? userById(l.userId) : null;
-        return `<tr><td class="muted tiny" style="white-space:nowrap">${fmtDate(l.date)}</td>
-          <td>${from?esc(fullName(from)):'<span class="muted">système</span>'}</td>
-          <td><code style="font-size:12px;background:var(--line-2);padding:2px 6px;border-radius:4px">${esc(l.action)}</code></td>
-          <td class="small">${esc(l.details||'')}</td></tr>`;
-      }).join('') : '<tr><td colspan="4" class="empty">Aucune activité.</td></tr>'}</tbody>
-    </table></div>`;
-}
-function renderAdminEmails(u){
-  const list = DB.emails.slice().reverse();
-  return `
-    <h2 class="page-title">Journal des emails</h2>
-    <p class="page-sub">${list.length} email(s) envoyés</p>
-    <div class="card">
-      ${list.length ? list.map(e => `<div class="item">
-        <div class="item-head">
-          <div><div class="item-title">${esc(e.subject)}</div>
-            <div class="item-meta">À : ${esc(e.to)} · ${fmtDate(e.date)}</div></div>
-          <span class="badge badge-grey">${esc(e.type)}</span>
-        </div>
-        <div class="item-body" style="font-family:monospace;font-size:12px;background:var(--line-2);padding:10px;border-radius:6px">${esc(e.body)}</div>
-      </div>`).join('') : '<div class="empty"><p>Aucun email.</p></div>'}
+
+async function renderAdminUsers(){
+  const main = $('#main');
+  main.innerHTML = `<div class="card">Chargement...</div>`;
+  const r = await api('admin.users');
+  if(r.status !== 'ok'){ main.innerHTML = `<div class="card">Erreur</div>`; return; }
+  const list = (r.users || []).filter(u => u.id !== parseInt(SESSION.token));
+
+  main.innerHTML = `
+    <h2 class="page-title">Utilisateurs</h2>
+    <p class="page-sub">${list.length} utilisateur(s)</p>
+    <div class="card table-scroll">
+      <table>
+        <thead><tr><th>Nom</th><th>Rôle</th><th>Email</th><th>Ville</th><th>Statut</th></tr></thead>
+        <tbody>
+          ${list.map(u => `<tr>
+            <td><strong>${esc(fullName(u))}</strong></td>
+            <td>${esc(u.monjob_role)}${u.metier ? '<br><span class="muted">'+esc(u.metier)+'</span>' : ''}</td>
+            <td>${esc(u.email)}</td>
+            <td>${esc(u.city||'')}</td>
+            <td>${u.statut === 'actif' ? '<span class="badge badge-green">Actif</span>'
+              : u.statut === 'en_attente' ? '<span class="badge badge-amber">En attente</span>'
+              : '<span class="badge badge-red">'+esc(u.statut)+'</span>'}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
     </div>`;
 }
-function renderAdminLitiges(u){
-  const list = DB.litiges.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  return `
-    <h2 class="page-title">Gestion des litiges</h2>
-    <p class="page-sub">${list.length} dossier(s)</p>
-    ${list.length ? list.map(l => {
-      const a = DB.annonces.find(x => x.id===l.annonceId);
-      const from = userById(l.ouvertPar);
-      return `<div class="item">
-        <div class="item-head">
-          <div><div class="item-title">Dossier ${esc(l.numero)}</div>
-            <div class="item-meta">Ouvert par ${esc(from?fullName(from):'—')} ${a?'· '+esc(a.titre):''} · ${fmtDateShort(l.createdAt)}</div></div>
-          <span class="badge ${l.statut==='resolu'?'badge-green':'badge-amber'}">${esc(l.statut)}</span>
-        </div>
-        <div class="item-body"><strong>Motif :</strong> ${esc(l.motif)}<br>${l.description?esc(l.description):''}</div>
-        ${l.statut!=='resolu'?`<div class="item-actions"><button class="btn btn-green btn-sm" data-resolve-litige="${l.id}">Résoudre</button></div>`:''}
-      </div>`;
-    }).join('') : emptyState('litiges','Aucun litige','Tous les litiges ont été traités.')}`;
-}
-function renderAdminTickets(u){
-  const list = DB.tickets.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  return `
-    <h2 class="page-title">Tickets support</h2>
-    <p class="page-sub">${list.length} ticket(s)</p>
-    ${list.length ? list.map(tk => {
-      const from = userById(tk.userId);
-      return `<div class="item">
-        <div class="item-head">
-          <div><div class="item-title">${esc(tk.sujet)}</div>
-            <div class="item-meta">${esc(from?fullName(from):'—')} · ${fmtDateShort(tk.createdAt)}</div></div>
-          <span class="badge ${tk.statut==='ferme'?'badge-grey':'badge-amber'}">${esc(tk.statut)}</span>
-        </div>
-        <div class="item-body">${esc(tk.message)}</div>
-        ${tk.statut!=='ferme'?`<div class="item-actions"><button class="btn btn-green btn-sm" data-fermer-ticket="${tk.id}">Fermer</button></div>`:''}
-      </div>`;
-    }).join('') : emptyState('messages','Aucun ticket','Aucun ticket de support ouvert.')}`;
-}
 
-function paginateList(list, page, renderItem){
-  const total = list.length, pages = Math.max(1, Math.ceil(total/CONFIG.perPage));
-  const p = Math.min(page, pages);
-  const slice = list.slice((p-1)*CONFIG.perPage, p*CONFIG.perPage);
-  const items = slice.map(renderItem);
-  const html = pages>1 ? pagination(p, pages, 'annoncesFiltre') : '';
-  return { items, html };
-}
-function pagination(page, pages, ctx){
-  return `<div class="pagination" data-paginate="${ctx}">
-    <button data-page="${page-1}" ${page<=1?'disabled':''}>${icon('chevronLeft',16)}</button>
-    ${Array.from({length:pages},(_,i)=>i+1).map(n => `<button data-page="${n}" class="${n===page?'active':''}">${n}</button>`).join('')}
-    <button data-page="${page+1}" ${page>=pages?'disabled':''}>${icon('chevronRight',16)}</button>
-  </div>`;
-}
-
-function bindPage(u, route){
-  $$('[data-nav]').forEach(el => { if(!el.onclick) el.onclick = () => navigate(el.dataset.nav); });
-  $$('[data-open-annonce]').forEach(el => el.onclick = () => navigate('annonce/'+el.dataset.openAnnonce));
-  $$('[data-open-thread]').forEach(el => {
-    el.onclick = () => { const [aid,oid] = el.dataset.openThread.split('|'); navigate('messages/'+aid+'/'+oid); };
-  });
-  $$('[data-toggle-fav]').forEach(b => b.onclick = e => {
-    e.stopPropagation(); const fav = toggleFavori(u.id, b.dataset.toggleFav); saveDB();
-    toast(fav?'Ajouté aux favoris.':'Retiré des favoris.','success'); render();
-  });
-  $$('[data-paginate]').forEach(pag => {
-    pag.querySelectorAll('button[data-page]').forEach(b => b.onclick = () => {
-      const n = Number(b.dataset.page); if(!n || b.disabled) return;
-      const k = pag.dataset.paginate;
-      if(k==='users') state.usersFiltre.page = n;
-      else if(k==='adminAnnonces') state.adminAnnoncesFiltre.page = n;
-      else state.annoncesFiltre.page = n;
-      render();
-    });
-  });
-  const fAnn = $('#formAnnonce'); if(fAnn) fAnn.onsubmit = handlePublier;
-  const fCat = $('#f_cat'); if(fCat) fCat.onchange = () => { state.annoncesFiltre.cat = fCat.value; state.annoncesFiltre.page=1; render(); };
-  const fVille = $('#f_ville'); if(fVille) fVille.onchange = () => { state.annoncesFiltre.ville = fVille.value; state.annoncesFiltre.page=1; render(); };
-  const btnR = $('#btnResetFiltre'); if(btnR) btnR.onclick = () => { state.annoncesFiltre = {cat:'',ville:'',q:'',tri:'recent',page:1}; render(); };
-  const btnR2 = $('#btnResetFiltre2'); if(btnR2) btnR2.onclick = () => { state.annoncesFiltre = {cat:'',ville:'',q:'',tri:'recent',page:1}; render(); };
-  const fDev = $('#formDevis'); if(fDev) fDev.onsubmit = handleEnvoyerDevis;
-
-  $$('[data-contact]').forEach(b => b.onclick = e => {
-    e.stopPropagation();
-    const [aid, oid] = b.dataset.contact.split('|');
-    if(!oid){ toast('Destinataire introuvable.','error'); return; }
-    const a = DB.annonces.find(x => x.id===aid);
-    if(a && !DB.messages.some(m => m.annonceId===aid &&
-      ((m.fromId===u.id && m.toId===oid) || (m.fromId===oid && m.toId===u.id)))){
-      notify(oid, fullName(u)+' souhaite vous contacter au sujet de : '+(a?a.titre:''), '#/messages/'+aid+'/'+u.id);
-      saveDB();
-    }
-    navigate('messages/'+aid+'/'+oid);
-  });
-  const fMsg = $('#formMsg');
-  if(fMsg) fMsg.onsubmit = e => {
-    e.preventDefault(); const t = $('#msg_text').value.trim(); if(!t) return;
-    DB.messages.push({ id:uid('m'), annonceId:route[1], fromId:u.id, toId:route[2], texte:t, createdAt:now(), lu:false });
-    notify(route[2], 'Nouveau message de '+fullName(u)+'.', '#/messages/'+route[1]+'/'+u.id);
-    saveDB(); render(); const th = $('#thread'); if(th) th.scrollTop = th.scrollHeight;
-  };
-  const th = $('#thread'); if(th) th.scrollTop = th.scrollHeight;
-
-  $$('[data-accept-devis]').forEach(b => b.onclick = async () => {
-    const d = DB.devis.find(x => x.id===b.dataset.acceptDevis);
-    if(!d) return;
-    const ok = await confirmDialog({ title:'Accepter ce devis ?',
-      message:'L\'annonce sera attribuée au prestataire. Un contrat sera généré automatiquement. Aucun paiement n\'est géré par la plateforme.',
-      confirmLabel:'Accepter' });
-    if(!ok) return;
-    const a = DB.annonces.find(x => x.id===d.annonceId); if(!a) return;
-    a.statut = 'attribuee'; a.attributedDevisId = d.id; d.statut = 'accepte';
-    DB.devis.filter(x => x.annonceId===a.id && x.id!==d.id).forEach(x => {
-      x.statut = 'refuse';
-      notify(x.prestataireId, 'Votre devis pour "'+a.titre+'" n\'a pas été retenu.', '#/mes-devis');
-    });
-    const contrat = { id:uid('c'), numero:'CT-'+(1000+DB.contrats.length+1), annonceId:a.id,
-      clientId:a.clientId, prestataireId:d.prestataireId, montant:d.montant, delai:d.delai,
-      signeClient:false, signePresta:false, createdAt:now() };
-    DB.contrats.push(contrat);
-    notify(d.prestataireId, 'Votre devis pour "'+a.titre+'" a été accepté !', '#/annonce/'+a.id);
-    saveDB(); audit('devis_accepte', a.titre);
-    
-    // ⚠️ APPEL N8N À L'ACCEPTATION DE DEVIS
-    const presta = userById(d.prestataireId);
-    callWorkflow('devis.accepted', {
-      clientId: a.clientId,
-      prestataireId: d.prestataireId,
-      prestataireEmail: presta ? presta.email : '',
-      prestataireName: presta ? fullName(presta) : '',
-      montant: d.montant,
-      delai: d.delai,
-      annonceTitre: a.titre,
-      annonceId: a.id
-    });
-
-    toast('Devis accepté. Contrat généré (sans paiement).','success'); render();
-  });
-  $$('[data-refuse-devis]').forEach(b => b.onclick = async () => {
-    const d = DB.devis.find(x => x.id===b.dataset.refuseDevis);
-    if(!d) return;
-    const ok = await confirmDialog({ title:'Refuser ce devis ?', message:'Le prestataire sera notifié.', confirmLabel:'Refuser', danger:true });
-    if(!ok) return;
-    d.statut = 'refuse';
-    const a = DB.annonces.find(x => x.id===d.annonceId);
-    notify(d.prestataireId, 'Votre devis pour "'+(a?a.titre:'')+'" a été refusé.', '#/mes-devis');
-    saveDB(); toast('Devis refusé.','info'); render();
-  });
-  $$('[data-terminer]').forEach(b => b.onclick = async () => {
-    const a = DB.annonces.find(x => x.id===b.dataset.terminer); if(!a) return;
-    const ok = await confirmDialog({ title:'Marquer terminée ?', message:'Vous pourrez laisser un avis.', confirmLabel:'Marquer terminée' });
-    if(!ok) return;
-    a.statut = 'terminee';
-    saveDB(); audit('mission_terminee', a.titre);
-    toast('Mission terminée.','success'); render();
-  });
-  $$('[data-laisser-avis]').forEach(b => b.onclick = () => {
-    const [aid,pid] = b.dataset.laisserAvis.split('|'); showAvisForm(aid, pid);
-  });
-  $$('[data-signaler]').forEach(b => b.onclick = () => showSignalerForm(b.dataset.signaler));
-  $$('[data-ouvrir-litige]').forEach(b => b.onclick = () => showLitigeForm(b.dataset.ouvrirLitige));
-  $$('[data-signer-contrat]').forEach(b => b.onclick = () => navigate('contrats'));
-  $$('[data-voir-contrat]').forEach(b => b.onclick = () => showContrat(b.dataset.voirContrat));
-  $$('[data-signer]').forEach(b => b.onclick = () => {
-    const [cid, who] = b.dataset.signer.split('|'); showSignature(cid, who);
-  });
-  $$('[data-validate]').forEach(b => b.onclick = () => validateUser(b.dataset.validate));
-  $$('[data-activate]').forEach(b => b.onclick = () => validateUser(b.dataset.activate));
-  $$('[data-reject]').forEach(b => b.onclick = async () => {
-    const x = userById(b.dataset.reject); if(!x) return;
-    const ok = await confirmDialog({ title:'Refuser ?', message:fullName(x)+' sera refusé.', confirmLabel:'Refuser', danger:true });
-    if(!ok) return;
-    x.statut = 'refuse'; notify(x.id, 'Votre inscription a été refusée.');
-    saveDB(); audit('inscription_refusee', x.email); toast('Inscription refusée.','info'); render();
-  });
-  $$('[data-suspend]').forEach(b => b.onclick = async () => {
-    const x = userById(b.dataset.suspend); if(!x) return;
-    const ok = await confirmDialog({ title:'Suspendre ?', message:'L\'utilisateur ne pourra plus se connecter.', confirmLabel:'Suspendre', danger:true });
-    if(!ok) return;
-    x.statut = 'suspendu'; saveDB(); audit('compte_suspendu', x.email); toast('Suspendu.','info'); render();
-  });
-  $$('[data-mask]').forEach(b => b.onclick = () => {
-    const a = DB.annonces.find(x => x.id===b.dataset.mask);
-    if(a){ a.statut = 'masquee'; saveDB(); audit('annonce_masquee', a.titre); toast('Masquée.','info'); render(); }
-  });
-  $$('[data-unmask]').forEach(b => b.onclick = () => {
-    const a = DB.annonces.find(x => x.id===b.dataset.unmask);
-    if(a){ a.statut = 'active'; saveDB(); audit('annonce_restauree', a.titre); toast('Restaurée.','success'); render(); }
-  });
-  $$('[data-del]').forEach(b => b.onclick = async () => {
-    const a = DB.annonces.find(x => x.id===b.dataset.del); if(!a) return;
-    const ok = await confirmDialog({ title:'Supprimer ?', message:'Action irréversible.', confirmLabel:'Supprimer', danger:true });
-    if(!ok) return;
-    DB.annonces = DB.annonces.filter(x => x.id!==a.id);
-    DB.devis = DB.devis.filter(d => d.annonceId!==a.id);
-    DB.messages = DB.messages.filter(m => m.annonceId!==a.id);
-    saveDB(); audit('annonce_supprimee', a.titre); toast('Supprimée.','info'); render();
-  });
-  const uq = $('#u_q'); if(uq) uq.oninput = debounce(() => { state.usersFiltre.q = uq.value; state.usersFiltre.page=1; render(); }, 300);
-  const ur = $('#u_role'); if(ur) ur.onchange = () => { state.usersFiltre.role = ur.value; state.usersFiltre.page=1; render(); };
-  const us = $('#u_statut'); if(us) us.onchange = () => { state.usersFiltre.statut = us.value; state.usersFiltre.page=1; render(); };
-  const aaq = $('#aa_q'); if(aaq) aaq.oninput = debounce(() => { state.adminAnnoncesFiltre.q = aaq.value; state.adminAnnoncesFiltre.page=1; render(); }, 300);
-  const aas = $('#aa_statut'); if(aas) aas.onchange = () => { state.adminAnnoncesFiltre.statut = aas.value; state.adminAnnoncesFiltre.page=1; render(); };
-  const bEU = $('#btnExportUsers'); if(bEU) bEU.onclick = () => exportCSV('users');
-  const bEA = $('#btnExportAnnonces'); if(bEA) bEA.onclick = () => exportCSV('annonces');
-
-  $$('[data-verify]').forEach(b => b.onclick = () => {
-    const k = b.dataset.verify;
-    if(k==='phone'){
-      const code = String(Math.floor(100000+Math.random()*900000));
-      const entered = prompt('Code envoyé par SMS (démo : '+code+')');
-      if(entered === code){ u.kyc = u.kyc||{}; u.kyc.phone = true; saveDB(); toast('Téléphone vérifié.','success'); render(); }
-      else toast('Code incorrect.','error');
-    } else if(k==='email'){
-      u.kyc = u.kyc||{}; u.kyc.email = true; saveDB(); toast('Email vérifié.','success'); render();
-    } else if(k==='cni'){
-      u.kyc = u.kyc||{}; u.kyc.cni = true; saveDB(); toast('Pièce d\'identité vérifiée.','success'); render();
-    }
-  });
-  const t2fa = $('#toggle2fa');
-  if(t2fa) t2fa.onchange = () => {
-    if(t2fa.checked){
-      const code = String(Math.floor(100000+Math.random()*900000));
-      const entered = prompt('Code de confirmation 2FA (démo : '+code+')');
-      if(entered === code){ u.twoFA = true; saveDB(); toast('2FA activée.','success'); }
-      else { toast('Code incorrect.','error'); t2fa.checked = false; }
-    } else { u.twoFA = false; saveDB(); toast('2FA désactivée.','info'); }
-  };
-  $$('[data-faq]').forEach(el => el.onclick = () => {
-    const i = el.dataset.faq; const body = $('#faq-'+i); if(body) body.classList.toggle('hidden');
-  });
-  const fTk = $('#formTicket');
-  if(fTk) fTk.onsubmit = e => {
-    e.preventDefault();
-    DB.tickets.push({ id:uid('tk'), userId:u.id, sujet:$('#tk_sujet').value.trim(), message:$('#tk_msg').value.trim(), statut:'ouvert', createdAt:now() });
-    DB.users.filter(x=>x.role==='admin').forEach(a => notify(a.id, 'Nouveau ticket : '+$('#tk_sujet').value.trim(), '#/admin/tickets'));
-    saveDB(); audit('ticket_ouvert', $('#tk_sujet').value.trim());
-    toast('Ticket envoyé.','success'); $('#formTicket').reset();
-  };
-  $$('[data-pref]').forEach(inp => inp.onchange = () => {
-    u.prefNotif = u.prefNotif||{}; u.prefNotif[inp.dataset.pref] = inp.checked; saveDB(); toast('Préférence enregistrée.','success');
-  });
-  const tTh = $('#toggleTheme'); if(tTh) tTh.onchange = () => { DB.theme = tTh.checked ? 'dark' : 'light'; saveDB(); render(); };
-  const sLang = $('#selectLang'); if(sLang) sLang.onchange = () => { DB.lang = sLang.value; saveDB(); render(); };
-  const bRD = $('#btnResetData'); if(bRD) bRD.onclick = async () => {
-    const ok = await confirmDialog({ title:'Réinitialiser ?', message:'Toutes les données locales seront supprimées.', confirmLabel:'Réinitialiser', danger:true });
-    if(!ok) return;
-    localStorage.removeItem(CONFIG.dbKey); location.reload();
-  };
-  $$('[data-resolve-litige]').forEach(b => b.onclick = () => {
-    const l = DB.litiges.find(x => x.id===b.dataset.resolveLitige);
-    if(l){ l.statut = 'resolu'; saveDB(); audit('litige_resolu', l.numero);
-      notify(l.ouvertPar, 'Votre litige '+l.numero+' est résolu.'); toast('Litige résolu.','success'); render(); }
-  });
-  $$('[data-fermer-ticket]').forEach(b => b.onclick = () => {
-    const t = DB.tickets.find(x => x.id===b.dataset.fermerTicket);
-    if(t){ t.statut = 'ferme'; saveDB(); toast('Ticket fermé.','info'); render(); }
-  });
-  if(route[0]==='admin' && route[1]==='dashboard') setTimeout(mountAdminCharts, 100);
-  bindProfil(u);
-}
-
-function validateUser(userId){
-  const x = userById(userId); if(!x) return;
-  x.statut = 'actif'; x.kyc = x.kyc || {}; x.kyc.email = true;
-  notify(x.id, 'Votre compte a été validé !', '#/dashboard');
-  sendEmail(x.email, 'Compte validé', 'Bienvenue sur Mon Job.','validation');
-  saveDB(); audit('compte_valide', x.email); toast('Compte validé.','success'); render();
-}
-function handlePublier(e){
-  e.preventDefault();
-  const u = me();
-  const titre = $('#an_titre').value.trim();
-  const cat = $('#an_cat').value;
-  const ville = $('#an_ville').value;
-  const desc = $('#an_desc').value.trim();
-  const budget = $('#an_budget').value;
-  const delai = $('#an_delai').value.trim();
-  if(!titre || !desc){ toast('Champs requis.','error'); return; }
-  const a = { id:uid('a'), clientId:u.id, titre, categorie:cat, ville, description:desc, budget, delai, statut:'active', createdAt:now() };
-  DB.annonces.push(a);
-  DB.users.filter(x => x.role==='prestataire' && x.statut==='actif' && x.metier===cat)
-    .forEach(p => notify(p.id, 'Nouvelle annonce : "'+titre+'" à '+ville, '#/annonce/'+a.id));
-  saveDB(); audit('annonce_publiee', titre);
-  toast('Annonce publiée.','success'); navigate('mes-annonces');
-
-  // ⚠️ APPEL N8N À LA PUBLICATION D'ANNONCE
-  callWorkflow('annonce.published', {
-    categorie: cat, titre: titre, ville: ville,
-    description: desc, annonceId: a.id
-  });
-}
-function handleEnvoyerDevis(e){
-  e.preventDefault();
-  const u = me();
-  const annonceId = getRoute()[1];
-  const montant = $('#dv_montant').value;
-  const delai = $('#dv_delai').value.trim();
-  const message = $('#dv_message').value.trim();
-  if(!montant || !delai || !message){ toast('Champs requis.','error'); return; }
-  if(DB.devis.find(d => d.annonceId===annonceId && d.prestataireId===u.id)){ toast('Devis déjà envoyé.','warn'); return; }
-  const a = DB.annonces.find(x => x.id===annonceId);
-  if(!a){ toast('Annonce introuvable.','error'); return; }
-  DB.devis.push({ id:uid('d'), annonceId, prestataireId:u.id, montant:Number(montant), delai, message, statut:'en_attente', createdAt:now() });
-  notify(a.clientId, fullName(u)+' a envoyé un devis pour "'+a.titre+'".', '#/annonce/'+a.id);
-  saveDB(); audit('devis_envoye', a.titre);
-  toast('Devis envoyé.','success'); render();
-}
-function showAvisForm(annonceId, prestaId){
-  const a = DB.annonces.find(x => x.id===annonceId);
-  const p = userById(prestaId);
-  if(!a || !p) return;
-  let note = 5;
-  openModal({ title:'Noter '+fullName(p),
-    content:`<p class="muted mb-3">Pour la mission : ${esc(a.titre)}</p>
-      <div class="field"><label>Note</label>
-        <div class="star-input" id="starInput">
-          ${[1,2,3,4,5].map(n => `<button type="button" data-n="${n}" class="${n<=note?'on':''}">${icon('starFill',28)}</button>`).join('')}
-        </div></div>
-      <div class="field"><label>Commentaire</label><textarea id="avis_comment" maxlength="500"></textarea></div>`,
-    footer:`<button class="btn btn-ghost" data-cancel>Annuler</button><button class="btn btn-primary" data-submit>Publier</button>`,
-    onMount: m => {
-      $$('#starInput button').forEach(b => b.onclick = () => {
-        note = Number(b.dataset.n);
-        $$('#starInput button').forEach(x => x.classList.toggle('on', Number(x.dataset.n)<=note));
-      });
-      m.querySelector('[data-cancel]').onclick = closeModal;
-      m.querySelector('[data-submit]').onclick = () => {
-        DB.avis.push({ id:uid('v'), annonceId, fromId:me().id, toId:prestaId, note, commentaire:$('#avis_comment').value.trim(), createdAt:now() });
-        notify(prestaId, fullName(me())+' vous a laissé un avis de '+note+'/5.', '#/mes-avis');
-        saveDB(); audit('avis_publie', fullName(p)+' — '+note+'/5');
-        toast('Avis publié.','success'); closeModal(); render();
-      };
-      attachRipple();
-    }
-  });
-}
-function showSignalerForm(annonceId){
-  openModal({ title:'Signaler cette annonce',
-    content:`<div class="field"><label>Motif</label>
-      <select id="sig_raison"><option>Contenu inapproprié</option><option>Arnaque</option><option>Spam</option><option>Doublon</option><option>Autre</option></select></div>
-      <div class="field"><label>Détails</label><textarea id="sig_detail" maxlength="300"></textarea></div>`,
-    footer:`<button class="btn btn-ghost" data-cancel>Annuler</button><button class="btn btn-danger" data-submit>Signaler</button>`,
-    onMount: m => {
-      m.querySelector('[data-cancel]').onclick = closeModal;
-      m.querySelector('[data-submit]').onclick = () => {
-        DB.signalements.push({ id:uid('s'), annonceId, fromId:me().id, raison:$('#sig_raison').value, detail:$('#sig_detail').value.trim(), createdAt:now(), traite:false });
-        DB.users.filter(x => x.role==='admin').forEach(a => notify(a.id, 'Signalement : '+$('#sig_raison').value, '#/admin/annonces'));
-        saveDB(); audit('signalement', $('#sig_raison').value);
-        toast('Signalement enregistré.','success'); closeModal();
-      };
-      attachRipple();
-    }
-  });
-}
-function showLitigeForm(annonceId){
-  const a = DB.annonces.find(x => x.id===annonceId);
-  if(!a) return;
-  const other = a.clientId===me().id ? (a.attributedDevisId ? DB.devis.find(d=>d.id===a.attributedDevisId)?.prestataireId : null) : a.clientId;
-  openModal({ title:'Ouvrir un litige',
-    content:`<p class="muted mb-3">Annonce : ${esc(a.titre)}</p>
-      <div class="field"><label>Motif</label>
-        <select id="lit_motif"><option>Travail non conforme</option><option>Retard important</option><option>Non-paiement</option><option>Communication rompue</option><option>Autre</option></select></div>
-      <div class="field"><label>Description</label><textarea id="lit_desc" maxlength="1000"></textarea></div>`,
-    footer:`<button class="btn btn-ghost" data-cancel>Annuler</button><button class="btn btn-danger" data-submit>Ouvrir le litige</button>`,
-    onMount: m => {
-      m.querySelector('[data-cancel]').onclick = closeModal;
-      m.querySelector('[data-submit]').onclick = () => {
-        const numero = 'LT-'+(1000+DB.litiges.length+1);
-        DB.litiges.push({ id:uid('l'), numero, annonceId, ouvertPar:me().id, contreId:other, motif:$('#lit_motif').value, description:$('#lit_desc').value.trim(), statut:'ouvert', createdAt:now() });
-        DB.users.filter(x => x.role==='admin').forEach(a => notify(a.id, 'Nouveau litige '+numero, '#/admin/litiges'));
-        saveDB(); audit('litige_ouvert', numero);
-        toast('Litige ouvert. Dossier '+numero+'.','success'); closeModal(); navigate('litiges');
-      };
-      attachRipple();
-    }
-  });
-}
-function exportCSV(type){
-  let rows = [], filename = '';
-  if(type==='users'){
-    filename = 'monjob-utilisateurs.csv';
-    rows.push(['Prénom','Nom','Email','Téléphone','Ville','Rôle','Métier','Statut','Inscrit le']);
-    DB.users.filter(u => u.role!=='admin').forEach(u => rows.push([u.prenom,u.nom,u.email,u.phone,u.ville,u.role,u.metier||'',u.statut,fmtDateShort(u.createdAt)]));
-  } else {
-    filename = 'monjob-annonces.csv';
-    rows.push(['Titre','Catégorie','Ville','Client','Statut','Budget','Publiée le']);
-    DB.annonces.forEach(a => { const c = userById(a.clientId); rows.push([a.titre,a.categorie,a.ville,c?fullName(c):'',a.statut,a.budget||'',fmtDateShort(a.createdAt)]); });
+/* ============ BOOT ============ */
+(async () => {
+  if(SESSION.token){
+    const r = await api('auth.me');
+    if(r.status === 'ok'){ USER = r.user; }
+    else { SESSION.token = null; }
   }
-  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
-  URL.revokeObjectURL(url); toast('CSV exporté.','success'); audit('export_csv', type);
-}
-
-window.addEventListener('hashchange', () => render());
-loadDB();
-if(!location.hash) location.hash = '#/login';
-render();
+  if(!location.hash || location.hash === '#/login') navigate('dashboard');
+  else ROUTE = location.hash.replace(/^#\/?/, '').split('/');
+  render();
+})();
 </script>
 </body>
 </html>
