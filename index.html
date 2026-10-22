@@ -159,7 +159,8 @@ footer.foot{text-align:center;padding:20px;font-size:12px;color:var(--ink-3);
 /* =========================================================================
    CONFIGURATION
    ========================================================================= */
-const API_URL = 'https://deploy-showoff-engaging.ngrok-free.dev/webhook/monjob';
+// ✅ URL MIS À JOUR POUR N8N EN LOCAL
+const API_URL = 'http://localhost:5678/webhook/monjob'; 
 const ODOO_WEB_URL = 'http://localhost:8069';   // ✅ URL de base Odoo pour les liens "Ouvrir dans Odoo"
 
 const CATEGORIES = ['Plomberie','Electricite','Menuiserie','Maconnerie','Peinture',
@@ -188,13 +189,13 @@ let USER = null;
 let ROUTE = ['dashboard'];
 
 /* =========================================================================
-   API CLIENT  ✅ Amélioré : gère les réponses non-JSON et erreurs HTTP
+   API CLIENT
    ========================================================================= */
 async function api(action, data = {}){
   try {
     const res = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type':'application/json', 'ngrok-skip-browser-warning':'true' },
+      headers: { 'Content-Type':'application/json' },
       body: JSON.stringify({ action, token: SESSION.token, ...data })
     });
     const text = await res.text();
@@ -209,7 +210,7 @@ async function api(action, data = {}){
     return json;
   } catch(e){
     console.error('API error:', e);
-    return { status:'error', message:'Erreur réseau : '+e.message };
+    return { status:'error', message:'Erreur réseau (CORS ou n8n éteint) : '+e.message };
   }
 }
 
@@ -227,8 +228,6 @@ const fmtNum = n => n==null || n==='' ? '' : Number(n).toLocaleString('fr-FR');
 const initials = u => u ? ((u.name||u.email||'?')[0]||'').toUpperCase() : '?';
 const fullName = u => u ? (u.name || u.email || 'Utilisateur') : 'Utilisateur';
 const catLabel = c => CAT_LABELS[c] || c || '';
-
-// ✅ Helper many2one Odoo : accepte [id, "nom"] OU id OU null
 const m2oId = v => Array.isArray(v) ? v[0] : (typeof v === 'number' ? v : null);
 
 function toast(msg, type='info'){
@@ -291,7 +290,6 @@ function renderAuth(){
   if(AUTH_MODE === 'login') $('#formLogin').onsubmit = handleLogin;
   else {
     $('#formRegister').onsubmit = handleRegister;
-    // ✅ Afficher/masquer le champ Métier selon le rôle choisi
     const roleSel = $('#rg_role');
     const metierWrap = $('#metierWrap');
     const toggleMetier = () => {
@@ -614,7 +612,6 @@ async function renderAnnonceDetail(id){
   const a = (r.annonces || []).find(x => String(x.id) === String(id));
   if(!a){ main.innerHTML = `<div class="card"><div class="empty"><h4>Annonce introuvable</h4></div></div>`; return; }
 
-  // ✅ many2one robuste : Odoo peut renvoyer [id,"nom"] ou id
   const clientId = m2oId(a.client_id);
   const myId = parseInt(SESSION.token, 10);
   const isOwner = USER.monjob_role === 'client' && clientId === myId;
@@ -725,7 +722,6 @@ async function renderThread(annonceId, otherId){
     <div class="card">
       <div class="thread" id="thread">
         ${msgs.length ? msgs.map(m => {
-          // ✅ many2one robuste
           const expId = m2oId(m.expediteur_id);
           const isMe = expId === myId;
           return `<div class="bubble ${isMe?'me':'them'}">
